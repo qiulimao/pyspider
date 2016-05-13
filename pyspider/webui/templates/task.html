@@ -11,7 +11,7 @@
     <meta name="author" content="binux">
     <link href="{{ url_for('cdn', path='twitter-bootstrap/3.1.1/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='task.css') }}" rel="stylesheet">
-
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png') }}">
     <script src="{{ url_for('cdn', path='jquery/1.11.0/jquery.min.js') }}"></script>
     <script src="{{ url_for('cdn', path='twitter-bootstrap/3.1.1/js/bootstrap.min.js') }}"></script>
   </head>
@@ -19,15 +19,23 @@
   <body>
       <div class=base-info>
         <p>
+          
+          <a href="/">
+            <span class="glyphicon glyphicon-home"></span>
+          </a>
+
           <span class="status status-{{ task.status }}">{{ status_to_string(task.status) }}</span>
           <a class=callback href="/debug/{{ task.project }}?taskid={{ task.taskid }}">{{ task.project }}.{{ task.process.callback }}</a>
           &gt;
-          <a class=url href="{{ task.url }}" target=_blank>{{ task.url }}</a>
+          <a class=url href="{{ task.url }}">{{ task.url }}</a>
           {% if task.status in (2, 3, 4) %}
           (<span class=last-crawl>{{ task.lastcrawltime | format_date }}</span> crawled )
           {% else %}
           (<span class=update-time>{{ task.updatetime | format_date }}</span> updated )
           {% endif %}
+
+
+
         </p>
       </div>
       <div class=more-info>

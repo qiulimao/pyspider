@@ -29,10 +29,14 @@ class ResultDB(SplitTableMixin, BaseResultDB):
     def _parse(self, data):
         data['_id'] = str(data['_id'])
         if 'result' in data:
-            data['result'] = json.loads(data['result'])
+            #data['result'] = json.loads(data['result'])
+            pass
         return data
 
     def _stringify(self, data):
+        """ it is in mongodb,why stringify this? """
+        return data 
+
         if 'result' in data:
             data['result'] = json.dumps(data['result'])
         return data

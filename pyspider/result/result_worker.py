@@ -9,6 +9,9 @@ import time
 import json
 import logging
 from six.moves import queue as Queue
+from inspect import isgeneratorfunction
+from collections import Iterable
+
 logger = logging.getLogger("result")
 
 
@@ -31,9 +34,13 @@ class ResultWorker(object):
         if 'taskid' in task and 'project' in task and 'url' in task:
             logger.info('result %s:%s %s -> %.30r' % (
                 task['project'], task['taskid'], task['url'], result))
+
+            taskid = "{taskid}-{__multi__}".format(taskid=task['taskid'],__multi__=result["__multi__"]) \
+                    if result.has_key("__multi__") else task["taskid"]
+
             return self.resultdb.save(
                 project=task['project'],
-                taskid=task['taskid'],
+                taskid=taskid,
                 url=task['url'],
                 result=result
             )

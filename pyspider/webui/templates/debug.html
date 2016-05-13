@@ -9,7 +9,7 @@
 
     <meta name="description" content="pyspider - debugger - {{ project_name }}">
     <meta name="author" content="binux">
-
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png') }}">
     <link href="{{ url_for('cdn', path='codemirror/3.22.0/codemirror.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('cdn', path='font-awesome/4.0.3/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('cdn', path='codemirror/3.22.0/addon/dialog/dialog.min.css') }}" rel="stylesheet">
@@ -33,7 +33,9 @@
 
   <body>
     <section id="control">
-      <div class="title pull-left"><a href="/">pyspider</a> &gt; {{ project_name }}</div>
+      <div class="title pull-left"><a href="/">
+            返回首页
+      </a> &gt; {{ project_name }}</div>
       <div class="pull-right">
         <a href="http://docs.pyspider.org/" target="_blank">Documentation</a>
         <span class="webdav-btn">WebDAV Mode</span>

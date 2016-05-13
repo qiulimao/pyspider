@@ -170,6 +170,33 @@ class Response(object):
             self._elements = self._elements.getroot()
         return self._elements
 
+    @property 
+    def xpath(self):
+        """ shortcut for etree.xpath add by qiulimao@2016.05"""
+        return self.etree.xpath
+
+    @staticmethod
+    def extract(items):
+        """ extract xpath items(lxml.html.HtmlElement) to unicode
+            if items is a lxml.html.HtmlElement return string
+            if items is a lxml.html.HtmlElement list return [string1,string2]
+            if items is a list but not lxml.html.HtmlElement items list ,return [*items]
+        """
+        
+        def htmlelement2string(item):
+            if isinstance(item,lxml.html.HtmlElement):
+                return lxml.etree.tostring(item).decode("utf-8")
+            else:
+                return item
+            
+        if isinstance(items,list):
+            if len(items) == 1:
+                return htmlelement2string(items[0])
+            else:
+                return map(htmlelement2string,items)
+        else:
+            return htmlelement2string(items)
+
     def raise_for_status(self, allow_redirects=True):
         """Raises stored :class:`HTTPError` or :class:`URLError`, if one occurred."""
 
@@ -198,6 +225,9 @@ class Response(object):
 
 
 def rebuild_response(r):
+    """
+        把raw response 转化为pyspider当中的response
+    """
     response = Response()
     response.status_code = r.get('status_code', 599)
     response.url = r.get('url', '')

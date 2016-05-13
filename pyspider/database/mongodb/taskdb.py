@@ -31,17 +31,26 @@ class TaskDB(SplitTableMixin, BaseTaskDB):
     def _parse(self, data):
         if '_id' in data:
             del data['_id']
-        for each in ('schedule', 'fetch', 'process', 'track'):
-            if each in data:
-                if data[each]:
-                    if isinstance(data[each], bytearray):
-                        data[each] = str(data[each])
-                    data[each] = json.loads(data[each], 'utf8')
-                else:
-                    data[each] = {}
+
+        ##
+        # comment out by qiulimao@2016.05
+        ##
+        #for each in ('schedule', 'fetch', 'process', 'track'):
+        #    if each in data:
+        #        if data[each]:
+        #            if isinstance(data[each], bytearray):
+        #                data[each] = str(data[each])
+        #            data[each] = json.loads(data[each], 'utf8')
+        #        else:
+        #            data[each] = {}
         return data
 
     def _stringify(self, data):
+        """ It is in mongodb,we can save json derectly """
+        return data
+        ##
+        # we don't need it in mongo db
+        ##
         for each in ('schedule', 'fetch', 'process', 'track'):
             if each in data:
                 data[each] = json.dumps(data[each])

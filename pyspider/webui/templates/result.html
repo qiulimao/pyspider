@@ -11,7 +11,7 @@
     <meta name="author" content="binux">
     <link href="{{ url_for('cdn', path='twitter-bootstrap/3.1.1/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='result.css') }}" rel="stylesheet">
-
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png') }}">
     <script src="{{ url_for('cdn', path='jquery/1.11.0/jquery.min.js') }}"></script>
     <script src="{{ url_for('cdn', path='twitter-bootstrap/3.1.1/js/bootstrap.min.js') }}"></script>
   </head>
@@ -19,7 +19,12 @@
   <body>
     <div class="top-bar">
       <h1>{{ project }} - Results</h1>
+
       <div class="btn-group">
+        <a class="btn btn-default btn-sm" href="/">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+        </a>
+
         <a href="/results/dump/{{ project }}.json"
           target="_blank" class="btn btn-default btn-sm">
           <span class="glyphicon glyphicon-download-alt"></span>
@@ -48,7 +53,7 @@
         # for result in results
         <tr>
           <td>
-            <a class=url href="/task/{{ project }}:{{ result.taskid }}" target=_blank>{{ result.url }}</a>
+            <a class=url href="/task/{{ project }}:{{ result.taskid }}">{{ result.url }}</a>
           </td>
           <td>
             <a class=open-url href="{{ result.url }}" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>
