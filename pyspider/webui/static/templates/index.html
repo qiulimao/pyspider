@@ -1,0 +1,99 @@
+
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">系统状态</div>
+			<div class="panel-body">
+				[$ hello $] moto....
+				<a class="btn btn-default btn-sm" ng-click="refresh_projects()">刷新</a>
+			</div>
+			
+		</div>
+	</div>
+
+	<div class="col-md-7">
+		
+	<table class="table">
+      <caption>spiders</caption>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>分组</th>
+          <th>spider</th>
+          <th>burst/rate</th>
+          <th>status</th>
+		  <th>operation</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="project in projects">
+          <th scope="row">[$ $index $]</th> <!-- 显示序号 -->
+          <td>
+          	
+  <span uib-popover-template="'changeGroupTemplate.html'" popover-title="分组" popover-placement='right' popover-trigger="outsideClick">
+		[$ project.group|spidergroup $]
+  </span>
+
+    <script type="text/ng-template" id="changeGroupTemplate.html">
+    	<div class="form-group">
+			<input class="form-control input-sm" ng-model="project.group"></input>
+
+		</div>
+        	<a class='btn btn-default btn-sm'>更新</a>
+    
+    </script>
+          </td>		<!-- 显示分组 -->
+          <td><a href="#">[$project.name$]</a></td>			<!-- 工程名 -->
+          <td>
+
+  <span uib-popover-template="'changeBRTemplate.html'" popover-title="并发/速度" popover-placement='right' popover-trigger="outsideClick">
+  	[$project.burst$]/[$project.rate$]
+  </span>
+
+    <script type="text/ng-template" id="changeBRTemplate.html">
+    	<div class="form-group">
+			<label class=" control-label">并发</label>
+			<input class="form-control input-sm" ng-model="project.burst"></input>
+
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">速度</label>
+
+    			<input class="form-control input-sm" ng-model="project.rate"></input> 		
+		</div>
+        	<a class='btn btn-default btn-sm'>更新</a>
+    
+    </script>
+
+          </td>  <!-- 并发与速度 -->
+
+
+          <td>
+
+
+  <span uib-popover-template="dynamicPopover.changeStatustemplateUrl" popover-title="修改状态" ng-bind="project.status" popover-placement='right' popover-trigger="outsideClick"></span>
+
+    <script type="text/ng-template" id="changeStatusTemplate.html">
+    <div class="form-group">
+    	<div class="col-md-8 col-sm-8 col-xs-8">
+      		<select class="form-control input-sm" ng-model="project.status" ng-options="m for m in STATUS"></select>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3">
+        	<a class='btn btn-default btn-sm'>更新</a>
+        </div>	
+        <p>&nbsp;</p>
+    </div>
+    </script>			
+
+		  </td>
+          <td><a  class="btn btn-default btn-sm">设置</a></td>
+
+        </tr>
+    </table>
+		<a href="#/task">task page</a>/
+		<a href="#/result">result page</a>
+
+
+	</div>
+

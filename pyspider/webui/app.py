@@ -90,7 +90,7 @@ app = QuitableFlask('webui',
 app.secret_key = os.urandom(24)
 app.jinja_env.line_statement_prefix = '#'
 app.jinja_env.globals.update(builtins.__dict__)
-
+app.debug = True
 app.config.update({
     'fetch': lambda x: tornado_fetcher.Fetcher(None, None, async=False).fetch(x),
     'taskdb': None,

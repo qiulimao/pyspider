@@ -21,6 +21,24 @@ def index():
                       key=lambda k: (0 if k['group'] else 1, k['group'], k['name']))
     return render_template("index.html", projects=projects)
 
+##
+#
+##
+
+##
+# add by qiulimao @2016.05
+##
+@app.route('/projects-list')
+def projectslist():
+    projectdb = app.config['projectdb']
+    projects = sorted(projectdb.get_all(fields=index_fields),
+                      key=lambda k: (0 if k['group'] else 1, k['group'], k['name']))
+    return json.dumps({"projects":projects}),200,{'Content-Type': 'application/json'}
+    #return render_template("index.html", projects=projects)
+
+@app.route("/angular")
+def angular_index():
+    return render_template("angularindex.html")
 
 @app.route('/queues')
 def get_queues():
