@@ -125,7 +125,9 @@ controller("ResultController",["$scope","$routeParams","$resource",function($sco
 	var ITERM_PER_PAGE = 30;
 	var ProjectItems = $resource('/result-list/:project/20/:page/', {project:$routeParams.project,page:"@page"});
 	var items = ProjectItems.get({page:1}, function(response){
-
+		$scope.num = response.count;
+		$scope.results = response.results;
+		$scope.project = response.project;
 	});
 
 }]).

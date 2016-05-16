@@ -39,12 +39,13 @@ def crawleddata(project,item_per_page,page):
 
     count = resultdb.count(project)
     results = list(resultdb.select(project, offset=offset, limit=limit))
-    print count,project,results
+    #print count,project,results
     reply = {
         "project":project,
         "count":count,
         "results":results,
     }
+    #print "ccccc"
     return json.dumps(reply),200,{'Content-Type': 'application/json'}
 
 

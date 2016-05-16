@@ -1,2 +1,13 @@
 
-[$hello$]....... resutl page content
+<div class="col-md-12">
+	[$ num $]
+	<div class="panel panel-default" ng-repeat="item in results">
+		<div class="panel-heading">taskid:[$ item.taskid $]</div>
+		<div class="panel-body">
+			<pre ng-repeat="data in item.result">
+			<p> <span class=""></span> [$data$]</p>
+		    </pre>
+		</div>
+		<div class="panel-footer"><a href="[$ item.url $]" target="_blank">原链接:[$ item.url $]</a></div>
+	</div>
+</div>
