@@ -1,18 +1,50 @@
 
-	<div class="col-md-3">
+	<div class="col-md-3 col-sm-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">系统状态</div>
 			<div class="panel-body">
-				[$ hello $] moto....
-				<a class="btn btn-default btn-sm" ng-click="refresh_projects()">刷新</a>
+        <a class="btn btn-primary btn-sm btn-block">创建爬虫</a>
+        <a class="btn btn-default btn-sm btn-block">最近任务</a>
 			</div>
-			
+
+     <ul class="list-group">
+        <li class="list-group-item">
+          <span class="text-success">fetcher2processor:</span>
+          <span class="badge">[$ queues.fetcher2processor $]</span>
+        </li>
+        <li class="list-group-item">
+          <span class="text-success">processor2result:</span>
+          <span class="badge">[$ queues.processor2result $]</span>
+        </li>
+        <li class="list-group-item">
+          <span class="text-success">scheduler2fetcher:</span>
+          <span class="badge">[$ queues.scheduler2fetcher $]</span>
+        </li>
+        <li class="list-group-item">
+          <span class="text-success">status_queue:</span>
+          <span class="badge">[$ queues.status_queue $]</span>
+        </li>        
+      </ul>
+
+			<div class="panel-footer">
+         <a class="btn btn-sm btn-warning" ng-click="refresh()" ng-disabled="AUTO_REFRESH">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+           </a>
+
+           <a class="btn  btn-sm" ng-class="{true: 'btn-success', false: 'btn-default'}[AUTO_REFRESH]" ng-disabled="AUTO_REFRESH" ng-click="start_auto_refresh()">
+            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+          </a>
+
+           <a class="btn btn-sm" ng-class="{true: 'btn-default', false: 'btn-danger'}[!AUTO_REFRESH]" ng-disabled="!AUTO_REFRESH" ng-click="stop_auto_refresh()">
+            <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+          </a>
+      </div>
 		</div>
 	</div>
-
-	<div class="col-md-9">
-		
-	<table class="table">
+<!-- 以上是左侧栏，以下是右侧栏 -->
+	<div class="col-md-9 col-sm-9">
+    <uib-alert close="close_alert()" ng-show="SHOW_ALERT">[$ alert.msg $] project in [$ alert.status $]</uib-alert>
+	  <table class="table">
       <caption>
         <div class="col-md-8">
           <div class="input-group">
@@ -24,6 +56,7 @@
             </span>
           </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
+
       </caption>
       <thead>
         <tr>
@@ -59,7 +92,11 @@
 		      </td><!-- 运行状态 -->
 
           <td>
-            <a  class="btn btn-default btn-sm">设置</a>
+            <a  class="btn btn-default btn-sm" uib-popover-template="'monitorTemplate.html'" popover-title="运行状况" popover-placement='right' popover-trigger="mouseenter">monitor</a>
+            <a  class="btn btn-default btn-sm" ng-click = "run(project)">run</a>
+            <a  class="btn btn-default btn-sm">result</a>
+            <a  class="btn btn-default btn-sm">task</a>
+
           </td>
 
         </tr>
@@ -71,11 +108,17 @@
 
 	</div>
 
+    <script type="text/ng-template" id="monitorTemplate.html">
+        <div class="col-md-12">
+          hello
+        </div>
+    </script>
+
     <script type="text/ng-template" id="changeGroupTemplate.html">
       <div class="form-group">
          <input class="form-control input-sm" ng-model="project.group" placeholder="分组"></input>
       </div>
-      <a class='btn btn-default btn-sm'>更新</a>
+      <a class='btn btn-default btn-sm' ng-click="update(project.name,'group',project.group)">更新</a>
     </script>
 
     <script type="text/ng-template" id="changeBRTemplate.html">
@@ -88,7 +131,7 @@
           <label class="control-label">速度</label>
           <input class="form-control input-sm" ng-model="project.rate"></input>     
       </div>
-          <a class='btn btn-default btn-sm'>更新</a>
+          <a class='btn btn-default btn-sm' ng-click="update(project.name,'rate',project.rate+'/'+project.burst)">更新</a>
     </script>    
 
     <script type="text/ng-template" id="changeStatusTemplate.html">
@@ -96,7 +139,7 @@
         <div class="input-group">
             <select class="form-control input-sm" ng-model="project.status" ng-options="m for m in STATUS"></select>
           <span class="input-group-btn">
-            <button class="btn btn-default btn-sm" type="button">Go!</button>
+            <button class="btn btn-default btn-sm" type="button" ng-click="update(project.name,'status',project.status)">更新</button>
           </span>
         </div>
         <p>&nbsp;</p>
