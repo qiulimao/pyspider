@@ -75,7 +75,7 @@
           <td>
           	
             <span uib-popover-template="'changeGroupTemplate.html'" popover-title="分组" popover-placement='right' popover-trigger="outsideClick" class="label label-default">
-          		[$ project.group|spidergroup $]
+          		[$ project.group | null2group $]
             </span>
           </td>		<!-- 显示分组 -->
 
@@ -92,9 +92,9 @@
 		      </td><!-- 运行状态 -->
 
           <td>
-            <a  class="btn btn-default btn-sm" uib-popover-template="'monitorTemplate.html'" popover-title="运行状况" popover-placement='right' popover-trigger="mouseenter">monitor</a>
+            <a  class="btn btn-default btn-sm" uib-popover-template="'monitorTemplate.html'" popover-title="运行状况" popover-placement='bottom-left' popover-trigger="mouseenter">monitor</a>
             <a  class="btn btn-default btn-sm" ng-click = "run(project)">run</a>
-            <a  class="btn btn-default btn-sm">result</a>
+            <a  class="btn btn-default btn-sm" href="#/result/[$ project.name $]">result</a>
             <a  class="btn btn-default btn-sm">task</a>
 
           </td>
@@ -110,7 +110,49 @@
 
     <script type="text/ng-template" id="monitorTemplate.html">
         <div class="col-md-12">
-          hello
+
+<table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>5m</th>
+          <th>1d</th>
+          <th>1h</th>
+          <th>all</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></th>
+          <td>[$ project.monitor["5m"]["pending"] | null2zero $]</td>
+          <td>[$ project.monitor["1h"]["pending"] | null2zero $]</td>
+          <td>[$ project.monitor["1d"]["pending"] | null2zero $]</td>
+          <td>[$ project.monitor["all"]["pending"] | null2zero $]</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></th>
+          <td>[$ project.monitor["5m"]["retry"] | null2zero $]</td>
+          <td>[$ project.monitor["1h"]["retry"] | null2zero $]</td>
+          <td>[$ project.monitor["1d"]["retry"] | null2zero $]</td>
+          <td>[$ project.monitor["all"]["retry"] | null2zero $]</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
+          <td>[$ project.monitor["5m"]["success"] | null2zero $]</td>
+          <td>[$ project.monitor["1h"]["success"] | null2zero $]</td>
+          <td>[$ project.monitor["1d"]["success"] | null2zero $]</td>
+          <td>[$ project.monitor["all"]["success"] | null2zero $]</td>
+        </tr>
+
+      </tbody>
+</table>                    
+
+  <ul class="list-inline">
+    <li><span class="glyphicon glyphicon-transfer" aria-hidden="true">:newtask</li>
+    <li><span class="glyphicon glyphicon-question-sign" aria-hidden="true">:重试</li>
+    <li><span class="glyphicon glyphicon-ok" aria-hidden="true">:成功</li>
+  </ul>
+
         </div>
     </script>
 

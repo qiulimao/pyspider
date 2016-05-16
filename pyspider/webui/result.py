@@ -29,6 +29,24 @@ def result():
         project=project, offset=offset, limit=limit, json=json
     )
 
+@app.route('/result-list/<project>/<int:item_per_page>/<int:page>/',methods=['GET', ])
+def crawleddata(project,item_per_page,page):
+    resultdb = app.config['resultdb']
+    #project = request.args.get('project')
+    #offset = int(request.args.get('offset', 0))
+    offset = int(item_per_page)*int(page-1)
+    limit = int(item_per_page)
+
+    count = resultdb.count(project)
+    results = list(resultdb.select(project, offset=offset, limit=limit))
+    print count,project,results
+    reply = {
+        "project":project,
+        "count":count,
+        "results":results,
+    }
+    return json.dumps(reply),200,{'Content-Type': 'application/json'}
+
 
 @app.route('/results/dump/<project>.<_format>')
 def dump_result(project, _format):

@@ -1,4 +1,4 @@
-var app = angular.module('pyspider', ['ui.bootstrap','ngRoute']);
+var app = angular.module('pyspider', ['ui.bootstrap','ngRoute','ngResource']);
 
 app.config(["$interpolateProvider","$routeProvider",function($interpolateProvider,$routeProvider) {
   $interpolateProvider.startSymbol('[$');
@@ -13,7 +13,7 @@ app.config(["$interpolateProvider","$routeProvider",function($interpolateProvide
                 controller: 'TaskController',
                 templateUrl: 'static/templates/tasks.html'
             })   
-  			.when('/result', {
+  			.when('/result/:project', {
                 controller: 'ResultController',
                 templateUrl: 'static/templates/results.html'
             })                      
