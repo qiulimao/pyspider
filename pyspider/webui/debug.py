@@ -62,10 +62,10 @@ def debug(project):
     return render_template("debug.html", task=task, script=script, project_name=project)
 
 @app.route("/debug/create-project",methods=["POST"])
-def create_project(project):
+def create_project():
     project_name = request.form.get("project-name")
     debug(project_name)
-    return {"ok":1,"project-name":project_name},200,{'Content-Type': 'application/json'}
+    return json.dumps({"ok":1,"project_name":project_name}),200,{'Content-Type': 'application/json'}
 
 @app.before_first_request
 def enable_projects_import():

@@ -374,7 +374,7 @@ def webui(ctx, host, port, cdn, scheduler_rpc, fetcher_rpc, max_rate, max_burst,
     if g.get('testing_mode'):
         return app
 
-    app.run(host=host, port=port,debug=True)
+    app.run(host=host, port=port)
 
 
 @cli.command()

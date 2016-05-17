@@ -10,34 +10,37 @@
     <meta name="description" content="pyspider - debugger - {{ project_name }}">
     <meta name="author" content="binux">
     <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png') }}">
-    <link href="{{ url_for('cdn', path='codemirror/3.22.0/codemirror.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('cdn', path='font-awesome/4.0.3/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('cdn', path='codemirror/3.22.0/addon/dialog/dialog.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/codemirror.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dialog.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='debug.css') }}" rel="stylesheet">
 
-    <script src="{{ url_for('cdn', path='jquery/1.11.0/jquery.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/codemirror.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/mode/xml/xml.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/mode/css/css.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/mode/javascript/javascript.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/mode/htmlmixed/htmlmixed.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/mode/python/python.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/addon/search/search.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/addon/search/searchcursor.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/addon/dialog/dialog.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/addon/selection/active-line.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/3.22.0/addon/runmode/runmode.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='codemirror/2.36.0/formatting.min.js') }}"></script>
-    <script src="{{ url_for('cdn', path='URI.js/1.11.2/URI.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/codemirror.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/xml.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/css.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/javascript.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/htmlmixed.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/python.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/search.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/searchcursor.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/dialog.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/active-line.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/runmode.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/formatting.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/URI.min.js') }}"></script>
+    <style>
+        body{font-size:16;line-height: 18}
+    </style>
   </head>
 
   <body>
     <section id="control">
-      <div class="title pull-left"><a href="/">
-            返回首页
-      </a> &gt; {{ project_name }}</div>
+      <div class="title pull-left">
+      _&gt; {{ project_name }}
+     </div>
+
       <div class="pull-right">
-        <a href="http://docs.pyspider.org/" target="_blank">Documentation</a>
         <span class="webdav-btn">WebDAV Mode</span>
       </div>
     </section>

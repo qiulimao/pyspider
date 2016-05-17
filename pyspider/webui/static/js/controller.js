@@ -122,13 +122,25 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 }]).
 controller("ResultController",["$scope","$routeParams","$resource",function($scope,$routeParams,$resource){
 	$scope.hello=$routeParams.project;
-	var ITERM_PER_PAGE = 30;
-	var ProjectItems = $resource('/result-list/:project/20/:page/', {project:$routeParams.project,page:"@page"});
-	var items = ProjectItems.get({page:1}, function(response){
-		$scope.num = response.count;
-		$scope.results = response.results;
-		$scope.project = response.project;
-	});
+	var ITERM_PER_PAGE = 10;
+	var ProjectItems = $resource('/result-list/:project/:itemPerPage/:page/', {project:$routeParams.project,itemPerPage:ITERM_PER_PAGE,page:"@page"});
+	$scope.CurrentPage = 1;
+
+	function getpage(pagenum){
+		ProjectItems.get({page:pagenum}, function(response){
+			$scope.num = response.count;
+			$scope.results = response.results;
+			$scope.project = response.project;
+		});		
+	}
+	getpage(1);
+
+	$scope.$watch('CurrentPage',function(new_value,old_value,_scope){
+		if(new_value){
+			getpage(new_value);
+		}
+		
+	})
 
 }]).
 controller("TaskController",["$scope","$routeParams",function($scope,$routeParams){
@@ -137,4 +149,28 @@ controller("TaskController",["$scope","$routeParams",function($scope,$routeParam
 controller("DebugController",["$scope","$routeParams","$sce",function($scope,$routeParams,$sce){
 	$scope.project = $routeParams.project;
 	$scope.trust_url = $sce.trustAsResourceUrl("/debug/"+$routeParams.project);
+}]).
+controller('CreateNewSpider', ['$scope',"$http","$location","$log", function($scope,$http,$location,$log){
+	$scope.newproject={}
+
+	$scope.create_new_spider = function(){
+
+  		var new_project_info = {
+  			"project-name":$scope.newproject.project_name,
+  			"start-urls":$scope.newproject.start_url,
+  			"script-mode":"script"
+  		}
+
+		$http({
+	        method  : 'POST',
+	        url     : '/debug/create-project',
+	        data    : $.param(new_project_info), 
+	        headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  
+		}).success(function(response){
+			var project_name = response.project_name;
+			var next_url = "/debug/"+project_name;
+			$location.path(next_url);
+		});
+	}
+
 }]);

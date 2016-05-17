@@ -1,6 +1,6 @@
 var app = angular.module('pyspider', ['ui.bootstrap','ngRoute','ngResource']);
 
-app.config(["$interpolateProvider","$routeProvider",function($interpolateProvider,$routeProvider) {
+app.config(["$interpolateProvider","$routeProvider","$sceDelegateProvider",function($interpolateProvider,$routeProvider,$sceDelegateProvider) {
   $interpolateProvider.startSymbol('[$');
   $interpolateProvider.endSymbol('$]');
 
@@ -24,5 +24,11 @@ app.config(["$interpolateProvider","$routeProvider",function($interpolateProvide
         .otherwise({
                 redirectTo: '/'
             });
+
+  $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        'http://*.mala.cn/**'
+        ]);
+
 
 }]);

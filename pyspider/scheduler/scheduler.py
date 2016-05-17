@@ -28,7 +28,7 @@ class Scheduler(object):
         'priority': 0,
         'retries': 3,
         'exetime': 0,
-        'age': -1,
+        'age': 3*60,# every web page changes within 3 minutes
         'itag': None,
     }
     LOOP_LIMIT = 1000
@@ -36,7 +36,7 @@ class Scheduler(object):
     ACTIVE_TASKS = 100
     INQUEUE_LIMIT = 0
     EXCEPTION_LIMIT = 3
-    DELETE_TIME = 24 * 60 * 60
+    DELETE_TIME = 10 * 60
     DEFAULT_RETRY_DELAY = {
         0: 30,
         1: 1*60*60,
