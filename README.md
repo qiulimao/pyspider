@@ -31,8 +31,14 @@ class Handler(BaseHandler):
 
     @config(age=10 * 24 * 60 * 60)
     def index_page(self, response):
-        for each in response.doc('a[href^="http"]').items():
-            self.crawl(each.attr.href, callback=self.detail_page)
+        """ you can use response.xpath now,just like scrapy,
+            It also support extract,just like scrapy's extrace,but you need to 
+            from pyspider.libs.response import Response
+            Response.extract(response.xpath("//a"))
+            this static method will help you extract content of <a>
+        """
+        for url in response.xpath("//a[starts-with(./@href,'http://')]/@href"):
+            self.crawl(each.url, callback=self.detail_page)
 
     def detail_page(self, response):
         return {
@@ -41,13 +47,16 @@ class Handler(BaseHandler):
         }
 ```
 
+And the web center
+------------------
+
 [![Demo][Demo Img]][Demo]
 
 
 Installation
 ------------
 
-* `pip install pyspider`
+* you need to run `git clone https://github.com/qiulimao/pyspider.git` then `$python setup.py install`
 * run command `pyspider`, visit [http://localhost:5000/](http://localhost:5000/)
 
 Quickstart: [http://docs.pyspider.org/en/latest/Quickstart/](http://docs.pyspider.org/en/latest/Quickstart/)
@@ -55,27 +64,26 @@ Quickstart: [http://docs.pyspider.org/en/latest/Quickstart/](http://docs.pyspide
 Contribute
 ----------
 
-* Use It
-* Open [Issue], send PR
-* [User Group]
-* [中文问答](http://segmentfault.com/t/pyspider)
+* Use Angularjs to rebuild the ui module
+* more resonable way to save data in mongodb
+* extra method on parsing the html
+* parameters optimized
 
 
 TODO
 ----
 
-### v0.4.0
+### next
 
-- [x] local mode, load script from file.
-- [x] works as a framework (all components running in one process, no threads)
-- [x] redis
-- [x] shell mode like `scrapy shell` 
-- [ ] a visual scraping interface like [portia](https://github.com/scrapinghub/portia)
+- [ ] read more source code
+- [ ] make better ui
+- [ ] better user authentic
 
 
 ### more
 
 - [x] edit script with vim via [WebDAV](http://en.wikipedia.org/wiki/WebDAV)
+- [x] binux is realy COW B!!!!
 
 
 License
@@ -89,6 +97,6 @@ Licensed under the Apache License, Version 2.0
 [Coverage]:             https://coveralls.io/r/binux/pyspider
 [Try]:                  https://img.shields.io/badge/try-pyspider-blue.svg?style=flat
 [Demo]:                 http://demo.pyspider.org/
-[Demo Img]:             https://github.com/binux/pyspider/blob/master/docs/imgs/demo.png
+[Demo Img]:             http://www.getqiu.com/static/image/pyspider-angularjs.png
 [Issue]:                https://github.com/binux/pyspider/issues
 [User Group]:           https://groups.google.com/group/pyspider-users

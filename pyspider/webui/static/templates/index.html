@@ -6,26 +6,25 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">系统状态</div>
 			<div class="panel-body">
-        <a class="btn btn-primary btn-sm btn-block">创建爬虫</a>
-        <a class="btn btn-default btn-sm btn-block">最近任务</a>
+
 			</div>
 
      <ul class="list-group">
         <li class="list-group-item">
           <span class="text-success">fetcher2processor:</span>
-          <span class="badge">[$ queues.fetcher2processor $]</span>
+          <span class="badge badge-primary">[$ queues.fetcher2processor $]</span>
         </li>
         <li class="list-group-item">
           <span class="text-success">processor2result:</span>
-          <span class="badge">[$ queues.processor2result $]</span>
+          <span class="badge badge-primary">[$ queues.processor2result $]</span>
         </li>
         <li class="list-group-item">
           <span class="text-success">scheduler2fetcher:</span>
-          <span class="badge">[$ queues.scheduler2fetcher $]</span>
+          <span class="badge badge-primary">[$ queues.scheduler2fetcher $]</span>
         </li>
         <li class="list-group-item">
           <span class="text-success">status_queue:</span>
-          <span class="badge">[$ queues.status_queue $]</span>
+          <span class="badge badge-primary">[$ queues.status_queue $]</span>
         </li> 
         <li class="list-group-item" ng-controller="CreateNewSpider">
 
@@ -113,8 +112,8 @@
 
           <td><a href="#/debug/[$ project.name $]">[$project.name$]</a></td>			<!-- 工程名 -->
           <td>
-              <span uib-popover-template="'changeBRTemplate.html'" popover-title="并发/速度" popover-placement='right' popover-trigger="outsideClick" class="label label-primary">
-              	[$project.burst$]/[$project.rate$]
+              <span uib-popover-template="'changeBRTemplate.html'" popover-title="并发/速度" popover-placement='right' popover-trigger="outsideClick" class="label label-fine">
+              	[$project.burst$] &nbsp;/ &nbsp;[$project.rate$]
               </span>
           </td>  <!-- 并发与速度 -->
 
@@ -134,8 +133,6 @@
         </tr>
     </table>
 
-		<a href="#/task">task page</a>/
-		<a href="#/result">result page</a>
 
 
 	</div>

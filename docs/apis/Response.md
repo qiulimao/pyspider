@@ -77,3 +77,7 @@ content returned by JS script
 
 Raise HTTPError if status code is not 200 or `Response.error` exists.
 
+### Response.extract()
+
+just like scrapy's `response("//a").extract()`,but we use it like `Response.extract(response("//a"))`
+

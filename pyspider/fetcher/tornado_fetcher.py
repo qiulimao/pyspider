@@ -61,7 +61,7 @@ fetcher_output = {
 
 
 class Fetcher(object):
-    user_agent = "pyspider/%s (+http://pyspider.org/)" % pyspider.__version__
+    user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/49.0.2623.108 Chrome/49.0.2623.108 Safari/537.36"
     default_options = {
         'method': 'GET',
         'headers': {
