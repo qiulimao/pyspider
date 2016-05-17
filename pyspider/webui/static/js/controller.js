@@ -131,6 +131,10 @@ controller("ResultController",["$scope","$routeParams","$resource",function($sco
 	});
 
 }]).
-controller("TaskController",["$scope",function($scope){
+controller("TaskController",["$scope","$routeParams",function($scope,$routeParams){
 	$scope.hello="task";
+}]).
+controller("DebugController",["$scope","$routeParams","$sce",function($scope,$routeParams,$sce){
+	$scope.project = $routeParams.project;
+	$scope.trust_url = $sce.trustAsResourceUrl("/debug/"+$routeParams.project);
 }]);

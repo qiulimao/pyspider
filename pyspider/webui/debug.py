@@ -33,6 +33,11 @@ default_script = inspect.getsource(sample_handler)
 
 @app.route('/debug/<project>', methods=['GET', 'POST'])
 def debug(project):
+    """
+        project-name:news_163_com
+        start-urls:http://news.163.com
+        script-mode:script    
+    """
     projectdb = app.config['projectdb']
     if not projectdb.verify_project_name(project):
         return 'project name is not allowed!', 400
@@ -56,6 +61,11 @@ def debug(project):
     default_task['project'] = project
     return render_template("debug.html", task=task, script=script, project_name=project)
 
+@app.route("/debug/create-project",methods=["POST"])
+def create_project(project):
+    project_name = request.form.get("project-name")
+    debug(project_name)
+    return {"ok":1,"project-name":project_name},200,{'Content-Type': 'application/json'}
 
 @app.before_first_request
 def enable_projects_import():

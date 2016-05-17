@@ -12,12 +12,16 @@ app.config(["$interpolateProvider","$routeProvider",function($interpolateProvide
   			.when('/task', {
                 controller: 'TaskController',
                 templateUrl: 'static/templates/tasks.html'
-            })   
+            })
+        .when('/debug/:project', {
+                controller: 'DebugController',
+                templateUrl: 'static/templates/debug.html'
+            })               
   			.when('/result/:project', {
                 controller: 'ResultController',
                 templateUrl: 'static/templates/results.html'
             })                      
-            .otherwise({
+        .otherwise({
                 redirectTo: '/'
             });
 
