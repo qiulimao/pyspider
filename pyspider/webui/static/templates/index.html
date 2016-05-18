@@ -4,9 +4,23 @@
 
 	<div class="col-md-3 col-sm-3">
 		<div class="panel panel-default">
-			<div class="panel-heading">系统状态</div>
-			<div class="panel-body">
+			<div class="panel-heading">
+        系统状态
+        <span uib-popover-template="'settingsTemplate.html'" popover-title="设置" class="glyphicon glyphicon-cog pull-right" popover-placement='bottom-right' aria-hidden="true" popover-trigger="outsideClick"></span>
+      </div>
 
+
+			<div class="panel-body">
+        <span class="text-muted">5minutes成功比例20%:</span>
+        <uib-progressbar animate="false" max="100" value="20" type="primary" class="progress-striped"></uib-progressbar> 
+        <span class="text-muted">1hour&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功比例40%:</span>
+        <uib-progressbar animate="false" max="100" value="40" type="warning" class="progress-striped"></uib-progressbar> 
+       <span class="text-muted">1day&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功比例60%:</span>
+        <uib-progressbar animate="false" max="100" value="60" type="success" class="progress-striped"></uib-progressbar> 
+       <span class="text-muted">
+         all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功比例80%:
+       </span>
+          <uib-progressbar animate="false" max="100" value="80" type="danger" class="progress-striped"></uib-progressbar>  
 			</div>
 
      <ul class="list-group">
@@ -59,7 +73,8 @@
 
 			<div class="panel-footer">
          <a class="btn btn-sm btn-warning" ng-click="refresh()" ng-disabled="AUTO_REFRESH">
-            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>[$ refresh_countdown $]
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            &nbsp;[$ refresh_countdown | refreshCounter:settings.AUTO_REFRESH_TIME $]
            </a>
 
            <a class="btn  btn-sm" ng-class="{true: 'btn-success', false: 'btn-default'}[AUTO_REFRESH]" ng-disabled="AUTO_REFRESH" ng-click="start_auto_refresh()">
@@ -75,6 +90,8 @@
 <!-- 以上是左侧栏，以下是右侧栏 -->
 	<div class="col-md-9 col-sm-9">
     <uib-alert close="close_alert()" ng-show="SHOW_ALERT">[$ alert.msg $] project in [$ alert.status $]</uib-alert>
+
+
 	  <table class="table">
       <caption>
         <div class="col-md-8">
@@ -96,7 +113,8 @@
           <th>spider</th>
           <th>burst/rate</th>
           <th>status</th>
-		  <th>operation</th>
+          <th>monitor</th>
+		      <th>operation</th>
         </tr>
       </thead>
 
@@ -116,11 +134,19 @@
               	[$project.burst$] &nbsp;/ &nbsp;[$project.rate$]
               </span>
           </td>  <!-- 并发与速度 -->
+          
 
 
           <td>
               <span uib-popover-template="'changeStatusTemplate.html'" popover-title="修改状态" ng-bind="project.status" popover-placement='right' popover-trigger="outsideClick" class="label" ng-class="{'label-danger':project.status == 'STOP','label-success':project.status=='RUNNING','label-warning':project.status=='CHECKING','label-primary':project.status=='TODO','label-info':project.status=='DEBUG'}"></span>
 		      </td><!-- 运行状态 -->
+
+          <td>
+            <uib-progressbar  max="project.monitor['5m']['pending'] | null2one" value="project.monitor['5m']['success'] | null2zero" type="primary" class="progress-striped"></uib-progressbar>
+            <uib-progressbar  max="project.monitor['1h']['pending'] | null2one" value="project.monitor['1h']['success'] | null2zero" type="warning" class="progress-striped"></uib-progressbar>
+            <uib-progressbar  max="project.monitor['1d']['pending'] | null2one" value="project.monitor['1d']['success'] | null2zero" type="success" class="progress-striped"></uib-progressbar>
+            <uib-progressbar animate="true" max="project.monitor['all']['pending'] | null2one" value="project.monitor['all']['success'] | null2zero" type="danger" class="progress-striped"></uib-progressbar>                                    
+          </td>
 
           <td>
             <a  class="btn btn-default btn-sm" uib-popover-template="'monitorTemplate.html'" popover-title="运行状况" popover-placement='bottom-left' popover-trigger="mouseenter">monitor</a>
@@ -132,8 +158,7 @@
 
         </tr>
     </table>
-
-
+   
 
 	</div>
 
@@ -215,6 +240,14 @@
         </div>
         <p>&nbsp;</p>
       </div>
+    </script>
+
+    <script type="text/ng-template" id="settingsTemplate.html">
+      <div class="input-group">
+        <span class="input-group-addon">刷新频率</span>
+        <input type="text" class="form-control" ng-model="settings.AUTO_REFRESH_TIME">
+      </div>
+      <p class="help-block">更改刷新频率后，您需要重新开启自动刷新模式</p>
     </script>
 
   </div>

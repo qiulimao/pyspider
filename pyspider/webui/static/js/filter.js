@@ -18,6 +18,14 @@ app.filter("null2group", function() {
 		}
 	}
 	return null2zero;
+}).filter("null2one",function(){
+    return function(number){
+        if (number==0){
+            return 1;
+        }
+        return number;
+    }
+
 }).filter('asHtml',["$sce",function($sce) {
   return function(input) {
   	if(typeof input=='string'){
@@ -31,4 +39,12 @@ app.filter("null2group", function() {
 	return function(input){
 		return $sec.trustAs($sec.URL,input);
 	}
-}]);
+}]).filter("refreshCounter",function(){
+    return function(input,count){
+        if(input == 0){
+            return 0
+        }
+        
+        return count - input
+    }
+});

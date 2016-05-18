@@ -3,7 +3,7 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 
 	
 	var timing_refresh;
-	var AUTO_REFRESH_TIME = 8;
+	
 	function refresh_projects(){
 		$http.get("/projects-list").success(function(response){
 			$scope.projects = response.projects
@@ -65,7 +65,7 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 	function auto_refresh_clock(){
 		if ($scope.AUTO_REFRESH == true){
 			$scope.refresh_countdown = $scope.refresh_countdown + 1;
-			if ( $scope.refresh_countdown == AUTO_REFRESH_TIME){
+			if ( $scope.refresh_countdown == $scope.settings.AUTO_REFRESH_TIME){
 				$scope.refresh_countdown = 0
 			}			
 		}
@@ -79,16 +79,17 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 	$scope.refresh_countdown = 0;
 
 	$interval(auto_refresh_clock,1*1000);
-
 	$scope.projects = [];
 	$scope.AUTO_REFRESH = false;
 	$scope.STATUS = ['TODO','STOP','CHECKING','DEBUG','RUNNING'];
 	$scope.refresh = refresh
 	$scope.close_alert = close_alert;
-	
+	$scope.settings = {
+		AUTO_REFRESH_TIME:8,
+	}
 
 	$scope.start_auto_refresh = function(){
-		timing_refresh = $interval(refresh,AUTO_REFRESH_TIME*1000);
+		timing_refresh = $interval(refresh,$scope.settings.AUTO_REFRESH_TIME*1000);
 		$scope.AUTO_REFRESH = true;
 	}
 	$scope.stop_auto_refresh = function(){
@@ -97,7 +98,9 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 			$scope.AUTO_REFRESH = false;
 		}
 	}
-
+	$scope.$watch('settings.AUTO_REFRESH_TIME',function(_new,_old,obj){
+		$scope.stop_auto_refresh();
+	});
 	$scope.update = function(pk,name,value){
 		var postdata = {
 			'pk':pk,
@@ -139,6 +142,9 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 
 
 	init();
+	/*
+     * 以下是测试：
+	*/
 }]).
 controller("ResultController",["$scope","$routeParams","$resource",function($scope,$routeParams,$resource){
 	$scope.hello=$routeParams.project;
