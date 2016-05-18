@@ -123,7 +123,7 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 controller("ResultController",["$scope","$routeParams","$resource",function($scope,$routeParams,$resource){
 	$scope.hello=$routeParams.project;
 	var ITERM_PER_PAGE = 10;
-	var ProjectItems = $resource('/result-list/:project/:itemPerPage/:page/', {project:$routeParams.project,itemPerPage:ITERM_PER_PAGE,page:"@page"});
+	var ProjectItems = $resource('/result-list/:project/:itemPerPage/:page', {project:$routeParams.project,itemPerPage:ITERM_PER_PAGE,page:"@page"});
 	$scope.CurrentPage = 1;
 
 	function getpage(pagenum){
@@ -143,8 +143,14 @@ controller("ResultController",["$scope","$routeParams","$resource",function($sco
 	})
 
 }]).
-controller("TaskController",["$scope","$routeParams",function($scope,$routeParams){
+controller("TaskController",["$scope","$routeParams","$resource",function($scope,$routeParams,$resource){
 	$scope.hello="task";
+	var project_name = $routeParams.project;
+	var taskitems = $resource('/tasks/:project',{project:project_name})
+	taskitems.get({},function(response){
+		$scope.tasks = response.tasks;
+	})
+
 }]).
 controller("DebugController",["$scope","$routeParams","$sce",function($scope,$routeParams,$sce){
 	$scope.project = $routeParams.project;

@@ -29,6 +29,8 @@ def result():
         project=project, offset=offset, limit=limit, json=json
     )
 
+# chrome may add / automaticly,thus causing 404 Error
+@app.route('/result-list/<project>/<int:item_per_page>/<int:page>',methods=['GET', ])
 @app.route('/result-list/<project>/<int:item_per_page>/<int:page>/',methods=['GET', ])
 def crawleddata(project,item_per_page,page):
     resultdb = app.config['resultdb']

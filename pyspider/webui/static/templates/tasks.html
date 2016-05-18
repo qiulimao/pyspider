@@ -1,1 +1,36 @@
-[$hello$] taskpage content 
+<div class="container">
+	<div class="row">
+		<!-- {"project": "news_163_com", "status": 2, "taskid": "_on_get_info", "updatetime": 1463535607.698866, "url": "data:,_on_get_info"}]} -->
+
+		 <div class="col-lg-6">
+		 		<p>&nbsp;</p>
+        		<div class="form-group">
+				    <div class="input-group">
+				      <input type="text" class="form-control" ng-model="TaskSearch" placeholder="Search for...">
+				      <span class="input-group-btn">
+				        <button class="btn btn-default" type="button">
+				        	&nbsp;<span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;
+				        </button>
+				      </span>
+				    </div><!-- /input-group -->  
+				    <p class="help-block">模糊查询,仅支持json第一层key</p>      			
+        		</div>
+		    </div><!-- /.col-lg-6 -->	
+
+		<div class="col-md-12" ng-repeat="task in tasks|filter:TaskSearch">
+			<div class="panel panel-default">
+				<div class="panel-heading">[$task.project$]</div>
+				<div class="panel-body">
+				    <pre>
+				       [$ task |json $]
+				    </pre>
+				</div>
+				<div class="panel-footer">
+					更新时间:[$task.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]
+					&nbsp;&nbsp;&nbsp;&nbsp;
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

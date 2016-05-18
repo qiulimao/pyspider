@@ -193,7 +193,7 @@ class Processor(object):
             logger_func = logger.error
         else:
             logger_func = logger.info
-        logger_func('process <project>%s:<taskid>%s <url>%s -> [<statusCode>%d] len:<response.content>%d -> result:%.10r follows:%d msg:%d error:%r' % (
+        logger_func('process %s:%s %s -> [%d] len:%d -> result:%.10r follows:%d msg:%d error:%r' % (
             task['project'], task['taskid'],
             task.get('url'), response.status_code, len(response.content),
             ret.result, len(ret.follows), len(ret.messages), ret.exception))

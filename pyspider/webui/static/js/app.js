@@ -9,7 +9,7 @@ app.config(["$interpolateProvider","$routeProvider","$sceDelegateProvider",funct
                 controller: 'IndexController',
                 templateUrl: 'static/templates/index.html'
             })
-  			.when('/task', {
+  			.when('/task/:project', {
                 controller: 'TaskController',
                 templateUrl: 'static/templates/tasks.html'
             })

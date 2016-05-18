@@ -14,7 +14,7 @@ from .app import app
 index_fields = ['name', 'group', 'status', 'comments', 'rate', 'burst', 'updatetime']
 
 
-@app.route('/')
+@app.route('/previews-index')
 def index():
     projectdb = app.config['projectdb']
     projects = sorted(projectdb.get_all(fields=index_fields),
@@ -35,7 +35,7 @@ def projectslist():
                       key=lambda k: (0 if k['group'] else 1, k['group'], k['name']))
     return json.dumps({"projects":projects}),200,{'Content-Type': 'application/json'}
     #return render_template("index.html", projects=projects)
-
+@app.route("/")
 @app.route("/angular")
 def angular_index():
     return render_template("angularindex.html")
