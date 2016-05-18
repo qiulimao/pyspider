@@ -176,6 +176,7 @@ def save(project):
         return app.login_response
 
     if project_info:
+        # 做更新
         info = {
             'script': script,
         }
@@ -183,6 +184,7 @@ def save(project):
             info['status'] = 'CHECKING'
         projectdb.update(project, info)
     else:
+        # 创建
         info = {
             'name': project,
             'script': script,
@@ -191,6 +193,13 @@ def save(project):
             'burst': app.config.get('max_burst', 3),
         }
         projectdb.insert(project, info)
+        ##
+        # we need to ensure_index when new project created
+        ##
+        taskdb = app.config["taskdb"]
+        resultdb = app.config['resultdb']
+        taskdb.ensure_index(project)
+        resultdb.ensure_index(project)
 
     rpc = app.config['scheduler_rpc']
     if rpc is not None:

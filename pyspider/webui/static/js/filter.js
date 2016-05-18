@@ -20,9 +20,12 @@ app.filter("null2group", function() {
 	return null2zero;
 }).filter('asHtml',["$sce",function($sce) {
   return function(input) {
-    var data  = $sce.trustAs($sce.HTML, input);
+  	if(typeof input=='string'){
+        return $sce.trustAsHtml(input)
+    }
+    //var data  = $sce.trustAs($sce.HTML, input);
     //data = $.trustAs($sce.URL,data);
-    return data;
+    //return data;
   };
 }]).filter("asULR",["$sce",function($sec){
 	return function(input){

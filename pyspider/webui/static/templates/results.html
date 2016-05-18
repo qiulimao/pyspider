@@ -20,7 +20,7 @@
   				<uib-pagination total-items="num" ng-model="CurrentPage" max-size="5" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
 			  </li>
 			</ul>
-			<div class="panel panel-primary" ng-repeat="item in results | filter: ResultSearch">
+			<div class="panel panel-default" ng-repeat="item in results | filter: ResultSearch">
 				<div class="panel-heading">
 					<span class="badge">[$ item.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]</span>
 					taskid:[$ item.taskid $]

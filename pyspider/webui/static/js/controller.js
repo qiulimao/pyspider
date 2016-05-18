@@ -3,7 +3,7 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 
 	
 	var timing_refresh;
-
+	var AUTO_REFRESH_TIME = 8;
 	function refresh_projects(){
 		$http.get("/projects-list").success(function(response){
 			$scope.projects = response.projects
@@ -55,20 +55,40 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 		refresh_queues();
 		refresh_projects();
 		monitor();
+		
 	}
 
 	function init(){
 		refresh();
 	}
 
+	function auto_refresh_clock(){
+		if ($scope.AUTO_REFRESH == true){
+			$scope.refresh_countdown = $scope.refresh_countdown + 1;
+			if ( $scope.refresh_countdown == AUTO_REFRESH_TIME){
+				$scope.refresh_countdown = 0
+			}			
+		}
+		else
+		{
+			$scope.refresh_countdown = 0;
+		}
+
+	}
+
+	$scope.refresh_countdown = 0;
+
+	$interval(auto_refresh_clock,1*1000);
+
 	$scope.projects = [];
 	$scope.AUTO_REFRESH = false;
 	$scope.STATUS = ['TODO','STOP','CHECKING','DEBUG','RUNNING'];
 	$scope.refresh = refresh
 	$scope.close_alert = close_alert;
+	
 
 	$scope.start_auto_refresh = function(){
-		timing_refresh = $interval(refresh,8*1000);
+		timing_refresh = $interval(refresh,AUTO_REFRESH_TIME*1000);
 		$scope.AUTO_REFRESH = true;
 	}
 	$scope.stop_auto_refresh = function(){

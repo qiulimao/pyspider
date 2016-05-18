@@ -119,3 +119,6 @@ class TaskDB(SplitTableMixin, BaseTaskDB):
             {"$set": self._stringify(obj)},
             upsert=True
         )
+    def ensure_index(self,collection_name):
+        self.database[collection_name].ensure_index('status')
+        self.database[collection_name].ensure_index('taskid')

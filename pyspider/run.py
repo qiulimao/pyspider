@@ -173,7 +173,7 @@ def cli(ctx, **kwargs):
 @click.option('--inqueue-limit', default=0,
               help='size limit of task queue for each project, '
               'tasks will been ignored when overflow')
-@click.option('--delete-time', default=24 * 60 * 60,
+@click.option('--delete-time', default=3* 60,
               help='delete time before marked as delete')
 @click.option('--active-tasks', default=100, help='active log size')
 @click.option('--loop-limit', default=1000, help='maximum number of tasks due with in a loop')

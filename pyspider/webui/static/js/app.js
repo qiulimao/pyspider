@@ -27,7 +27,7 @@ app.config(["$interpolateProvider","$routeProvider","$sceDelegateProvider",funct
 
   $sceDelegateProvider.resourceUrlWhitelist([
         'self',
-        'http://*.mala.cn/**'
+        '*.mala.cn**'
         ]);
 
 

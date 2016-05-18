@@ -4,10 +4,12 @@
 # Project: __PROJECT_NAME__
 
 from pyspider.libs.base_handler import *
-
+from pyspider.libs.useragent import IphoneSafari,LinuxChrome
+from pyspider.libs.response import Response
 
 class Handler(BaseHandler):
     crawl_config = {
+      'headers': {'User-Agent': LinuxChrome}
     }
 
     @every(minutes=24 * 60)

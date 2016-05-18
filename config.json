@@ -8,5 +8,8 @@
      "username": "zephyr",
      "password": "admin",
      "need-auth": false
-   }
+   },
+  "scheduler": {
+     "delete_time": 60
+  }
 }

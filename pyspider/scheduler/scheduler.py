@@ -88,6 +88,7 @@ class Scheduler(object):
         if (
                 not self._force_update_project
                 and self._last_update_project + self.UPDATE_PROJECT_INTERVAL > now
+                #就是说没有强制更新，并且没有到更新时间就跳过
         ):
             return
         for project in self.projectdb.check_update(self._last_update_project):

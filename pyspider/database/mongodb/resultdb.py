@@ -80,3 +80,7 @@ class ResultDB(SplitTableMixin, BaseResultDB):
         if not ret:
             return ret
         return self._parse(ret)
+
+    def ensure_index(self,collection_name):
+        # 因为result 的索引实际上的taskid，所以这里建taskid的索引
+        self.database[collection_name].ensure_index('taskid')
