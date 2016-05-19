@@ -5,7 +5,8 @@
 
 from pyspider.libs.base_handler import *
 from pyspider.libs.useragent import IphoneSafari,LinuxChrome
-from pyspider.libs.response import Response
+from pyspider.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2,reduceclean,mapclean,mapreduce
+#from pyspider.libs.response import Response
 
 class Handler(BaseHandler):
     crawl_config = {

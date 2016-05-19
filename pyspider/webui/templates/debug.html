@@ -31,6 +31,26 @@
     <script src="{{ url_for('static', filename='js/core/URI.min.js') }}"></script>
     <style>
         li { margin-bottom: 6px; }
+        .CodeMirror-code {background-color:#a5a5a5;font-size:14px;line-height:20px;}
+        .settings-menue { 
+          margin-left:20px;
+          cursor:pointer;
+          font-weight:bold;
+          padding-left: 5px;
+          padding-right: 5px;
+          border: 1px solid #595959;
+          -moz-border-radius:5px; 
+          -webkit-border-radius:5px;
+        }
+        .settings-menue-change { 
+          margin-left:20px;
+          cursor:pointer;
+          padding-left: 5px;
+          padding-right: 5px;
+          border: 1px solid #5555a5;
+          -moz-border-radius:5px; 
+          -webkit-border-radius:5px;
+        }
     </style>
   </head>
 
@@ -38,12 +58,35 @@
     <section id="control">
       <div class="title pull-left">
       _&gt; {{ project_name }}
+
+        <span class="settings-menue" value="+1" target="font-size">+</span>
+        <span class="settings-menue" value="-1" target="font-size">-</span>
+<!--
+        <span class="settings-menue" value="+1" target="line-height">&#8593;</span>
+        <span class="settings-menue" value="-1" target="line-height">&#8595;</span>
+-->
+        <span class="settings-menue-change" value="#a5a5a5" target="background-color" style="background-color:#a5a5a5">&nbsp;&nbsp;</span>
+        <span class="settings-menue-change" value="#fff" target="background-color" style="background-color:#fff">&nbsp;&nbsp;</span>
      </div>
 
       <div class="pull-right">
         <span class="webdav-btn">WebDAV Mode</span>
       </div>
     </section>
+    <script>
+      $(".settings-menue").click(function(){
+          var incr = parseInt($(this).attr('value'));
+          var target = $(this).attr("target");
+          var current_value = parseInt($(".CodeMirror-code").css(target));
+          var new_value = current_value + incr;
+          $(".CodeMirror-code").css(target,new_value);
+      });
+      $(".settings-menue-change").click(function(){
+          var new_value = $(this).attr('value');
+          var target = $(this).attr("target");
+          $(".CodeMirror-code").css(target,new_value);
+      });      
+    </script>
     <section id="editarea">
       <div id="left-area" class="debug-panel" style="right: 50%">
         <div id="task-panel">

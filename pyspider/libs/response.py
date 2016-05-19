@@ -194,10 +194,10 @@ class Response(object):
                 return item
             
         if isinstance(items,list):
-            if len(items) == 1:
-                return htmlelement2string(items[0])
-            else:
-                return map(htmlelement2string,items)
+            #if len(items) == 1:
+            #    return htmlelement2string(items[0])
+            #else:
+            return map(htmlelement2string,items)
         else:
             return htmlelement2string(items)
 

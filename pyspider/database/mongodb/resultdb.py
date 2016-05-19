@@ -8,6 +8,7 @@
 import json
 import time
 from pymongo import MongoClient
+import pymongo
 from pyspider.database.base.resultdb import ResultDB as BaseResultDB
 from .mongodbbase import SplitTableMixin
 
@@ -25,6 +26,7 @@ class ResultDB(SplitTableMixin, BaseResultDB):
         for project in self.projects:
             collection_name = self._collection_name(project)
             self.database[collection_name].ensure_index('taskid')
+            self.database[collection_name].create_index('updatetime')
 
     def _parse(self, data):
         data['_id'] = str(data['_id'])
@@ -59,7 +61,8 @@ class ResultDB(SplitTableMixin, BaseResultDB):
         if project not in self.projects:
             return
         collection_name = self._collection_name(project)
-        for result in self.database[collection_name].find({}, fields, skip=offset, limit=limit):
+        results = self.database[collection_name].find({}, fields, skip=offset, limit=limit).sort("updatetime",pymongo.DESCENDING)
+        for result in results:
             yield self._parse(result)
 
     def count(self, project):
@@ -84,3 +87,4 @@ class ResultDB(SplitTableMixin, BaseResultDB):
     def ensure_index(self,collection_name):
         # 因为result 的索引实际上的taskid，所以这里建taskid的索引
         self.database[collection_name].ensure_index('taskid')
+        self.database[collection_name].create_index('updatetime')

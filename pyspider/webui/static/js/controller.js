@@ -1,5 +1,5 @@
 app.
-controller("IndexController",["$scope","$http","$interval",function($scope,$http,$interval){
+controller("IndexController",["$scope","$http","$interval","$timeout",function($scope,$http,$interval,$timeout){
 
 	
 	var timing_refresh;
@@ -65,7 +65,7 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 	function auto_refresh_clock(){
 		if ($scope.AUTO_REFRESH == true){
 			$scope.refresh_countdown = $scope.refresh_countdown + 1;
-			if ( $scope.refresh_countdown == $scope.settings.AUTO_REFRESH_TIME){
+			if ( $scope.refresh_countdown >= $scope.settings.AUTO_REFRESH_TIME){
 				$scope.refresh_countdown = 0
 			}			
 		}
@@ -79,6 +79,10 @@ controller("IndexController",["$scope","$http","$interval",function($scope,$http
 	$scope.refresh_countdown = 0;
 
 	$interval(auto_refresh_clock,1*1000);
+	$timeout(function(){
+		$scope.start_auto_refresh();
+	},1*1000);
+
 	$scope.projects = [];
 	$scope.AUTO_REFRESH = false;
 	$scope.STATUS = ['TODO','STOP','CHECKING','DEBUG','RUNNING'];
@@ -181,6 +185,20 @@ controller("TaskController",["$scope","$routeParams","$resource",function($scope
 controller("DebugController",["$scope","$routeParams","$sce",function($scope,$routeParams,$sce){
 	$scope.project = $routeParams.project;
 	$scope.trust_url = $sce.trustAsResourceUrl("/debug/"+$routeParams.project);
+	$scope.iframeHeiht = 750;
+	$scope.heightup = function(){
+		$scope.iframeHeiht += 5;
+	}
+	$scope.heightdown = function(){
+        $scope.iframeHeiht -= 5;       
+	}
+	$scope.$watch("iframeHeiht",function(_new,_old,obj){
+		if($scope.iframeHeiht > 1920 || $scope.iframeHeiht < 500){
+			$scope.iframeHeiht = 750;
+		} 		
+	});
+
+
 }]).
 controller('CreateNewSpider', ['$scope',"$http","$location","$log", function($scope,$http,$location,$log){
 	$scope.newproject={}
