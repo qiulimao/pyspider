@@ -16,8 +16,11 @@ class Handler(BaseHandler):
     def on_start(self):
         self.crawl('__START_URL__', callback=self.index_page)
 
-    @config(age=10 * 24 * 60 * 60)
+    @config(age=60)
     def index_page(self, response):
+        """
+        response.xpath method is available
+        """
         for each in response.doc('a[href^="http"]').items():
             self.crawl(each.attr.href, callback=self.detail_page)
 

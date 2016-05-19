@@ -27,7 +27,10 @@
 				</div>
 				<div class="panel-body">
 					
-					<pre ng-repeat="data in item.result">  <span ng-bind-html="data|json|asHtml"></span></pre>
+					<div ng-repeat="data in item.result">
+						<p ng-bind-html="data|asHTML"></p>
+						<hr>
+					</div>
 
 				</div>
 				<div class="panel-footer">

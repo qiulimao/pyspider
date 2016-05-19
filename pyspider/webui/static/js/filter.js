@@ -26,18 +26,21 @@ app.filter("null2group", function() {
         return number;
     }
 
-}).filter('asHtml',["$sce",function($sce) {
+}).filter('asHTML',["$sce",function($sce) {
   return function(input) {
   	if(typeof input=='string'){
         return $sce.trustAsHtml(input)
     }
     //var data  = $sce.trustAs($sce.HTML, input);
     //data = $.trustAs($sce.URL,data);
-    //return data;
+    return input;
   };
-}]).filter("asULR",["$sce",function($sec){
+}]).filter("asURL",["$sce",function($sec){
 	return function(input){
-		return $sec.trustAs($sec.URL,input);
+        if(typeof input == 'string'){
+            return $sec.trustAs($sec.URL,input);
+        }
+		return input
 	}
 }]).filter("refreshCounter",function(){
     return function(input,count){

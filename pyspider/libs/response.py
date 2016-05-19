@@ -19,6 +19,7 @@ except ImportError:
     get_encodings_from_content = None
 from requests import HTTPError
 from pyspider.libs import utils
+from six.moves.urllib.parse import urljoin
 
 
 class Response(object):
@@ -170,6 +171,9 @@ class Response(object):
             self._elements = self._elements.getroot()
         return self._elements
 
+    ##
+    #  the below is to make pyspider's response can be used as scrapy
+    ##
     @property 
     def xpath(self):
         """ shortcut for etree.xpath add by qiulimao@2016.05"""
@@ -196,6 +200,18 @@ class Response(object):
                 return map(htmlelement2string,items)
         else:
             return htmlelement2string(items)
+
+    def body_as_unicode(self):
+        """ add this method to be campatible with scrapy """
+        return self.text
+
+    def urljoin(self, url):
+        """Join this Response's url with a possible relative url to form an
+        absolute interpretation of the latter."""
+        return urljoin(self.url, url)
+    ##
+    #  the upper is to make pyspider's response can be used as scrapy
+    ##
 
     def raise_for_status(self, allow_redirects=True):
         """Raises stored :class:`HTTPError` or :class:`URLError`, if one occurred."""
