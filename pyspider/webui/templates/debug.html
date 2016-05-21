@@ -31,7 +31,7 @@
     <script src="{{ url_for('static', filename='js/core/URI.min.js') }}"></script>
     <style>
         li { margin-bottom: 6px; }
-        .CodeMirror-code {background-color:#a5a5a5;font-size:14px;line-height:20px;}
+
         .settings-menue { 
           margin-left:20px;
           cursor:pointer;
@@ -58,14 +58,14 @@
     <section id="control">
       <div class="title pull-left">
       _&gt; {{ project_name }}
-
-        <span class="settings-menue" value="+1" target="font-size">+</span>
-        <span class="settings-menue" value="-1" target="font-size">-</span>
 <!--
+        <span class="settings-menue" value="+1" target="font-size">+</span>
+        <span class="settings-menue" value="-1" target="font-size">-&nbsp;</span>
+
         <span class="settings-menue" value="+1" target="line-height">&#8593;</span>
         <span class="settings-menue" value="-1" target="line-height">&#8595;</span>
 -->
-        <span class="settings-menue-change" value="#a5a5a5" target="background-color" style="background-color:#a5a5a5">&nbsp;&nbsp;</span>
+        <span class="settings-menue-change" value="#c5c5c5" target="background-color" style="background-color:#c5c5c5">&nbsp;&nbsp;</span>
         <span class="settings-menue-change" value="#fff" target="background-color" style="background-color:#fff">&nbsp;&nbsp;</span>
      </div>
 
@@ -74,13 +74,13 @@
       </div>
     </section>
     <script>
-      $(".settings-menue").click(function(){
-          var incr = parseInt($(this).attr('value'));
-          var target = $(this).attr("target");
-          var current_value = parseInt($(".CodeMirror-code").css(target));
-          var new_value = current_value + incr;
-          $(".CodeMirror-code").css(target,new_value);
-      });
+      // $(".settings-menue").click(function(){
+      //     var incr = parseInt($(this).attr('value'));
+      //     var target = $(this).attr("target");
+      //     var current_value = parseInt($(".CodeMirror-code").css(target));
+      //     var new_value = current_value + incr;
+      //     $(".CodeMirror-code").css(target,new_value);
+      // });
       $(".settings-menue-change").click(function(){
           var new_value = $(this).attr('value');
           var target = $(this).attr("target");

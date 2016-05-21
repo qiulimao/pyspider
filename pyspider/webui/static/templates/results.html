@@ -27,8 +27,9 @@
 				</div>
 				<div class="panel-body">
 					
-					<div ng-repeat="data in item.result">
-						<p ng-bind-html="data|asHTML"></p>
+					<div ng-repeat="(key,data) in item.result">
+						<p><a href="" class="btn btn-default"><span class="glyphicon glyphicon-tag"></span> [$key$]</a> </p>
+						<div ng-bind-html="data|asHTML"></div>
 						<hr>
 					</div>
 

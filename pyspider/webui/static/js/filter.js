@@ -26,10 +26,13 @@ app.filter("null2group", function() {
         return number;
     }
 
-}).filter('asHTML',["$sce",function($sce) {
+}).filter('asHTML',["$sce","$filter",function($sce,$filter) {
   return function(input) {
   	if(typeof input=='string'){
         return $sce.trustAsHtml(input)
+    }
+    else if(angular.isObject(input)){
+        return "<pre>"+$filter('json')(input)+"</pre>";
     }
     //var data  = $sce.trustAs($sce.HTML, input);
     //data = $.trustAs($sce.URL,data);

@@ -3,7 +3,9 @@
   "projectdb": "mongodb+projectdb://localhost:27017/pyspider_project",
   "resultdb": "mongodb+resultdb://localhost:27017/pyspider_result",
   "message_queue": "redis://localhost:6379/0",
-
+  "result_worker": {
+    "result_cls": "pyspider.result.AdvanceResultWorker"
+  },
   "webui": {
      "username": "zephyr",
      "password": "admin",

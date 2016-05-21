@@ -2,7 +2,7 @@
     <div class="row">
 
 
-	<div class="col-md-3 col-sm-3">
+	<div class="col-md-3 col-sm-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
         系统状态
@@ -26,19 +26,19 @@
      <ul class="list-group">
         <li class="list-group-item">
           <span class="text-success">fetcher2processor:</span>
-          <span class="badge badge-primary">[$ queues.fetcher2processor $]</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.fetcher2processor != 0]">[$ queues.fetcher2processor $]</span>
         </li>
         <li class="list-group-item">
           <span class="text-success">processor2result:</span>
-          <span class="badge badge-primary">[$ queues.processor2result $]</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.processor2result != 0]">[$ queues.processor2result $]</span>
         </li>
         <li class="list-group-item">
           <span class="text-success">scheduler2fetcher:</span>
-          <span class="badge badge-primary">[$ queues.scheduler2fetcher $]</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.scheduler2fetcher != 0]">[$ queues.scheduler2fetcher $]</span>
         </li>
         <li class="list-group-item">
           <span class="text-success">status_queue:</span>
-          <span class="badge badge-primary">[$ queues.status_queue $]</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.status_queue != 0]">[$ queues.status_queue $]</span>
         </li> 
         <li class="list-group-item" ng-controller="CreateNewSpider">
 
@@ -88,7 +88,7 @@
 		</div>
 	</div>
 <!-- 以上是左侧栏，以下是右侧栏 -->
-	<div class="col-md-9 col-sm-9">
+	<div class="col-md-9 col-sm-12">
     <uib-alert close="close_alert()" ng-show="SHOW_ALERT">[$ alert.msg $] project in [$ alert.status $]</uib-alert>
 
 
