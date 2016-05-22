@@ -103,8 +103,7 @@ class AdvanceResultWorker(ResultWorker):
             logger.info('result %s:%s %s -> %.30r' % (
                 task['project'], task['taskid'], task['url'], result))
 
-            taskid = "{taskid}-{__multi__}".format(taskid=task['taskid'],__multi__=result["__multi__"]) \
-                    if result.has_key("__multi__") else task["taskid"]
+            taskid = task["taskid"]
 
             # use advance save 
             return self.resultdb.asave(

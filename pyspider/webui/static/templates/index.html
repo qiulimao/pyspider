@@ -142,10 +142,10 @@
 		      </td><!-- 运行状态 -->
 
           <td>
-            <uib-progressbar  max="project.monitor['5m']['pending'] | null2one" value="project.monitor['5m']['success'] | null2zero" type="primary" class="progress-striped"></uib-progressbar>
-            <uib-progressbar  max="project.monitor['1h']['pending'] | null2one" value="project.monitor['1h']['success'] | null2zero" type="warning" class="progress-striped"></uib-progressbar>
-            <uib-progressbar  max="project.monitor['1d']['pending'] | null2one" value="project.monitor['1d']['success'] | null2zero" type="success" class="progress-striped"></uib-progressbar>
-            <uib-progressbar animate="true" max="project.monitor['all']['pending'] | null2one" value="project.monitor['all']['success'] | null2zero" type="danger" class="progress-striped"></uib-progressbar>                                    
+            <uib-progressbar animate="false" max="project.monitor['5m']['pending'] | null2one" value="project.monitor['5m']['success'] | null2zero" type="primary" class="progress-striped"></uib-progressbar>
+            <uib-progressbar animate="false"  max="project.monitor['1h']['pending'] | null2one" value="project.monitor['1h']['success'] | null2zero" type="warning" class="progress-striped"></uib-progressbar>
+            <uib-progressbar animate="false" max="project.monitor['1d']['pending'] | null2one" value="project.monitor['1d']['success'] | null2zero" type="success" class="progress-striped"></uib-progressbar>
+            <uib-progressbar animate="false" max="project.monitor['all']['pending'] | null2one" value="project.monitor['all']['success'] | null2zero" type="danger" class="progress-striped"></uib-progressbar>                                    
           </td>
 
           <td>

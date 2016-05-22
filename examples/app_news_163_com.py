@@ -22,29 +22,30 @@ class Handler(BaseHandler):
       'headers': {'User-Agent': IphoneSafari}
     }
 
-    source_news_list_url =u"http://3g.163.com/touch/article/list/{category}/{page}-10.html"
+    source_news_list_url =u"http://3g.163.com/touch/article/list/{category}/{offset}-10.html"
     source_one_news_url = u'http://3g.163.com/touch/article.html?docid={docid}&version=A'
     source_one_news_detail = u'http://3g.163.com/touch/article/{docid}/full.html'
     source_one_news_comment = u'http://comment.news.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/{docid}/comments/newList?offset={offset}&limit=30&headLimit=3&tailLimit=1&callback=newList&ibc=newswap'
     category_list = [u"BA8J7DG9wangning",u'BCR0CBQ2wangning',u'BBM54PGAwangning',u'BA8DOPCSwangning']
     category_dict = {
-    	"recommand":u"BA8J7DG9wangning",
-    	"news":u"BBM54PGAwangning",
-    	"car":u"BA8DOPCSwangning",
-    	"military":u"BAI67OGGwangning",
-    	"technology":u"BA8D4A3Rwangning",
-    	"finacial":u"BA8EE5GMwangning",
-    	"sports":u"BA8E6OEOwangning",
+        "recommand":u"BA8J7DG9wangning",
+        "news":u"BBM54PGAwangning",
+        "car":u"BA8DOPCSwangning",
+        "military":u"BAI67OGGwangning",
+        "technology":u"BA8D4A3Rwangning",
+        "finacial":u"BA8EE5GMwangning",
+        "sports":u"BA8E6OEOwangning",
     }
-    pages = [10*x for x in range(0,3)]
+    pages = range(0,3)
 
-    _all_category_page_url_list = [source_news_list_url.format(category=c,page=p) for c,p in product(category_dict.values(),pages)]
+    _all_category_page_url_tube = [(source_news_list_url.format(category=c[1],offset=p*10),c[0]) \
+                                    for c,p in product(category_dict.items(),pages)]
     
     
     @every(minutes=4 * 60)
     def on_start(self):
-        add_task = lambda url:self.crawl(url,callback=self.news_list)
-        map(add_task,self._all_category_page_url_list)
+        add_task = lambda t:self.crawl(t[0],callback=self.news_list,save={'category':t[1]})
+        map(add_task,self._all_category_page_url_tube)
          
 
     @config(age=60)
@@ -59,14 +60,20 @@ class Handler(BaseHandler):
             for one in v:
                 if not one.has_key("skipType"):
                     # 不是special 图片等等的新闻
+                    category = response.save.get("category")
+
                     docid = one.get("docid")
                     comment_count = one.get("commentCount")
+                    comment_count = 2100 if comment_count > 2100 else comment_count
+
                     news_detail_url = self.source_one_news_detail.format(docid=one.get("docid"))
                     news_taskid = md5(news_detail_url).hexdigest()
-                    pass2next = {'news_digest':one,"docid":docid,"comment_count":comment_count}
+                    pass2next = {'news_digest':one,"docid":docid,"category":category}
                     self.crawl(news_detail_url,callback=self.news_detail,save=pass2next)
                     comment_page_total = comment_count / 30 + 1
-                    comment_url_list = [self.source_one_news_comment.format(docid=docid,offset=30*ofst) for ofst in range(0,comment_page_total)]
+                    comment_url_list = [self.source_one_news_comment.format(docid=docid,offset=30*ofst) \
+                                        for ofst in range(0,comment_page_total)]
+
                     get_comment = lambda url:self.crawl(url,callback=self.comments,save={"__parent__":news_taskid})
                     map(get_comment,comment_url_list)
                     
@@ -75,19 +82,19 @@ class Handler(BaseHandler):
         news_detail =  json.loads(response.text[12:-1])
         news_digest = response.save.get("news_digest")
         docid = response.save.get("docid")
+        category = response.save.get("category")
         one_news = {
           "docid":docid,
           "news_detail":news_detail.get(docid),
           "news_digest":news_digest,
+          "category":category,
         }
         return one_news
     
     @config(age=60)
     def comments(self,response):
         replys =  json.loads(response.text[9:-3])
-        comments = {
-           "__parent__":response.save.get("__parent__"),
-           "__content__":replys["comments"],
-           "__keyname__":"comments_list"
-        }
-        return comments
+        refer = response.save.get("__parent__")
+        for k,v in replys["comments"].items():
+            one_comment = dict(v,**{"__refer__":refer,"__extraid__":k})
+            yield one_comment

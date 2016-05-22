@@ -25,8 +25,9 @@ class ResultDB(SplitTableMixin, BaseResultDB):
         self._list_project()
         for project in self.projects:
             collection_name = self._collection_name(project)
-            self.database[collection_name].ensure_index('taskid')
-            self.database[collection_name].create_index('updatetime')
+            #self.database[collection_name].ensure_index('taskid')
+            #self.database[collection_name].create_index('updatetime')
+            self.ensure_index(collection_name)
 
     def _parse(self, data):
         data['_id'] = str(data['_id'])
@@ -63,34 +64,18 @@ class ResultDB(SplitTableMixin, BaseResultDB):
         db.book.update({'user':'body'}, {'$addToSet':{books:{'$each':['心经','楞严经','阿弥陀佛经','金刚经']}});
         """
         collection_name = self._collection_name(project)
+        extraid = result.get("__extraid__")
+        refer = result.get("__refer__")
         obj = {
             'taskid': taskid,
+            'extraid':extraid if extraid else "__main__",
+            'refer':refer if refer else "__self__",
             'url': url,
-            'result.main':result,
+            'result':result,
             'updatetime': time.time(),
         }
 
-        if result.has_key("__parent__"):
-            """
-              if you want to use one2many:
-                you show specific:
-                   __parent__: parent id 
-                   __keyname__: the list key name in parent 
-                   __content__: you must wrap the result in this key 
-            """
-            parent_taskid = result.get("__parent__")
-            keyname = result.get("__keyname__","_list")
-            result_content = result.get("__content__")
-
-            parent_list_keyname = "result.%s"%keyname
-
-            if isinstance(result_content,dict):
-                result_content = result_content.values()
-
-            return self.database[collection_name].update({'taskid':parent_taskid},{'$addToSet':{parent_list_keyname:{"$each":result_content}}},upsert=True)
-        else:
-            return self.database[collection_name].update({'taskid': taskid}, {"$set":obj}, upsert=True)
-            # 这里有问题的原因： 在你做save的时候，你已经把result原有的result干掉了                   
+        return self.database[collection_name].update({'taskid': taskid,'extraid':extraid}, {"$set":obj}, upsert=True)                  
 
     def select(self, project, fields=None, offset=0, limit=0):
         if project not in self.projects:
@@ -123,5 +108,8 @@ class ResultDB(SplitTableMixin, BaseResultDB):
 
     def ensure_index(self,collection_name):
         # 因为result 的索引实际上的taskid，所以这里建taskid的索引
-        self.database[collection_name].ensure_index('taskid')
+        self.database[collection_name].create_index([
+                                  ("taskid", pymongo.ASCENDING),
+                                  ("extraid", pymongo.ASCENDING)
+                                ])
         self.database[collection_name].create_index('updatetime')
