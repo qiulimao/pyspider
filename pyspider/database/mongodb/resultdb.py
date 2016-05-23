@@ -137,3 +137,8 @@ class ResultDB(SplitTableMixin, BaseResultDB):
                                   ("extraid", pymongo.ASCENDING)
                                 ])
         self.database[collection_name].create_index('updatetime')
+        
+        self.database[collection_name].create_index([
+                                    ('refer',pymongo.DESCENDING),
+                                    ("updatetime",pymongo.DESCENDING)
+                                    ])

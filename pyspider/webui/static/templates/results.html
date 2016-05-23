@@ -20,7 +20,38 @@
   				<uib-pagination total-items="num" ng-model="current_page" max-size="5" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
 			  </li>
 			</ul>
+
+  <uib-accordion ng-repeat="item in results | filter: ResultSearch">
+    <uib-accordion-group is-open="item.open" panel-class="panel-default">
+      <uib-accordion-heading>
+        <span>[$ item.taskid $]</span><span>@</span>
+        <span>[$ item.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]</span>
+        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': item.open, 'glyphicon-chevron-right': !item.open}"></i>
+      </uib-accordion-heading>
+
+        <p>
+        	<span class="glyphicon glyphicon-paperclip pull-right" ng-click="refered(item.taskid)" style="margin-left:20px;"></span>
+        	<a href="[$ item.url $]" target="_blank" class="pull-right" style="margin-left:10px;margin-right:10px;"><span class="glyphicon glyphicon-link"></span></a>
+           
+        </p>
+		<div ng-repeat="(key,data) in item.result">
+			<p>
+				<a class="btn btn-default">
+					<span class="glyphicon glyphicon-tag"></span> [$key$]
+				</a>
+			</p>
+			<div ng-bind-html="data|asHTML"></div>
+			<hr>
+		</div>
+        <p>
+           <a href="[$ item.url $]" target="_blank"><span class="glyphicon glyphicon-link"></span>原链接</a>
+        </p>
+    </uib-accordion-group>
+  </uib-accordion>
+
+<!--
 			<div class="panel panel-default" ng-repeat="item in results | filter: ResultSearch">
+
 				<div class="panel-heading">
 					<span class="badge">[$ item.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]</span>
 					taskid:[$ item.taskid $]
@@ -43,7 +74,7 @@
 					<a href="[$ item.url $]" target="_blank">原链接:[$ item.url $]</a>
 				</div>
 			</div>
-
+-->
 			<uib-pagination total-items="num" ng-model="current_page" max-size="5" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
 		</div>
 
