@@ -50,6 +50,24 @@ def crawleddata(project,item_per_page,page):
     #print "ccccc"
     return json.dumps(reply),200,{'Content-Type': 'application/json'}
 
+@app.route('/result-list/<project>/<refer>/<int:item_per_page>/<int:page>/',methods=['GET', ])
+def showdata(project,item_per_page,page,refer):
+    # refer:__self__  :不是外键，不是别人的一部分
+    # extraid:__main__:不是一页当中产生的多个结果之一
+    resultdb = app.config['resultdb']
+
+    offset = int(item_per_page)*int(page-1)
+    limit = int(item_per_page)
+
+    count = resultdb.count_by(project,condition={"refer":refer})
+    results = list(resultdb.select_by(project, condition={"refer":refer},offset=offset, limit=limit))
+
+    reply = {
+        "project":project,
+        "count":count,
+        "results":results,
+    }
+    return json.dumps(reply),200,{'Content-Type': 'application/json'}
 
 @app.route('/results/dump/<project>.<_format>')
 def dump_result(project, _format):

@@ -23,7 +23,11 @@ function($interpolateProvider,$routeProvider,$sceDelegateProvider) {
   			.when('/result/:project', {
                 controller: 'ResultController',
                 templateUrl: 'static/templates/results.html'
-            })                      
+            })  
+        .when('/result/:project/:refer/:limit/:page', {
+                controller: 'ResultController',
+                templateUrl: 'static/templates/results.html'
+            })                               
         .otherwise({
                 redirectTo: '/'
             });

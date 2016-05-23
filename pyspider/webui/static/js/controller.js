@@ -150,27 +150,43 @@ controller("IndexController",["$scope","$http","$interval","$timeout",function($
      * 以下是测试：
 	*/
 }]).
-controller("ResultController",["$scope","$routeParams","$resource",function($scope,$routeParams,$resource){
-	$scope.hello=$routeParams.project;
-	var ITERM_PER_PAGE = 10;
-	var ProjectItems = $resource('/result-list/:project/:itemPerPage/:page', {project:$routeParams.project,itemPerPage:ITERM_PER_PAGE,page:"@page"});
-	$scope.CurrentPage = 1;
+controller("ResultController",["$scope","$routeParams","$resource","$location",function($scope,$routeParams,$resource,$location){
+	
+	//var $scope.limit = $routeParams.limit || 10;
+	$scope.project = $routeParams.project;
+	$scope.refer = $routeParams.refer || "__self__";
+	$scope.limit = $routeParams.limit || 10;
+	$scope.current_page = $routeParams.page || 1;
 
-	function getpage(pagenum){
-		ProjectItems.get({page:pagenum}, function(response){
+	var result_resource = $resource('/result-list/:project/:refer/:limit/:page/',
+		   {project:$scope.project,limit:$scope.limit,page:"@page",refer:"@refer"});
+	
+
+	function getpage(pagenum,refer){
+		result_resource.get({page:pagenum,refer:refer}, function(response){
 			$scope.num = response.count;
 			$scope.results = response.results;
 			$scope.project = response.project;
 		});		
 	}
-	getpage(1);
+	getpage($scope.current_page,$scope.refer);
 
-	$scope.$watch('CurrentPage',function(new_value,old_value,_scope){
-		if(new_value){
-			getpage(new_value);
+	$scope.$watch('current_page',function(new_value,old_value,_scope){
+
+		if(new_value == old_value){
+			return 
 		}
+		url_indicator = "/result/"+$scope.project+"/"+$scope.refer+"/"+$scope.limit+"/"+new_value;
+		$location.path(url_indicator);
 		
-	})
+	});
+	$scope.refered = function(refer){
+		var url_indicator;
+		$scope.refer = refer;
+		$scope.current_page = 1;
+		url_indicator = "/result/"+$scope.project+"/"+refer+"/"+$scope.limit+"/"+"1";
+		$location.path(url_indicator);
+	}
 
 }]).
 controller("TaskController",["$scope","$routeParams","$resource",function($scope,$routeParams,$resource){

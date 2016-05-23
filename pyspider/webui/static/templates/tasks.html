@@ -21,15 +21,57 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">[$task.project$]</div>
 				<div class="panel-body">
-				    <pre>
-				       [$ task |json $]
-				    </pre>
-				</div>
-				<div class="panel-footer">
-					更新时间:[$task.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]
-					&nbsp;&nbsp;&nbsp;&nbsp;
+					<table class="table table-bordered">
+						<thead>
+							<th>#</th>
+							<th>value</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>project
+				    				</a>
+								</td>
+								<td>[$task.project$]</td>
+							</tr>
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>taskid
+				    				</a>
+								</td>
+								<td>[$task.taskid$]</td>
+							</tr>
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>url
+				    				</a>									
+								</td>
+								<td>[$task.url$]</td>	
+							</tr>			
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>track
+				    				</a>									
+								</td>
+								<td><pre>[$task.track|json$]</pre></td>	
+							</tr>
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>updatime
+				    				</a>									
+								</td>
+								<td>[$task.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]</td>
+							</tr>
+						</tbody>
+					</table>
 
 				</div>
+
 			</div>
 		</div>
 	</div>

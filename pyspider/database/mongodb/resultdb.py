@@ -86,7 +86,31 @@ class ResultDB(SplitTableMixin, BaseResultDB):
         results = self.database[collection_name].find({}, fields, skip=offset, limit=limit).sort("updatetime",pymongo.DESCENDING)
         for result in results:
             yield self._parse(result)
+    ##
+    # select by condition
+    ##
+    def select_by(self,project,condition={},offset=0,limit=0):
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        results = self.database[collection_name].find(condition, skip=offset, limit=limit).sort("updatetime",pymongo.DESCENDING)
+        for result in results:
+            yield self._parse(result)
 
+
+    def count_by(self,project,condition={}):
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        return self.database[collection_name].find(condition).count()
+    
+    ##
+    # ------------------------------------------------------------------------
+    ##
     def count(self, project):
         if project not in self.projects:
             self._list_project()
