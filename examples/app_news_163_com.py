@@ -70,12 +70,15 @@ class Handler(BaseHandler):
                     news_taskid = md5(news_detail_url).hexdigest()
                     pass2next = {'news_digest':one,"docid":docid,"category":category}
                     self.crawl(news_detail_url,callback=self.news_detail,save=pass2next)
-                    comment_page_total = comment_count / 30 + 1
-                    comment_url_list = [self.source_one_news_comment.format(docid=docid,offset=30*ofst) \
-                                        for ofst in range(0,comment_page_total)]
-
-                    get_comment = lambda url:self.crawl(url,callback=self.comments,save={"__parent__":news_taskid})
-                    map(get_comment,comment_url_list)
+                    comment_page_total = comment_count / 30
+                    getcomment = lambda url,age:self.crawl(url,callback=self.comments,save={"__parent__":news_taskid},age=age)
+                    for p in range(0,comment_page_total):
+                        comment_url = self.source_one_news_comment.format(docid=docid,offset=30*p)
+                        getcomment(comment_url,-1)
+                        
+                    last_comment_url = self.source_one_news_comment.format(docid=docid,offset=30*comment_page_total)
+                    getcomment(last_comment_url,58*60)
+                    
                     
     @config(age=60)                
     def news_detail(self,response):

@@ -24,6 +24,12 @@
 			</div>
 
      <ul class="list-group">
+      
+        <li class="list-group-item">
+          <span class="text-success">scheduler2fetcher:</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.scheduler2fetcher != 0]">[$ queues.scheduler2fetcher $]</span>
+        </li>
+
         <li class="list-group-item">
           <span class="text-success">fetcher2processor:</span>
           <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.fetcher2processor != 0]">[$ queues.fetcher2processor $]</span>
@@ -32,10 +38,7 @@
           <span class="text-success">processor2result:</span>
           <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.processor2result != 0]">[$ queues.processor2result $]</span>
         </li>
-        <li class="list-group-item">
-          <span class="text-success">scheduler2fetcher:</span>
-          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.scheduler2fetcher != 0]">[$ queues.scheduler2fetcher $]</span>
-        </li>
+
         <li class="list-group-item">
           <span class="text-success">status_queue:</span>
           <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.status_queue != 0]">[$ queues.status_queue $]</span>
