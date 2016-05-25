@@ -26,7 +26,7 @@
 			  <li class="list-group-item list-group-item-default">
 			  	 <div class="form-group">
 				    <div class="input-group">
-				      <input type="text" class="form-control" ng-model="concentrate"  placeholder="参数聚焦" uib-typeahead="k for k in keylist | filter:$viewValue | limitTo:5" ng-change="change_keylist()">
+				      <input type="text" class="form-control" ng-model="concentrate"  placeholder="parameter focus" uib-typeahead="k for k in keylist | filter:$viewValue | limitTo:8" ng-change="change_keylist()" typeahead-min-length=0>
 				      <span class="input-group-btn">
 				        <button class="btn btn-default" type="button">
 				        	&nbsp;<span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>&nbsp;

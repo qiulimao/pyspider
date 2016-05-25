@@ -54,6 +54,19 @@ app.filter("null2group", function() {
         return count - input
     }
 }).filter("spotlight",["$log",function($log){
+    function __str__(result){
+        if(angular.isObject(result)){
+            return "<Object>";
+        }
+        if(angular.isString(result)){
+            r = result.length<18?result:result.slice(0,18)+"...";
+            return r;
+        }
+        else{
+            return result;
+        }
+    }
+
     return function(obj,key){
         var _keys;
         var result = obj;
@@ -72,7 +85,7 @@ app.filter("null2group", function() {
                 return "Invalidkey";
               }
            }
-           return result;
+           return __str__(result);
         }
         catch(err){
             return "NotFound";

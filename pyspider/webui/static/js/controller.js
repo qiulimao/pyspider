@@ -218,6 +218,7 @@ controller("ResultController",["$scope","$routeParams","$resource","$location","
 		}
 		url_indicator = "/result/"+$scope.project+"/"+$scope.refer+"/"+$scope.limit+"/"+new_value;
 		$location.path(url_indicator);
+		//$location.hash("result");
 		
 	});
 	$scope.refered = function(refer){

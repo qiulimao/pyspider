@@ -205,7 +205,7 @@ if (system.args.length !== 2) {
   });
 
   if (service) {
-    console.log('Web server running on port ' + port);
+    console.log('proxy server  phantomjs running on port ' + port);
   } else {
     console.log('Error: Could not create web server listening on port ' + port);
     phantom.exit();
