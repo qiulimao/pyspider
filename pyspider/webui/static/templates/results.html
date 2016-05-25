@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="row">
-        	<div class="col-lg-6">
+        	<div class="col-md-6">
         		<div class="form-group">
 				    <div class="input-group">
 				      <input type="text" class="form-control" ng-model="ResultSearch" placeholder="Search for...">
@@ -13,11 +13,27 @@
         		</div>
 		    </div><!-- /.col-lg-6 -->		
 
+        	<div class="col-md-6">
+
+		    </div><!-- /.col-lg-6 -->	
+
 		<div class="col-md-12">
 
 			<ul class="list-group">
 			  <li class="list-group-item list-group-item-default">
   				<uib-pagination total-items="num" ng-model="current_page" max-size="5" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+			  </li>
+			  <li class="list-group-item list-group-item-default">
+			  	 <div class="form-group">
+				    <div class="input-group">
+				      <input type="text" class="form-control" ng-model="concentrate"  placeholder="参数聚焦" uib-typeahead="k for k in keylist | filter:$viewValue | limitTo:5" ng-change="change_keylist()">
+				      <span class="input-group-btn">
+				        <button class="btn btn-default" type="button">
+				        	&nbsp;<span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>&nbsp;
+				        </button>
+				      </span>
+				    </div><!-- /input-group -->     			
+        		</div>
 			  </li>
 			</ul>
 
@@ -28,7 +44,12 @@
         <span>[$ item.taskid $]</span>
         <span class="text-danger">@</span>
         <span>[$ item.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]</span>
+        
         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': item.open, 'glyphicon-chevron-right': !item.open}"></i>
+        <span class="pull-right text-success">
+        	<span class="glyphicon glyphicon-pushpin"></span>&nbsp;
+        	[$ item.result|spotlight:concentrate $]
+        </span>
       </uib-accordion-heading>
 
         <p>

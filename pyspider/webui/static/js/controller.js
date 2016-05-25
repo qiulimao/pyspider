@@ -150,14 +150,15 @@ controller("IndexController",["$scope","$http","$interval","$timeout",function($
      * 以下是测试：
 	*/
 }]).
-controller("ResultController",["$scope","$routeParams","$resource","$location",function($scope,$routeParams,$resource,$location){
+controller("ResultController",["$scope","$routeParams","$resource","$location","$log",function($scope,$routeParams,$resource,$location,$log){
 	
 	//var $scope.limit = $routeParams.limit || 10;
 	$scope.project = $routeParams.project;
 	$scope.refer = $routeParams.refer || "__self__";
 	$scope.limit = $routeParams.limit || 10;
 	$scope.current_page = $routeParams.page || 1;
-
+	$scope.keylist = [];
+	$scope.concentrate='';
 	var result_resource = $resource('/result-list/:project/:refer/:limit/:page/',
 		   {project:$scope.project,limit:$scope.limit,page:"@page",refer:"@refer"});
 	
@@ -170,6 +171,45 @@ controller("ResultController",["$scope","$routeParams","$resource","$location",f
 		});		
 	}
 	getpage($scope.current_page,$scope.refer);
+
+	$scope.change_keylist = function (){
+		var obj = $scope.results?$scope.results[0]["result"]:{};
+		var last_obj;
+		var _keys;
+		var _parent_keys = [];
+		var prefix = "";
+		$scope.keylist = [];
+
+		if(/[a-zA-Z0-9_\.]+/.test($scope.concentrate)){
+			//正常匹配
+			_keys = $scope.concentrate.split(".");
+			for(i in _keys){
+				last_obj = obj;
+				obj = obj[_keys[i]];
+				if (obj==undefined){
+					obj = last_obj;
+					break;
+				}
+				if(!angular.isObject(obj)){
+					obj = last_obj;
+					break;
+				}
+				_parent_keys.push(_keys[i]);
+			}
+		}
+		
+		prefix = _parent_keys.join(".");
+		angular.forEach(obj,function(data,index,array){
+			if(prefix){
+				$scope.keylist.push(prefix+"."+index);
+			}
+			else{
+				$scope.keylist.push(index);
+			}
+			
+		});
+
+	}
 
 	$scope.$watch('current_page',function(new_value,old_value,_scope){
 

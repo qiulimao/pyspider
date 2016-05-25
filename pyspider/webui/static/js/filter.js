@@ -53,4 +53,36 @@ app.filter("null2group", function() {
         
         return count - input
     }
-});
+}).filter("spotlight",["$log",function($log){
+    return function(obj,key){
+        var _keys;
+        var result = obj;
+        if(!key){
+            return "";
+        }
+        if (!/[a-zA-Z0-9_\.]+/.test(key)){
+            return "InvalidKey";
+        }
+        _keys = key.split(".");
+
+        try{
+           for(i in _keys){
+              result = result[_keys[i]];
+              if (result == undefined){
+                return "Invalidkey";
+              }
+           }
+           return result;
+        }
+        catch(err){
+            return "NotFound";
+        }
+
+    }
+}]).filter("partfilter",["$filter",function($filter){
+    return function(input,value){
+        var part_key;
+        part_key = value.split(".").pop();
+        return $filter("filter")(input,part_key);
+    }
+}]);
