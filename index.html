@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Pyspider by qiulimao</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Pyspider</h1>
+      <h2 class="project-tagline">A nicer pyspider and powerful spider </h2>
+      <a href="https://github.com/qiulimao/pyspider" class="btn">View on GitHub</a>
+      <a href="https://github.com/qiulimao/pyspider/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/qiulimao/pyspider/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="forked-from-pyspider---" class="anchor" href="#forked-from-pyspider---" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>forked from pyspider <a href="https://travis-ci.org/binux/pyspider"><img src="https://img.shields.io/travis/binux/pyspider/master.svg?style=flat" alt="Build Status"></a> <a href="https://coveralls.io/r/binux/pyspider"><img src="https://img.shields.io/coveralls/binux/pyspider.svg?branch=master&amp;style=flat" alt="Coverage Status"></a> <a href="http://demo.pyspider.org/"><img src="https://img.shields.io/badge/try-pyspider-blue.svg?style=flat" alt="Try"></a>
+</h1>
+
+<p>A Powerful Spider(Web Crawler) System in Python. <strong><a href="http://demo.pyspider.org/">TRY IT NOW!</a></strong></p>
+
+<ul>
+<li>Write script in Python</li>
+<li>Powerful WebUI with script editor, task monitor, project manager and result viewer</li>
+<li>
+<a href="https://www.mysql.com/">MySQL</a>, <a href="https://www.mongodb.org/">MongoDB</a>, <a href="http://redis.io/">Redis</a>, <a href="https://www.sqlite.org/">SQLite</a>, <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a>; <a href="http://www.postgresql.org/">PostgreSQL</a> with <a href="http://www.sqlalchemy.org/">SQLAlchemy</a> as database backend</li>
+<li>
+<a href="http://www.rabbitmq.com/">RabbitMQ</a>, <a href="http://kr.github.com/beanstalkd/">Beanstalk</a>, <a href="http://redis.io/">Redis</a> and <a href="http://kombu.readthedocs.org/">Kombu</a> as message queue</li>
+<li>Task priority, retry, periodical, recrawl by age, etc...</li>
+<li>Distributed architecture, Crawl Javascript pages, Python 2&amp;3, etc...</li>
+</ul>
+
+<p>Tutorial: <a href="http://docs.pyspider.org/en/latest/tutorial/">http://docs.pyspider.org/en/latest/tutorial/</a><br>
+Documentation: <a href="http://docs.pyspider.org/">http://docs.pyspider.org/</a><br>
+Release notes: <a href="https://github.com/binux/pyspider/releases">https://github.com/binux/pyspider/releases</a>  </p>
+
+<h2>
+<a id="sample-code-" class="anchor" href="#sample-code-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Code </h2>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">from</span> pyspider.libs.base_handler <span class="pl-k">import</span> <span class="pl-k">*</span>
+
+
+<span class="pl-k">class</span> <span class="pl-en">Handler</span>(<span class="pl-e">BaseHandler</span>):
+    crawl_config <span class="pl-k">=</span> {
+    }
+
+    <span class="pl-en">@every</span>(<span class="pl-v">minutes</span><span class="pl-k">=</span><span class="pl-c1">24</span> <span class="pl-k">*</span> <span class="pl-c1">60</span>)
+    <span class="pl-k">def</span> <span class="pl-en">on_start</span>(<span class="pl-smi"><span class="pl-smi">self</span></span>):
+        <span class="pl-v">self</span>.crawl(<span class="pl-s"><span class="pl-pds">'</span>http://scrapy.org/<span class="pl-pds">'</span></span>, <span class="pl-v">callback</span><span class="pl-k">=</span><span class="pl-v">self</span>.index_page)
+
+    <span class="pl-en">@config</span>(<span class="pl-v">age</span><span class="pl-k">=</span><span class="pl-c1">10</span> <span class="pl-k">*</span> <span class="pl-c1">24</span> <span class="pl-k">*</span> <span class="pl-c1">60</span> <span class="pl-k">*</span> <span class="pl-c1">60</span>)
+    <span class="pl-k">def</span> <span class="pl-en">index_page</span>(<span class="pl-smi"><span class="pl-smi">self</span></span>, <span class="pl-smi">response</span>):
+        <span class="pl-s"><span class="pl-pds">"""</span> you can use response.xpath now,just like scrapy,</span>
+<span class="pl-s">            It also support extract,just like scrapy's extrace,but you need to </span>
+<span class="pl-s">            from pyspider.libs.response import Response</span>
+<span class="pl-s">            Response.extract(response.xpath("//a"))</span>
+<span class="pl-s">            this static method will help you extract content of &lt;a&gt;</span>
+<span class="pl-s">        <span class="pl-pds">"""</span></span>
+        <span class="pl-k">for</span> url <span class="pl-k">in</span> response.xpath(<span class="pl-s"><span class="pl-pds">"</span>//a[starts-with(./@href,'http://')]/@href<span class="pl-pds">"</span></span>):
+            <span class="pl-v">self</span>.crawl(each.url, <span class="pl-v">callback</span><span class="pl-k">=</span><span class="pl-v">self</span>.detail_page)
+
+    <span class="pl-k">def</span> <span class="pl-en">detail_page</span>(<span class="pl-smi"><span class="pl-smi">self</span></span>, <span class="pl-smi">response</span>):
+        <span class="pl-k">return</span> {
+            <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>: response.url,
+            <span class="pl-s"><span class="pl-pds">"</span>title<span class="pl-pds">"</span></span>: response.doc(<span class="pl-s"><span class="pl-pds">'</span>title<span class="pl-pds">'</span></span>).text(),
+        }</pre></div>
+
+<h2>
+<a id="and-the-web-center" class="anchor" href="#and-the-web-center" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>And the web center</h2>
+
+<p><a href="http://demo.pyspider.org/"><img src="http://www.getqiu.com/static/image/pyspider-angularjs.png" alt="Demo"></a></p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<ul>
+<li>you need to run <code>git clone https://github.com/qiulimao/pyspider.git</code> then <code>$python setup.py install</code>
+</li>
+<li>run command <code>pyspider</code>, visit <a href="http://localhost:5000/">http://localhost:5000/</a>
+</li>
+</ul>
+
+<p>Quickstart: <a href="http://docs.pyspider.org/en/latest/Quickstart/">http://docs.pyspider.org/en/latest/Quickstart/</a></p>
+
+<h2>
+<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribute</h2>
+
+<ul>
+<li>Use Angularjs to rebuild the ui module</li>
+<li>more resonable way to save data in mongodb</li>
+<li>extra method on parsing the html</li>
+<li>parameters optimized</li>
+</ul>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
+
+<h3>
+<a id="next" class="anchor" href="#next" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>next</h3>
+
+<ul>
+<li>[ ] read more source code</li>
+<li>[ ] make better ui</li>
+<li>[ ] better user authentic</li>
+</ul>
+
+<h3>
+<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>more</h3>
+
+<ul>
+<li>[x] edit script with vim via <a href="http://en.wikipedia.org/wiki/WebDAV">WebDAV</a>
+</li>
+<li>[x] binux is realy COW B!!!!</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>Licensed under the Apache License, Version 2.0</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/qiulimao/pyspider">Pyspider</a> is maintained by <a href="https://github.com/qiulimao">qiulimao</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
