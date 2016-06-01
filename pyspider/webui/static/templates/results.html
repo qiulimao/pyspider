@@ -21,7 +21,7 @@
 
 			<ul class="list-group">
 			  <li class="list-group-item list-group-item-default">
-  				<uib-pagination total-items="num" ng-model="current_page" max-size="5" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+  				<uib-pagination total-items="num" ng-model="current_page" max-size="5" ng-change="page_turning()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
 			  </li>
 			  <li class="list-group-item list-group-item-default">
 			  	 <div class="form-group">
@@ -76,7 +76,7 @@
 
 	<ul class="list-group">
 	  <li class="list-group-item list-group-item-default">
-		<uib-pagination total-items="num" ng-model="current_page" max-size="5" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+		<uib-pagination total-items="num" ng-model="current_page" max-size="5" ng-change="page_turning()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
 	</li>
    </ul>
 		</div>
