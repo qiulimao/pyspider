@@ -1,4 +1,4 @@
-var app = angular.module('pyspider', ['ui.bootstrap','ngRoute','ngResource','ngSanitize']);
+var app = angular.module('pyspider', ['ui.bootstrap','ngRoute','ngResource','ngSanitize','ngAnimate']);
 
 app.config(["$interpolateProvider",
             "$routeProvider",

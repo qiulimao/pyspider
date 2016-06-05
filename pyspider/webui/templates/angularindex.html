@@ -33,7 +33,7 @@
 	<div ng-include="'static/templates/navbar.part.html'"></div>
         
 
-            <div ng-view></div>
+            <div ng-view class="view-slide-in"></div>
 
 
 	
@@ -43,6 +43,8 @@
     <script src="{{ url_for('static', filename='js/derective.js') }}"></script>
     <script src="{{ url_for('static', filename='js/filter.js') }}"></script>
     <script src="{{ url_for('static', filename='js/service.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/controller.js') }}"></script>	
+    <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/controller.js') }}"></script>
+
 </body>
 </html>

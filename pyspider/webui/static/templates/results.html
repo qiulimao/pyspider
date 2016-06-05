@@ -38,7 +38,7 @@
 			</ul>
 
   <uib-accordion >
-    <uib-accordion-group is-open="item.open" panel-class="panel-default" ng-repeat="item in results | filter: ResultSearch">
+    <uib-accordion-group is-open="item.open" panel-class="panel-default" ng-repeat="item in results | filter: ResultSearch" class="repeat-animation">
       <uib-accordion-heading>
       	<span class="text-primary">#[$ $index $]#</span>
         <span>[$ item.taskid $]</span>
