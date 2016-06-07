@@ -145,8 +145,12 @@ class BaseHandler(object):
     def _run_func(self, function, *arguments):
         """
         Running callback function with requested number of arguments
+        这傻逼，为啥在调用 self._run_func 时，最后一定要多传一个参数进来
+        comment by qiulimao@2016.06.07
         """
         args, varargs, keywords, defaults = inspect.getargspec(function)
+        # 这个 _run_func是 一个class instance 方法，第一参数默认为self，所以 函数接收参数个数为: args-1
+        # 最后多传一个参数进来，我真的不理解。
         return function(*arguments[:len(args) - 1])
 
     def _run_task(self, task, response):
@@ -165,7 +169,57 @@ class BaseHandler(object):
             return None
         if not getattr(function, '_catch_status_code_error', False):
             response.raise_for_status()
+        # callback 也只接收一个参数，这里给了两个参数。
         return self._run_func(function, response, task)
+
+    def _deal_result(self,result,task):
+        """
+            we alway come in this situation:
+                differrent crawl callback has differrent data schema,we need to save them seperatly.
+            in preview version,all data yield by crawl callback use the same on_result method.
+            But this time: you can save data to differrent schema by offer an `on_result__callback` method in your class 
+            just like this:
+
+            def list_page(self,response):
+                for item in response.xpath("//div[@class="item-list"]"):
+                    yield {
+                       "url":response.url,
+                       "updatetime":item.xpath("./text()"),
+                    }
+
+                self.crawl(a_url,callback=self.next_url)
+            
+            def next_url(self,response):
+                return {
+                    "more_detail":response.text,
+                }
+
+            def on_result__list_page(self,result):
+                save_list_page_result_to_table_one()
+
+            def on_result__next_url(self,result):
+                save_list_page_result_to_table_two()
+
+            by default:
+            if you don't offer on_result_(%callmethod)s 
+            we fall to use self.on_result
+
+            powered by qiulimao@2016.06.07
+        """
+        process = task.get('process', {})
+        result_loader = process.get('callback')
+        current_result_dealer = "on_result__%s"%result_loader if result_loader else "on_result"
+        function = getattr(self,current_result_dealer) if hasattr(self, current_result_dealer) else getattr(self,"on_result")
+
+        # this method is tested,in most cases,it won't raise exceptions,
+        # so let's apply this method first.
+        self.on_result(result)
+
+        if function.__name__ != "on_result":
+            # exceptions will be catch by self.run_task method
+            self._run_func(function,result,task)
+
+        
 
     def run_task(self, module, task, response):
         """
@@ -188,9 +242,13 @@ class BaseHandler(object):
             result = self._run_task(task, response)
             if inspect.isgenerator(result):
                 for r in result:
-                    self._run_func(self.on_result, r, response, task)
+                    # 为啥 on_result 只接收一个参数，这里给了它三个参数？
+                    #self._run_func(self.on_result, r, response, task)
+                    self._deal_result(r,task)
             else:
-                self._run_func(self.on_result, result, response, task)
+                #self._run_func(self.on_result, result, response, task)
+                self._deal_result(result,task)
+
         except Exception as e:
             logger.exception(e)
             exception = e
