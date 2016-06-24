@@ -13,8 +13,6 @@
 #| Hello Chebyshev:                             |
 #|  Are you writting BUUUUGs again?             |
 #|  please make good explaination Notes.        |
-#|  Nobody want to wipe your bottom, even       |
-#|  YOURSELF !                                  |
 #|                                              |
 #|      --May you have fun with this framework. |
 #|               tips from qiulimao@2016.06.07  |

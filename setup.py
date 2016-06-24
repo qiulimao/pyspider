@@ -55,16 +55,16 @@ if sys.version_info < (3, 0):
 
 
 setup(
-    name='pyspider',
+    name='weblocust',
     version=pyspider.__version__,
 
-    description='A Powerful Spider System in Python',
+    description='A more Powerful Spider System in Python based on pyspider',
     long_description=long_description,
 
-    url='https://github.com/binux/pyspider',
+    url='https://github.com/qiulimao/pyspider',
 
-    author='Roy Binux',
-    author_email='roy@binux.me',
+    author='qiulimao',
+    author_email='qiulimao@getqiu.com',
 
     license='Apache License, Version 2.0',
 
@@ -88,7 +88,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
 
-    keywords='scrapy crawler spider webui',
+    keywords='scrapy crawler spider webui pyspider weblocust',
 
     packages=find_packages(exclude=['data', 'tests*']),
 
@@ -109,14 +109,23 @@ setup(
         'pyspider': [
             'logging.conf',
             'fetcher/phantomjs_fetcher.js',
-            'webui/static/*',
+            'webui/static/*.css',
+            'webui/static/*.js',
+            'webui/static/*.less',
+            'webui/static/css/*',
+            'webui/static/js/*.js',
+            'webui/static/js/core/*',
+            'webui/static/templates/*',
+            'webui/static/image/*',
+            'webui/static/fonts/*',
             'webui/templates/*'
+
         ],
     },
 
     entry_points={
         'console_scripts': [
-            'pyspider=pyspider.run:main'
+            'weblocust=pyspider.run:main'
         ]
     },
 

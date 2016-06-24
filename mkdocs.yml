@@ -1,7 +1,7 @@
-site_name: pyspider
-site_description: A Powerful Spider(Web Crawler) System in Python.
+site_name: weblocust
+site_description: A more Powerful Spider(Web Crawler) System based on pyspider.
 site_author: binux
-repo_url: https://github.com/binux/pyspider
+repo_url: https://github.com/qiuliamo/weblocust
 pages:
 - Introduction: index.md
 - Quickstart: Quickstart.md

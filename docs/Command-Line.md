@@ -4,12 +4,12 @@ Command Line
 Global Config
 -------------
 
-You can get command help via `pyspider --help` and `pyspider all --help` for subcommand help.
+You can get command help via `weblocust --help` and `weblocust all --help` for subcommand help.
 
 global options work for all subcommands.
 
 ```
-Usage: pyspider [OPTIONS] COMMAND [ARGS]...
+Usage: weblocust [OPTIONS] COMMAND [ARGS]...
 
   A powerful spider system in python.
 
@@ -114,7 +114,7 @@ all
 ---
 
 ```
-Usage: pyspider all [OPTIONS]
+Usage: weblocust all [OPTIONS]
 
   Run all the components in subprocess or thread
 
@@ -132,7 +132,7 @@ one
 ---
 
 ```
-Usage: pyspider one [OPTIONS] [SCRIPTS]...
+Usage: weblocust one [OPTIONS] [SCRIPTS]...
 
   One mode not only means all-in-one, it runs every thing in one process
   over tornado.ioloop, for debug purpose
@@ -182,7 +182,7 @@ bench
 -----
 
 ```
-Usage: pyspider bench [OPTIONS]
+Usage: weblocust bench [OPTIONS]
 
   Run Benchmark test. In bench mode, in-memory sqlite database is used
   instead of on-disk sqlite database.
@@ -203,7 +203,7 @@ scheduler
 ---------
 
 ```
-Usage: pyspider scheduler [OPTIONS]
+Usage: weblocust scheduler [OPTIONS]
 
   Run Scheduler, only one scheduler is allowed.
 
@@ -247,7 +247,7 @@ fetcher
 -------
 
 ```
-Usage: pyspider fetcher [OPTIONS]
+Usage: weblocust fetcher [OPTIONS]
 
   Run Fetcher.
 
@@ -272,7 +272,7 @@ processor
 ---------
 
 ```
-Usage: pyspider processor [OPTIONS]
+Usage: weblocust processor [OPTIONS]
 
   Run Processor.
 
@@ -285,7 +285,7 @@ result_worker
 -------------
 
 ```
-Usage: pyspider result_worker [OPTIONS]
+Usage: weblocust result_worker [OPTIONS]
 
   Run result worker.
 
@@ -299,7 +299,7 @@ webui
 -----
 
 ```
-Usage: pyspider webui [OPTIONS]
+Usage: weblocust webui [OPTIONS]
 
   Run WebUI
 

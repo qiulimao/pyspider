@@ -16,6 +16,8 @@ class BaseCleaner(object):
         
 class JoinCleaner(BaseCleaner):
     """ join list to one item """
+    seperator = ""
+
     @classmethod
     def doapply(cls,raw_input):
 
@@ -24,7 +26,11 @@ class JoinCleaner(BaseCleaner):
                 return raw_input
             elif isinstance(raw_input,str):
                 return raw_input.decode("utf-8")
-        return "".join(raw_input)
+        return cls.seperator.join(raw_input)
+
+    @classmethod
+    def set_seperator(cls,seperator):
+        cls.seperator = seperator
     
 class StripBlankMoreThan2(BaseCleaner):
     """ strip black more than 2 """

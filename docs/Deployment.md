@@ -98,22 +98,23 @@ You should run components alone with subcommands. You may add `&` after command 
 
 ```
 # start **only one** scheduler instance
-pyspider -c config.json scheduler
+weblocust -c config.json scheduler
 
 # phantomjs
-pyspider -c config.json phantomjs
+weblocust -c config.json phantomjs
 
 # start fetcher / processor / result_worker instances as many as your needs
-pyspider -c config.json --phantomjs-proxy="localhost:25555" fetcher
-pyspider -c config.json processor
-pyspider -c config.json result_worker
+weblocust -c config.json --phantomjs-proxy="localhost:25555" fetcher
+weblocust -c config.json processor
+weblocust -c config.json result_worker
 
 # start webui, set `--scheduler-rpc` if scheduler is not running on the same host as webui
-pyspider -c config.json webui
+weblocust -c config.json webui
 ```
 
 Running with Docker
 -------------------
-Or [Running pyspider with Docker](Running-pyspider-with-Docker)
+Or [Running weblocust with Docker](Running-pyspider-with-Docker)
 
+>   关于部署呢，我本人还是推荐使用 `supervisor`
 

@@ -21,6 +21,8 @@ from pyspider.message_queue import connect_message_queue
 from pyspider.database import connect_database
 from pyspider.libs import utils
 
+__version__=1.0
+__program_name__ = "weblocust"
 
 def read_config(ctx, param, value):
     if not value:
@@ -85,7 +87,7 @@ def connect_rpc(ctx, param, value):
 @click.option('--data-path', default='./data', help='data dir path')
 @click.option('--add-sys-path/--not-add-sys-path', default=True, is_flag=True,
               help='add current working directory to python lib search path')
-@click.version_option(version=pyspider.__version__, prog_name=pyspider.__name__)
+@click.version_option(version=__version__, prog_name=__program_name__)
 @click.pass_context
 def cli(ctx, **kwargs):
     """

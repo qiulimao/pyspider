@@ -4,8 +4,8 @@ Quickstart
 Installation
 ------------
 
-* `pip install pyspider`
-* run command `pyspider`, visit [http://localhost:5000/](http://localhost:5000/)
+* you need to run `git clone https://github.com/qiulimao/weblocust.git` then `$python setup.py install`
+* run command `weblocust`, visit [http://localhost:5000/](http://localhost:5000/)
 
 if you are using ubuntu, try:
 ```
