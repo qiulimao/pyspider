@@ -1,12 +1,14 @@
 {
-  "taskdb": "mongodb+taskdb://localhost:27017/pyspider_task",
-  "projectdb": "mongodb+projectdb://localhost:27017/pyspider_project",
-  "resultdb": "mongodb+resultdb://localhost:27017/pyspider_result",
+  "taskdb": "mongodb+taskdb://localhost:27017/weblocust_task",
+  "projectdb": "mongodb+projectdb://localhost:27017/weblocust_project",
+  "resultdb": "mongodb+resultdb://localhost:27017/weblocust_result",
   "message_queue": "redis://localhost:6379/0",
   "result_worker": {
     "result_cls": "pyspider.result.AdvanceResultWorker"
   },
+  "phantomjs_proxy":"localhost:25555",
   "webui": {
+     "host":"127.0.0.1",
      "username": "zephyr",
      "password": "admin",
      "need-auth": false

@@ -98,4 +98,10 @@ app.filter("null2group", function() {
         part_key = value.split(".").pop();
         return $filter("filter")(input,part_key);
     }
+}]).filter("templateinclude",["$filter",function($filter){
+    return function(template_name)
+    {
+        var template_name = template_name +"?v="+Math.floor(Math.random()*10000+99);
+        return template_name;
+    }
 }]);

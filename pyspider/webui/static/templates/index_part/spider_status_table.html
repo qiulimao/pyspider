@@ -1,0 +1,69 @@
+    <uib-alert close="close_alert()" ng-show="SHOW_ALERT">[$ alert.msg $] project in [$ alert.status $]</uib-alert>
+
+
+	  <table class="table">
+      <caption>
+        <div class="col-md-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="根据分组、名字、状态搜索爬虫" ng-model="search">
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="button">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              </button>
+            </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+
+      </caption>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>分组</th>
+          <th>spider</th>
+          <th>burst/rate</th>
+          <th>status</th>
+          <th>monitor</th>
+		      <th>operation</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="project in projects | filter:search">
+          <th scope="row">[$ $index $]</th> <!-- 显示序号 -->
+          <td>
+          	
+            <span uib-popover-template="'changeGroupTemplate.html'" popover-title="分组" popover-placement='right' popover-trigger="outsideClick" class="label label-default">
+          		[$ project.group | null2group $]
+            </span>
+          </td>		<!-- 显示分组 -->
+
+          <td><a href="#/debug/[$ project.name $]">[$project.name$]</a></td>			<!-- 工程名 -->
+          <td>
+              <span uib-popover-template="'changeBRTemplate.html'" popover-title="并发/速度" popover-placement='right' popover-trigger="outsideClick" class="label label-fine">
+              	[$project.burst$] &nbsp;/ &nbsp;[$project.rate$]
+              </span>
+          </td>  <!-- 并发与速度 -->
+          
+
+
+          <td>
+              <span uib-popover-template="'changeStatusTemplate.html'" popover-title="修改状态" ng-bind="project.status" popover-placement='right' popover-trigger="outsideClick" class="label" ng-class="{'label-danger':project.status == 'STOP','label-success':project.status=='RUNNING','label-warning':project.status=='CHECKING','label-primary':project.status=='TODO','label-info':project.status=='DEBUG'}"></span>
+		      </td><!-- 运行状态 -->
+
+          <td>
+            <uib-progressbar animate="true" max="project.monitor['5m']['pending'] | null2one" value="project.monitor['5m']['success'] | null2zero" type="primary" class="progress-striped"></uib-progressbar>
+            <uib-progressbar animate="true"  max="project.monitor['1h']['pending'] | null2one" value="project.monitor['1h']['success'] | null2zero" type="warning" class="progress-striped"></uib-progressbar>
+            <uib-progressbar animate="true" max="project.monitor['1d']['pending'] | null2one" value="project.monitor['1d']['success'] | null2zero" type="success" class="progress-striped"></uib-progressbar>
+            <uib-progressbar animate="true" max="project.monitor['all']['pending'] | null2one" value="project.monitor['all']['success'] | null2zero" type="danger" class="progress-striped"></uib-progressbar>                                    
+          </td>
+
+          <td>
+            <a  class="btn btn-default btn-sm" uib-popover-template="'monitorTemplate.html'" popover-title="运行状况" popover-placement='bottom-left' popover-trigger="mouseenter">monitor</a>
+            <a  class="btn btn-default btn-sm" ng-click = "run(project)">run</a>
+            <a  class="btn btn-default btn-sm" href="#/result/[$ project.name $]">result</a>
+            <a  class="btn btn-default btn-sm" href="#/task/[$ project.name $]">task</a>
+
+          </td>
+
+        </tr>
+    </table>
