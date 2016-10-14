@@ -31,6 +31,48 @@ default_task = {
 default_script = inspect.getsource(sample_handler)
 
 
+@app.route("/debug/clear/taskdb/<project>",methods=['GET','POST'])
+def clear_taskdb(project):
+    """
+        clear all the tasks in taskdb
+    """
+    taskdb = app.config['taskdb']
+    resultdb = app.config['resultdb']
+    taskdb.remove(project)
+    return json.dumps({"taskdb":taskdb.size(project),"resultdb":resultdb.size(project)}),200,{'Content-Type':"application/json"}
+
+
+
+@app.route("/debug/clear/resultdb/<project>",methods=['GET','POST'])
+def clear_resultdb(project):
+    """
+        clear all the results in resultdb 
+    """
+    taskdb = app.config['taskdb']
+    resultdb = app.config['resultdb']
+    resultdb.remove(project)
+    return json.dumps({"taskdb":taskdb.size(project),"resultdb":resultdb.size(project)}),200,{'Content-Type':"application/json"}
+
+def get_project_info(project):
+    """
+    """
+    taskdb = app.config['taskdb']
+    resultdb = app.config['resultdb']
+    result = {'taskdbsize':taskdb.size(project),'resultdbsize':resultdb.size(project)}
+    return json.dumps(result),200,{'Content-Type':'application/json'}
+
+
+@app.route("/debug/info/<project>",methods=['GET'])
+def project_info(project):
+    """
+        project infomation
+    """
+    taskdb = app.config['taskdb']
+    resultdb = app.config['resultdb']
+    result = {'taskdbsize':taskdb.size(project),'resultdbsize':resultdb.size(project)}
+    return json.dumps(result),200,{'Content-Type':'application/json'}
+
+
 @app.route('/debug/<project>', methods=['GET', 'POST'])
 def debug(project):
     """

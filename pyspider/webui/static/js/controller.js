@@ -205,7 +205,7 @@ controller("TaskController",["$scope","$routeParams","$resource",function($scope
 	})
 
 }]).
-controller("DebugController",["$scope","$routeParams","$sce",function($scope,$routeParams,$sce){
+controller("DebugController",["$scope","$routeParams","$sce","$resource",function($scope,$routeParams,$sce,$resource){
 	$scope.project = $routeParams.project;
 	$scope.trust_url = $sce.trustAsResourceUrl("/debug/"+$routeParams.project);
 	$scope.iframeHeiht = 750;
@@ -220,6 +220,27 @@ controller("DebugController",["$scope","$routeParams","$sce",function($scope,$ro
 			$scope.iframeHeiht = 750;
 		} 		
 	});
+    
+    var projectinfo = $resource('/debug/info/:project',{project:$scope.project});
+    projectinfo.get({},function(response){
+        $scope.projectinfo = response;
+    });
+
+    var dboperation = $resource("/debug/:operation/:db/:project",{operation:"clear",db:"@db",project:$scope.project});
+
+    $scope.removeTaskdb = function()
+    {
+        dboperation.get({db:"taskdb"},function(response){
+            $scope.projectinfo = response;
+        });
+    }
+    
+    $scope.removeResultdb = function()
+    {
+        dboperation.get({db:"resultdb"},function(response){
+            $scope.projectinfo = response;
+        });
+    }
 
 
 }]).

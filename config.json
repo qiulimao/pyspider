@@ -7,6 +7,9 @@
     "result_cls": "pyspider.result.AdvanceResultWorker"
   },
   "phantomjs_proxy":"localhost:25555",
+  "fetcher":{
+    "timeout":8
+  },
   "webui": {
      "host":"127.0.0.1",
      "username": "zephyr",

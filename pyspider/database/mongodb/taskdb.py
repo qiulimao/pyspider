@@ -56,6 +56,31 @@ class TaskDB(SplitTableMixin, BaseTaskDB):
                 data[each] = json.dumps(data[each])
         return data
 
+    def remove(self,project):
+        """
+            remove all tasks in taskdb 
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        #ret = self.database[collection_name].find_one({'taskid': taskid}, fields)
+        self.database[collection_name].remove()
+
+    def size(self,project):
+        """
+            get the size of the tasks in taskdb 
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        ret = self.database[collection_name].find().count()
+        return ret 
+
+
     def load_tasks(self, status, project=None, fields=None):
         if not project:
             self._list_project()

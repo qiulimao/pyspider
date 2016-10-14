@@ -108,6 +108,24 @@ class ResultDB(SplitTableMixin, BaseResultDB):
         collection_name = self._collection_name(project)
         return self.database[collection_name].find(condition).count()
     
+    def remove(self,project):
+        """
+            remove all the results in result database 
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        return self.database[collection_name].remove()
+
+    def size(self,project):
+        """
+            return the size of result database 
+        """
+        return self.count(project)
+
+
     ##
     # ------------------------------------------------------------------------
     ##
