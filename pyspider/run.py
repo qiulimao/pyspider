@@ -302,8 +302,8 @@ def result_worker(ctx, result_cls):
               help='js/css cdn server')
 @click.option('--scheduler-rpc', help='xmlrpc path of scheduler')
 @click.option('--fetcher-rpc', help='xmlrpc path of fetcher')
-@click.option('--max-rate', type=float, help='max rate for each project')
-@click.option('--max-burst', type=float, help='max burst for each project')
+@click.option('--max-rate', type=float, help='max rate for each project',default=8.0)
+@click.option('--max-burst', type=float, help='max burst for each project',default=5.0)
 @click.option('--username', envvar='WEBUI_USERNAME',
               help='username of lock -ed projects')
 @click.option('--password', envvar='WEBUI_PASSWORD',

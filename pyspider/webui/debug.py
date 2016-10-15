@@ -13,8 +13,8 @@ import inspect
 import datetime
 import traceback
 from flask import render_template, request, json
-from flask.ext import login
-
+#from flask.ext import login
+import flask_login as login 
 from pyspider.libs import utils, sample_handler, dataurl
 from pyspider.libs.response import rebuild_response
 from pyspider.processor.project_module import ProjectManager, ProjectFinder
@@ -39,7 +39,7 @@ def clear_taskdb(project):
     taskdb = app.config['taskdb']
     resultdb = app.config['resultdb']
     taskdb.remove(project)
-    return json.dumps({"taskdb":taskdb.size(project),"resultdb":resultdb.size(project)}),200,{'Content-Type':"application/json"}
+    return json.dumps({"taskdbsize":taskdb.size(project),"resultdbsize":resultdb.size(project)}),200,{'Content-Type':"application/json"}
 
 
 
@@ -51,7 +51,7 @@ def clear_resultdb(project):
     taskdb = app.config['taskdb']
     resultdb = app.config['resultdb']
     resultdb.remove(project)
-    return json.dumps({"taskdb":taskdb.size(project),"resultdb":resultdb.size(project)}),200,{'Content-Type':"application/json"}
+    return json.dumps({"taskdbsize":taskdb.size(project),"resultdbsize":resultdb.size(project)}),200,{'Content-Type':"application/json"}
 
 def get_project_info(project):
     """
@@ -106,7 +106,7 @@ def debug(project):
 @app.route("/debug/create-project",methods=["POST"])
 def create_project():
     project_name = request.form.get("project-name")
-    debug(project_name)
+    #debug(project_name)
     return json.dumps({"ok":1,"project_name":project_name}),200,{'Content-Type': 'application/json'}
 
 @app.before_first_request

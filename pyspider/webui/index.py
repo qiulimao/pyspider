@@ -8,7 +8,8 @@
 import socket
 
 from flask import render_template, request, json
-from flask.ext import login
+#from flask.ext import login
+import flask_login as login 
 from .app import app
 
 index_fields = ['name', 'group', 'status', 'comments', 'rate', 'burst', 'updatetime']

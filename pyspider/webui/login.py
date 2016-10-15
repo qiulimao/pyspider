@@ -7,7 +7,8 @@
 
 import base64
 from flask import Response
-from flask.ext import login
+#from flask.ext import login
+import flask_login as login
 from .app import app
 
 login_manager = login.LoginManager()
@@ -62,6 +63,8 @@ def load_user_from_request(request):
             app.logger.error('wrong api key: %r, %r', api_key, e)
             return None
     return None
+
+    
 app.login_response = Response(
     "need auth.", 401, {'WWW-Authenticate': 'Basic realm="Login Required"'}
 )

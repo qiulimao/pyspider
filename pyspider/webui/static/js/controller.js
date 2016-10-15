@@ -205,7 +205,8 @@ controller("TaskController",["$scope","$routeParams","$resource",function($scope
 	})
 
 }]).
-controller("DebugController",["$scope","$routeParams","$sce","$resource",function($scope,$routeParams,$sce,$resource){
+controller("DebugController",["$scope","$routeParams","$sce","$resource","$uibModal",
+	function($scope,$routeParams,$sce,$resource,$uibModal){
 	$scope.project = $routeParams.project;
 	$scope.trust_url = $sce.trustAsResourceUrl("/debug/"+$routeParams.project);
 	$scope.iframeHeiht = 750;
@@ -228,21 +229,43 @@ controller("DebugController",["$scope","$routeParams","$sce","$resource",functio
 
     var dboperation = $resource("/debug/:operation/:db/:project",{operation:"clear",db:"@db",project:$scope.project});
 
-    $scope.removeTaskdb = function()
-    {
-        dboperation.get({db:"taskdb"},function(response){
-            $scope.projectinfo = response;
-        });
-    }
-    
-    $scope.removeResultdb = function()
-    {
-        dboperation.get({db:"resultdb"},function(response){
-            $scope.projectinfo = response;
-        });
-    }
+	$scope.alert = function(db)
+	{
+        var deleteAlertModal = $uibModal.open({
+              templateUrl: '/static/templates/delete-alert.html?v='+Math.random(),
+              controller: 'DeleteDBAlertController',
+              size: "sm",
+              resolve: {
+				project:function(){return $scope.project},
+                targetdb: function () {
+                  return db;
+                },
+              }
+            });
+
+        deleteAlertModal.result.then(function(response){
+            if(response){
+                dboperation.get({db:db},function(response){
+					$scope.projectinfo = response;
+				});
+            }
+        });		
+	}
 
 
+}]).
+controller("DeleteDBAlertController",["$scope","$uibModalInstance","project","targetdb",
+    function($scope,$uibModalInstance,project,targetdb){
+
+          $scope.db = targetdb;
+		  $scope.project = project;
+          $scope.ok = function () {
+            $uibModalInstance.close(true);
+          };
+
+          $scope.cancel = function () {
+            $uibModalInstance.close(false);
+          };
 }]).
 controller('CreateNewSpider', ['$scope',"$http","$location","$log", function($scope,$http,$location,$log){
 	$scope.newproject={}
