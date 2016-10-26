@@ -3,6 +3,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 # Created on 2016-05-20 15:28:20
+# Modified on 2016-10-26 20:46:20
 # Project: app_news_163 product
 
 from pyspider.libs.base_handler import *

@@ -3,7 +3,12 @@
 # vim: set et sw=4 ts=4 sts=4 ff=unix fenc=utf8:
 # Author: Binux<i@binux.me>
 #         http://binux.me
+#
+# Contributor: qiulimao<qiulimao@getqiu.com>
+#         http://www.getqiu.com
+#
 # Created on 2014-02-22 14:00:05
+# Modified on 2016-10-26 20:46:20
 
 import os
 import six
@@ -311,9 +316,25 @@ class TestProcessor(unittest.TestCase):
             "content": (
                 "<html><body>"
                 "<a href='http://binux.me'>binux</a>"
+#
+# Contributor: qiulimao<qiulimao@getqiu.com>
+#         http://www.getqiu.com
+#
                 "<a href='http://binux.me/中文'>binux</a>"
+#
+# Contributor: qiulimao<qiulimao@getqiu.com>
+#         http://www.getqiu.com
+#
                 "<a href='http://binux.me/1'>1</a>"
+#
+# Contributor: qiulimao<qiulimao@getqiu.com>
+#         http://www.getqiu.com
+#
                 "<a href='http://binux.me/1'>2</a>"
+#
+# Contributor: qiulimao<qiulimao@getqiu.com>
+#         http://www.getqiu.com
+#
                 "</body></html>"
             ),
             "headers": {'a': 'b', 'etag': 'tag'},
@@ -342,7 +363,15 @@ class TestProcessor(unittest.TestCase):
         tasks = self.newtask_queue.get()
         self.assertEqual(len(tasks), 3)
         self.assertEqual(tasks[0]['url'], 'http://binux.me/')
+#
+# Contributor: qiulimao<qiulimao@getqiu.com>
+#         http://www.getqiu.com
+#
         self.assertTrue(tasks[1]['url'].startswith('http://binux.me/%'), task['url'])
+#
+# Contributor: qiulimao<qiulimao@getqiu.com>
+#         http://www.getqiu.com
+#
 
     def test_50_fetch_error(self):
         # clear new task queue

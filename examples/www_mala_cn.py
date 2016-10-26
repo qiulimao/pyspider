@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 # Created on 2016-05-24 08:53:10
+# Modified on 2016-10-26 20:46:20
 # Project: www_mala_cn
 
 from pyspider.libs.base_handler import *
