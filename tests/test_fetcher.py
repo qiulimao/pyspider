@@ -20,16 +20,16 @@ import unittest2 as unittest
 
 import logging
 import logging.config
-logging.config.fileConfig("pyspider/logging.conf")
+logging.config.fileConfig("weblocust/logging.conf")
 
 try:
     from six.moves import xmlrpc_client
 except ImportError:
     import xmlrpclib as xmlrpc_client
-from pyspider.libs import utils
-from pyspider.libs.multiprocessing_queue import Queue
-from pyspider.libs.response import rebuild_response
-from pyspider.fetcher.tornado_fetcher import Fetcher
+from weblocust.libs import utils
+from weblocust.libs.multiprocessing_queue import Queue
+from weblocust.libs.response import rebuild_response
+from weblocust.fetcher.tornado_fetcher import Fetcher
 
 
 class TestFetcher(unittest.TestCase):
@@ -77,7 +77,7 @@ class TestFetcher(unittest.TestCase):
         try:
             self.phantomjs = subprocess.Popen(['phantomjs',
                 os.path.join(os.path.dirname(__file__),
-                    '../pyspider/fetcher/phantomjs_fetcher.js'),
+                    '../weblocust/fetcher/phantomjs_fetcher.js'),
                 '25555'])
         except OSError:
             self.phantomjs = None
@@ -262,14 +262,14 @@ class TestFetcher(unittest.TestCase):
         if not self.phantomjs:
             raise unittest.SkipTest('no phantomjs')
         request = copy.deepcopy(self.sample_task_http)
-        request['url'] = self.httpbin+'/pyspider/ajax.html'
+        request['url'] = self.httpbin+'/weblocust/ajax.html'
         request['fetch']['fetch_type'] = 'js'
-        request['fetch']['headers']['User-Agent'] = 'pyspider-test'
+        request['fetch']['headers']['User-Agent'] = 'weblocust-test'
         result = self.fetcher.sync_fetch(request)
         self.assertEqual(result['status_code'], 200)
         self.assertNotIn('loading', result['content'])
         self.assertIn('done', result['content'])
-        self.assertIn('pyspider-test', result['content'])
+        self.assertIn('weblocust-test', result['content'])
 
     def test_a110_dns_error(self):
         request = copy.deepcopy(self.sample_task_http)

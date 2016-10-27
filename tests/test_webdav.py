@@ -18,8 +18,8 @@ import inspect
 import unittest2 as unittest
 
 from six import BytesIO
-from pyspider import run
-from pyspider.libs import utils
+from weblocust import run
+from weblocust.libs import utils
 from tests import data_sample_handler, data_handler
 
 @unittest.skipIf(six.PY3, 'webdav not support python3')

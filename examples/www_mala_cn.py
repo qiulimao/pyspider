@@ -4,9 +4,9 @@
 # Modified on 2016-10-26 20:46:20
 # Project: www_mala_cn
 
-from pyspider.libs.base_handler import *
-from pyspider.libs.useragent import IphoneSafari,LinuxChrome
-from pyspider.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2,reduceclean,mapclean,mapreduce
+from weblocust.libs.base_handler import *
+from weblocust.libs.useragent import IphoneSafari,LinuxChrome
+from weblocust.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2,reduceclean,mapclean,mapreduce
 from hashlib import md5
 import re
 

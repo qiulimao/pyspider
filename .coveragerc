@@ -1,12 +1,12 @@
 [run]
 source =
-    pyspider
+    weblocust
 parallel = True
 
 [report]
 omit =
-    pyspider/libs/sample_handler.py
-    pyspider/libs/pprint.py
+    weblocust/libs/sample_handler.py
+    weblocust/libs/pprint.py
 
 exclude_lines =
     pragma: no cover

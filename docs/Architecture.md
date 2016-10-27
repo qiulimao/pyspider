@@ -1,7 +1,7 @@
 Architecture
 ============
 
-This document describes the reason why I made pyspider and the architecture.
+This document describes the reason why I made weblocust and the architecture.
 
 Why
 ---
@@ -12,17 +12,17 @@ Two years ago, I was working on a vertical search engine. We are facing followin
 
 2. data should be collected in 5min when website updated
 > We solve this problem by check index page frequently, and use something like 'last update time' or 'last reply time' to determine which page is changed. In addition to this, we recheck pages after X days in case to prevent the omission.  
-> **pyspider will never stop as WWW is changing all the time**
+> **weblocust will never stop as WWW is changing all the time**
 
 Furthermore, we have some APIs from our cooperators, the API may need POST, proxy, request signature etc. Full control from script is more convenient than some global parameters of components.
 
 Overview
 --------
-The following diagram shows an overview of the pyspider architecture with its components and an outline of the data flow that takes place inside the system.
+The following diagram shows an overview of the weblocust architecture with its components and an outline of the data flow that takes place inside the system.
 
-![pyspider](imgs/pyspider-arch.png)
+![weblocust](imgs/weblocust-arch.png)
 
-Components are connected by message queue. Every component, including message queue, is running in their own process/thread, and replaceable. That means, when process is slow, you can have many instances of processor and make full use of multiple CPUs, or deploy to multiple machines. This architecture makes pyspider really fast. [benchmarking](https://gist.github.com/binux/67b276c51e988f8e2c31#comment-1339242).
+Components are connected by message queue. Every component, including message queue, is running in their own process/thread, and replaceable. That means, when process is slow, you can have many instances of processor and make full use of multiple CPUs, or deploy to multiple machines. This architecture makes weblocust really fast. [benchmarking](https://gist.github.com/binux/67b276c51e988f8e2c31#comment-1339242).
 
 Components
 ----------
@@ -64,11 +64,11 @@ WebUI is a web frontend for everything. It contains:
 * task monitor
 * result viewer, exporter
 
-Maybe webui is the most attractive part of pyspider. With this powerful UI, you can debug your scripts step by step just as pyspider do. Starting or stop a project. Finding which project is going wrong and what request is failed and try it again with debugger.
+Maybe webui is the most attractive part of weblocust. With this powerful UI, you can debug your scripts step by step just as weblocust do. Starting or stop a project. Finding which project is going wrong and what request is failed and try it again with debugger.
 
 Data flow
 ---------
-The data flow in pyspider is just as your seen in diagram above:
+The data flow in weblocust is just as your seen in diagram above:
 
 1. Each script has a callback named `on_start`, when you press the `Run` button on WebUI. A new task of `on_start` is submitted to Scheduler as the entries of project.
 2. Scheduler dispatches this `on_start` task with a Data URI as a normal task to Fetcher.

@@ -18,12 +18,12 @@ import unittest2 as unittest
 import tornado.wsgi
 import tornado.ioloop
 import tornado.httpserver
-from pyspider.libs import utils
+from weblocust.libs import utils
 
 class TestXMLRPCServer(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        from pyspider.libs import wsgi_xmlrpc
+        from weblocust.libs import wsgi_xmlrpc
         
         def test_1():
             return 'test_1'

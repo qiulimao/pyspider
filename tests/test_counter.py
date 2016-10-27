@@ -14,7 +14,7 @@ import sys
 import time
 import unittest2 as unittest
 
-from pyspider.libs import counter
+from weblocust.libs import counter
 
 class TestCounter(unittest.TestCase):
     def test_010_TimebaseAverageEventCounter(self):

@@ -1,20 +1,20 @@
 Deployment
 ===========
 
-Since pyspider has various components, you can just run `pyspider` to start a standalone and third service free instance. Or using MySQL or MongoDB and RabbitMQ to deploy a distributed crawl cluster.
+Since weblocust has various components, you can just run `weblocust` to start a standalone and third service free instance. Or using MySQL or MongoDB and RabbitMQ to deploy a distributed crawl cluster.
 
-To deploy pyspider in product environment, running component in each process and store data in database service is more reliable and flexible.
+To deploy weblocust in product environment, running component in each process and store data in database service is more reliable and flexible.
 
 Installation
 ------------
 
-To deploy pyspider components in each single processes, you need at least one database service. pyspider now supports [MySQL](http://www.mysql.com/), [MongoDB](http://www.mongodb.org/) and [PostgreSQL](http://www.postgresql.org/). You can choose one of them.
+To deploy weblocust components in each single processes, you need at least one database service. weblocust now supports [MySQL](http://www.mysql.com/), [MongoDB](http://www.mongodb.org/) and [PostgreSQL](http://www.postgresql.org/). You can choose one of them.
 
 And you need a message queue service to connect the components together. You can use [RabbitMQ](http://www.rabbitmq.com/), [Beanstalk](http://kr.github.io/beanstalkd/) or [Redis](http://redis.io/) as message queue.
 
-`pip install --allow-all-external pyspider[all]`
+`pip install --allow-all-external weblocust[all]`
 
-> Even if you had install pyspider using `pip` before. Install with `pyspider[all]` is necessary to install the requirements for MySQL/MongoDB/RabbitMQ.
+> Even if you had install weblocust using `pip` before. Install with `weblocust[all]` is necessary to install the requirements for MySQL/MongoDB/RabbitMQ.
 
 if you are using Ubuntu, try:
 ```
@@ -45,7 +45,7 @@ Although you can use command-line to specify the parameters. A config file is a 
 }
 ```
 
-you can get complete options by running `pyspider --help` and `pyspider webui --help` for subcommands. `"webui"` in JSON  is configs for subcommands. You can add parameters for other components similar to this one.
+you can get complete options by running `weblocust --help` and `weblocust webui --help` for subcommands. `"webui"` in JSON  is configs for subcommands. You can add parameters for other components similar to this one.
 
 #### Database Connection URI
 `"taskdb"`, `"projectdb”`, `"resultdb"` is using database connection URI with format below:
@@ -89,7 +89,7 @@ builtin:
     None
 ```
 
-> Hint for postgresql: you need to create database with encoding utf8 by your own. pyspider will not create database for you.
+> Hint for postgresql: you need to create database with encoding utf8 by your own. weblocust will not create database for you.
 
 running
 -------
@@ -114,7 +114,7 @@ weblocust -c config.json webui
 
 Running with Docker
 -------------------
-Or [Running weblocust with Docker](Running-pyspider-with-Docker)
+Or [Running weblocust with Docker](Running-weblocust-with-Docker)
 
 >   关于部署呢，我本人还是推荐使用 `supervisor`
 

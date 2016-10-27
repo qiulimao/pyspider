@@ -19,7 +19,7 @@ import json
 import unittest2 as unittest
 from six import StringIO
 
-from pyspider.libs import result_dump
+from weblocust.libs import result_dump
 
 results1 = [
     {'taskid': 'taskid1', 'url': 'http://example.org/url1', 'pdatetime': time.time(),

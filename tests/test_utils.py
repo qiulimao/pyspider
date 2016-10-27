@@ -14,7 +14,7 @@ import sys
 import time
 import unittest2 as unittest
 
-from pyspider.libs import utils
+from weblocust.libs import utils
 
 class TestFetcher(unittest.TestCase):
     def test_readonlydict(self):

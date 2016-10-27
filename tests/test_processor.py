@@ -16,10 +16,10 @@ import copy
 import time
 import unittest2 as unittest
 import logging.config
-logging.config.fileConfig("pyspider/logging.conf")
+logging.config.fileConfig("weblocust/logging.conf")
 
-from pyspider.libs import utils
-from pyspider.processor.project_module import ProjectManager
+from weblocust.libs import utils
+from weblocust.processor.project_module import ProjectManager
 
 
 class TestProjectModule(unittest.TestCase):
@@ -194,11 +194,11 @@ class TestProjectModule(unittest.TestCase):
 
 import shutil
 import inspect
-from pyspider.database.sqlite import projectdb
-from pyspider.processor.processor import Processor
-from pyspider.libs.multiprocessing_queue import Queue
-from pyspider.libs.utils import run_in_thread
-from pyspider.libs import sample_handler
+from weblocust.database.sqlite import projectdb
+from weblocust.processor.processor import Processor
+from weblocust.libs.multiprocessing_queue import Queue
+from weblocust.libs.utils import run_in_thread
+from weblocust.libs import sample_handler
 
 
 class TestProcessor(unittest.TestCase):

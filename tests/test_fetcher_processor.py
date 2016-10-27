@@ -16,10 +16,10 @@ import httpbin
 import subprocess
 import unittest2 as unittest
 
-from pyspider.database.local.projectdb import ProjectDB
-from pyspider.fetcher import Fetcher
-from pyspider.processor import Processor
-from pyspider.libs import utils, dataurl
+from weblocust.database.local.projectdb import ProjectDB
+from weblocust.fetcher import Fetcher
+from weblocust.processor import Processor
+from weblocust.libs import utils, dataurl
 from six.moves.queue import Queue
 
 

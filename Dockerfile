@@ -8,18 +8,18 @@ RUN apt-get update && \
 
 # install requirements
 RUN pip install http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-2.1.3.zip#md5=710479afc4f7895207c8f96f91eb5385
-ADD requirements.txt /opt/pyspider/requirements.txt
-RUN pip install -r /opt/pyspider/requirements.txt
+ADD requirements.txt /opt/weblocust/requirements.txt
+RUN pip install -r /opt/weblocust/requirements.txt
 RUN pip install -U pip
 
 # add all repo
-ADD ./ /opt/pyspider
+ADD ./ /opt/weblocust
 
 # run test
-WORKDIR /opt/pyspider
+WORKDIR /opt/weblocust
 RUN pip install -e .[all]
 
-VOLUME ["/opt/pyspider"]
-ENTRYPOINT ["pyspider"]
+VOLUME ["/opt/weblocust"]
+ENTRYPOINT ["weblocust"]
 
 EXPOSE 5000 23333 24444 25555

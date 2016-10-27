@@ -1,7 +1,7 @@
 site_name: weblocust
 site_description: A more Powerful Spider(Web Crawler) System based on pyspider.
-site_author: binux
-repo_url: https://github.com/qiuliamo/weblocust
+site_author: qiulimao
+repo_url: https://github.com/qiulimao/weblocust
 pages:
 - Introduction: index.md
 - Quickstart: Quickstart.md
@@ -11,7 +11,7 @@ pages:
   - 'Level 1: HTML and CSS Selector': tutorial/HTML-and-CSS-Selector.md
   - 'Level 2: AJAX and More HTTP': tutorial/AJAX-and-more-HTTP.md
   - 'Level 3: Render with PhantomJS': tutorial/Render-with-PhantomJS.md
-- About pyspider:
+- About weblocust:
   - Architecture: Architecture.md
   - About Tasks: About-Tasks.md
   - About Projects: About-Projects.md
@@ -25,7 +25,7 @@ pages:
   - '@catch_status_code_error': apis/@catch_status_code_error.md
   - '@every': apis/@every.md
 - Deployment: Deployment.md
-- Running pyspider with Docker: Running-pyspider-with-Docker.md
+- Running weblocust with Docker: Running-weblocust-with-Docker.md
 - Frequently Asked Questions: Frequently-Asked-Questions.md
 
 theme: readthedocs

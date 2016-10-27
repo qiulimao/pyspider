@@ -10,7 +10,7 @@
 # Created on 2015-01-18 14:12:55
 # Modified on 2016-10-26 20:46:20
 
-from pyspider.libs.base_handler import *
+from weblocust.libs.base_handler import *
 
 class Handler(BaseHandler):
 

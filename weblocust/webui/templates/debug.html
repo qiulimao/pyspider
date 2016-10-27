@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ project_name }} - Debugger</title>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <meta name="description" content="weblocust - debugger - {{ project_name }}">
+    <meta name="author" content="binux">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png') }}">
+    <link href="{{ url_for('static', filename='css/codemirror.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dialog.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='debug.css') }}" rel="stylesheet">
+
+    <script src="{{ url_for('static', filename='js/core/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/codemirror.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/xml.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/css.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/javascript.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/htmlmixed.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/python.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/search.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/searchcursor.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/dialog.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/active-line.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/runmode.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/formatting.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/URI.min.js') }}"></script>
+    <style>
+        li { margin-bottom: 6px; }
+
+        .settings-menue { 
+          margin-left:20px;
+          cursor:pointer;
+          font-weight:bold;
+          padding-left: 5px;
+          padding-right: 5px;
+          border: 1px solid #595959;
+          -moz-border-radius:5px; 
+          -webkit-border-radius:5px;
+        }
+        .settings-menue-change { 
+          margin-left:20px;
+          cursor:pointer;
+          padding-left: 5px;
+          padding-right: 5px;
+          border: 1px solid #5555a5;
+          -moz-border-radius:5px; 
+          -webkit-border-radius:5px;
+        }
+    </style>
+  </head>
+
+  <body>
+    <section id="control">
+      <div class="title pull-left">
+      _&gt; {{ project_name }}
+<!--
+        <span class="settings-menue" value="+1" target="font-size">+</span>
+        <span class="settings-menue" value="-1" target="font-size">-&nbsp;</span>
+
+        <span class="settings-menue" value="+1" target="line-height">&#8593;</span>
+        <span class="settings-menue" value="-1" target="line-height">&#8595;</span>
+-->
+        <span class="settings-menue-change" value="#c5c5c5" target="background-color" style="background-color:#c5c5c5">&nbsp;&nbsp;</span>
+        <span class="settings-menue-change" value="#fff" target="background-color" style="background-color:#fff">&nbsp;&nbsp;</span>
+     </div>
+
+      <div class="pull-right">
+        <span class="webdav-btn">WebDAV Mode</span>
+      </div>
+    </section>
+    <script>
+      // $(".settings-menue").click(function(){
+      //     var incr = parseInt($(this).attr('value'));
+      //     var target = $(this).attr("target");
+      //     var current_value = parseInt($(".CodeMirror-code").css(target));
+      //     var new_value = current_value + incr;
+      //     $(".CodeMirror-code").css(target,new_value);
+      // });
+      $(".settings-menue-change").click(function(){
+          var new_value = $(this).attr('value');
+          var target = $(this).attr("target");
+          $(".CodeMirror-code").css(target,new_value);
+      });      
+    </script>
+    <section id="editarea">
+      <div id="left-area" class="debug-panel" style="right: 50%">
+        <div id="task-panel">
+          <div id="task-editor" class="editor">
+            <div id="run-task-btn">run</div>
+            <div id="undo-redo-btn-group">
+              <a href="javascript:;" id="undo-btn"> &lt; </a>|<a href="javascript:;" id="redo-btn">&gt; </a>
+            </div>
+          </div>
+          <div id="python-log" style="display: none;">
+            <pre style="display: none;"></pre>
+            <div id="python-log-show"></div>
+          </div>
+          <div id="debug-tabs">
+            <div id="tab-web" class="tab" style="display: none;">
+              <div id="css-selector-helper">
+                <input class="copy-selector-input" />
+                <button class="btn copy-selector"><i class="fa fa-clipboard" title="copy css selector"></i></button>
+                <button class="btn add-to-editor"><i class="fa fa-arrow-right" title="add to editor"></i></button>
+              </div>
+              <div class="iframe-box"></div>
+            </div>
+            <div id="tab-html" class="tab" style="display: none;"><pre class="cm-s-default"></pre></div>
+            <div id="tab-follows" class="tab">
+              {# <div class="newtask">
+                <span class="task-callback">__callback__</span> &gt; <span class="task-url">__url__</span>
+                <div class="task-run"><i class="fa fa-play"></i></div>
+                <div class="task-more"> <i class="fa fa-ellipsis-h"></i> </div>
+              </div> #}
+            </div>
+            <div id="tab-messages" class="tab" style="display: none;">
+              <pre class="cm-s-default"></pre>
+            </div>
+          </div>
+        </div>
+        <ul id="tab-control">
+          <li data-id="tab-messages">msg<span class="num" style="display: none;"></span></li>
+          <li data-id="tab-follows">follows<span class="num" style="display: none;"></span></li>
+          <li data-id="tab-html">html</li>
+          <li data-id="tab-web" class="active">web</li>
+          <li id="J-enable-css-selector-helper">SelectorHelper</li>
+        </ul>
+        <div class="overlay" style="display: none;"></div>
+      </div>
+
+      <div id="right-area" class="debug-panel" style="left: 50%">
+        <div id="python-editor" class="editor focus">
+          <div id="save-task-btn">save</div>
+        </div>
+        <div class="overlay" style="display: none;"></div>
+      </div>
+    </section>
+
+    <script>
+      var task_content = {{ task | tojson | tojson | safe }};
+      var script_content = {{ script | tojson | safe }};
+    </script>
+    <script src="{{ url_for('static', filename='splitter.js') }}"></script>
+    <script src="{{ url_for('static', filename='debug.js') }}"></script>
+  </body>
+</html>
+<!-- vim: set et sw=2 ts=2 sts=2 ff=unix fenc=utf8 syntax=htmldjango: -->
+

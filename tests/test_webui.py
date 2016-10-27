@@ -17,9 +17,9 @@ import json
 import shutil
 import unittest2 as unittest
 
-from pyspider import run
-from pyspider.libs import utils
-from pyspider.libs.utils import run_in_thread, ObjectDict
+from weblocust import run
+from weblocust.libs import utils
+from weblocust.libs.utils import run_in_thread, ObjectDict
 
 
 class TestWebUI(unittest.TestCase):
@@ -117,7 +117,7 @@ class TestWebUI(unittest.TestCase):
     def test_25_debug_post(self):
         rv = self.app.post('/debug/test_project', data={
             'project-name': 'other_project',
-            'start-urls': 'http://127.0.0.1:14887/pyspider/test.html',
+            'start-urls': 'http://127.0.0.1:14887/weblocust/test.html',
             'script-mode': 'script',
         })
         self.assertEqual(rv.status_code, 200)

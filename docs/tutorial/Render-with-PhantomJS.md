@@ -3,11 +3,11 @@ Level 3: Render with PhantomJS
 
 Sometimes web page is too complex to find out the API request. It's time to meet the power of [PhantomJS].
 
-To use PhantomJS, you should have PhantomJS [installed](http://phantomjs.org/download.html). If you are running pyspider with `all` mode, PhantomJS is enabled if excutable in the `PATH`.
+To use PhantomJS, you should have PhantomJS [installed](http://phantomjs.org/download.html). If you are running weblocust with `all` mode, PhantomJS is enabled if excutable in the `PATH`.
 
 Make sure phantomjs is working by running
 ```
-$ pyspider phantomjs
+$ weblocust phantomjs
 ```
 
 Continue with the rest of the tutorial if the output is
@@ -18,7 +18,7 @@ Web server running on port 25555
 Use PhantomJS
 -------------
 
-When pyspider with PhantomJS connected, you can enable this feature by adding a parameter `fetch_type='js'` to `self.crawl`. We use PhantomJS to scrape channel list of  [http://www.twitch.tv/directory/game/Dota%202](http://www.twitch.tv/directory/game/Dota%202) which is loaded with AJAX we discussed in [Level 2](tutorial/AJAX-and-more-HTTP#ajax):
+When weblocust with PhantomJS connected, you can enable this feature by adding a parameter `fetch_type='js'` to `self.crawl`. We use PhantomJS to scrape channel list of  [http://www.twitch.tv/directory/game/Dota%202](http://www.twitch.tv/directory/game/Dota%202) which is loaded with AJAX we discussed in [Level 2](tutorial/AJAX-and-more-HTTP#ajax):
 
 ```
 class Handler(BaseHandler):
@@ -69,7 +69,7 @@ class Handler(BaseHandler):
 > * Script would been executed after page loaded(can been changed via [`js_run_at` parameter](/apis/self.crawl/#enable-javascript-fetcher-need-support-by-fetcher))
 > * We scroll once after page loaded, you can scroll multiple times using [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers.setTimeout). PhantomJS will fetch as many items as possible before timeout arrived.
 
-Online demo: [http://demo.pyspider.org/debug/tutorial_pinterest](http://demo.pyspider.org/debug/tutorial_pinterest)
+Online demo: [http://demo.weblocust.org/debug/tutorial_pinterest](http://demo.weblocust.org/debug/tutorial_pinterest)
 
 
 

@@ -18,8 +18,8 @@ import shutil
 import inspect
 import unittest2 as unittest
 
-from pyspider import run
-from pyspider.libs import utils
+from weblocust import run
+from weblocust.libs import utils
 
 class TestBench(unittest.TestCase):
 

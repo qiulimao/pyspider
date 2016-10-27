@@ -23,8 +23,8 @@ import inspect
 import requests
 import unittest2 as unittest
 
-from pyspider import run
-from pyspider.libs import utils
+from weblocust import run
+from weblocust.libs import utils
 from tests import data_sample_handler
 
 class TestRun(unittest.TestCase):
@@ -103,7 +103,7 @@ class TestRun(unittest.TestCase):
                                        obj=dict(testing_mode=True))
             ctx = run.cli.invoke(ctx)
 
-            from pyspider.database.sqlite import resultdb
+            from weblocust.database.sqlite import resultdb
             self.assertIsInstance(ctx.obj.resultdb, resultdb.ResultDB)
         finally:
             del os.environ['RESULTDB']
@@ -278,13 +278,13 @@ class TestRun(unittest.TestCase):
 
             text = wait_text(3)
             self.assertIn('new task data_sample_handler:on_start', text)
-            self.assertIn('pyspider shell', text)
+            self.assertIn('weblocust shell', text)
 
             os.write(fd, utils.utf8('run()\n'))
             text = wait_text()
             self.assertIn('task done data_sample_handler:on_start', text)
 
-            os.write(fd, utils.utf8('crawl("%s/pyspider/test.html")\n' % self.httpbin))
+            os.write(fd, utils.utf8('crawl("%s/weblocust/test.html")\n' % self.httpbin))
             text = wait_text()
             self.assertIn('/robots.txt', text)
 
@@ -299,7 +299,7 @@ class TestRun(unittest.TestCase):
             text = wait_text()
             self.assertIn('task retry', text)
 
-            os.write(fd, b'quit_pyspider()\n')
+            os.write(fd, b'quit_weblocust()\n')
             text = wait_text()
             self.assertIn('scheduler exiting...', text)
             os.close(fd)

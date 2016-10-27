@@ -16,10 +16,10 @@ import shutil
 import unittest2 as unittest
 import logging
 import logging.config
-logging.config.fileConfig("pyspider/logging.conf")
+logging.config.fileConfig("weblocust/logging.conf")
 
-from pyspider.scheduler.task_queue import TaskQueue
-from pyspider.libs import utils
+from weblocust.scheduler.task_queue import TaskQueue
+from weblocust.libs import utils
 
 
 class TestTaskQueue(unittest.TestCase):
@@ -79,7 +79,7 @@ class TestTaskQueue(unittest.TestCase):
         self.assertEqual(len(self.task_queue), 0)
 
 
-from pyspider.scheduler.token_bucket import Bucket
+from weblocust.scheduler.token_bucket import Bucket
 
 
 class TestBucket(unittest.TestCase):
@@ -101,10 +101,10 @@ try:
     from six.moves import xmlrpc_client
 except ImportError:
     import xmlrpclib as xmlrpc_client
-from pyspider.scheduler.scheduler import Scheduler
-from pyspider.database.sqlite import taskdb, projectdb, resultdb
-from pyspider.libs.multiprocessing_queue import Queue
-from pyspider.libs.utils import run_in_thread
+from weblocust.scheduler.scheduler import Scheduler
+from weblocust.database.sqlite import taskdb, projectdb, resultdb
+from weblocust.libs.multiprocessing_queue import Queue
+from weblocust.libs.utils import run_in_thread
 
 
 class TestScheduler(unittest.TestCase):

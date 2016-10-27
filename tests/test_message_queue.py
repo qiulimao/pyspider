@@ -15,7 +15,7 @@ import six
 import time
 import unittest2 as unittest
 
-from pyspider.libs import utils
+from weblocust.libs import utils
 from six.moves import queue as Queue
 
 
@@ -71,7 +71,7 @@ class TestMessageQueue(object):
 class BuiltinQueue(TestMessageQueue, unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        from pyspider.message_queue import connect_message_queue
+        from weblocust.message_queue import connect_message_queue
         with utils.timeout(3):
             self.q1 = self.q2 = connect_message_queue('test_queue', maxsize=5)
             self.q3 = connect_message_queue('test_queue_for_threading_test')
@@ -83,7 +83,7 @@ class TestPikaRabbitMQ(TestMessageQueue, unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        from pyspider.message_queue import rabbitmq
+        from weblocust.message_queue import rabbitmq
         with utils.timeout(3):
             self.q1 = rabbitmq.PikaQueue('test_queue', maxsize=5)
             self.q2 = rabbitmq.PikaQueue('test_queue', amqp_url='amqp://localhost:5672/%2F', maxsize=5)
@@ -106,7 +106,7 @@ class TestAmqpRabbitMQ(TestMessageQueue, unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        from pyspider.message_queue import connect_message_queue
+        from weblocust.message_queue import connect_message_queue
         with utils.timeout(3):
             self.q1 = connect_message_queue('test_queue', 'amqp://localhost:5672/',
                                             maxsize=5)
@@ -134,7 +134,7 @@ class TestBeansTalkQueue(TestMessageQueue, unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        from pyspider.message_queue import connect_message_queue
+        from weblocust.message_queue import connect_message_queue
         with utils.timeout(3):
             self.q1 = connect_message_queue('test_queue', 'beanstalk://localhost:11300',
                                             maxsize=5)
@@ -163,8 +163,8 @@ class TestRedisQueue(TestMessageQueue, unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        from pyspider.message_queue import connect_message_queue
-        from pyspider.message_queue import redis_queue
+        from weblocust.message_queue import connect_message_queue
+        from weblocust.message_queue import redis_queue
         with utils.timeout(3):
             self.q1 = redis_queue.RedisQueue('test_queue', maxsize=5, lazy_limit=False)
             self.q2 = redis_queue.RedisQueue('test_queue', maxsize=5, lazy_limit=False)
@@ -191,7 +191,7 @@ class TestKombuQueue(TestMessageQueue, unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        from pyspider.message_queue import connect_message_queue
+        from weblocust.message_queue import connect_message_queue
         with utils.timeout(3):
             self.q1 = connect_message_queue('test_queue', self.kombu_url, maxsize=5)
             self.q2 = connect_message_queue('test_queue', self.kombu_url, maxsize=5)

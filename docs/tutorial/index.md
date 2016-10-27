@@ -1,4 +1,4 @@
-pyspider Tutorial
+weblocust Tutorial
 =================
 
 > The best way to learn how to scrap is learning how to make it.
@@ -7,11 +7,11 @@ pyspider Tutorial
 * [Level 2: AJAX and More HTTP](AJAX-and-more-HTTP)
 * [Level 3: Render with PhantomJS](Render-with-PhantomJS)
 
-If you have problem using pyspider, [user group](https:#groups.google.com/group/pyspider-users) is a place for discussing.
+If you have problem using weblocust, [user group](https:#groups.google.com/group/weblocust-users) is a place for discussing.
 
 Note:
 
-*   `pyspider`采用`pyquery`解析网页内容。如果您需要对网页当中的`dom`做修改之后再存如数据库，或者您非常熟悉使用`jquery`推荐您使用`pyquery`.
+*   `weblocust`采用`pyquery`解析网页内容。如果您需要对网页当中的`dom`做修改之后再存如数据库，或者您非常熟悉使用`jquery`推荐您使用`pyquery`.
 *   如果您非常喜欢`xpath`，`weblocust`不会让您失望。
 
 ##  关于xpath
@@ -22,10 +22,10 @@ Note:
 ### 来看下面这个使用`xpath`的例子
 ```python
 
-from pyspider.libs.base_handler import *
-from pyspider.libs.useragent import IphoneSafari,LinuxChrome
-from pyspider.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2
-from pyspider.libs.cleaners import  reduceclean,mapclean,mapreduce
+from weblocust.libs.base_handler import *
+from weblocust.libs.useragent import IphoneSafari,LinuxChrome
+from weblocust.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2
+from weblocust.libs.cleaners import  reduceclean,mapclean,mapreduce
 
 class Handler(BaseHandler):
     crawl_config = {
@@ -254,11 +254,11 @@ u" 电影的导演 演员有：范冰冰.....目前的评分是：9分票价是:
 
 ### 自定义cleaner
 
-显然这几个内置的`cleaner`不能满足您的需求，但是您可以通过继承 `pyspider.libs.cleaners.BaseCleaner`,并实现`doapply`方法来定制您自己的`cleaner`
+显然这几个内置的`cleaner`不能满足您的需求，但是您可以通过继承 `weblocust.libs.cleaners.BaseCleaner`,并实现`doapply`方法来定制您自己的`cleaner`
 
 例如：
 ```python
-from pyspider.libs.cleaners import BaseCleaner
+from weblocust.libs.cleaners import BaseCleaner
 
 class MyOwnCleaner(BaseCleaner):
     

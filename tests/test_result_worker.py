@@ -14,13 +14,13 @@ import os
 import time
 import unittest2 as unittest
 import logging.config
-logging.config.fileConfig("pyspider/logging.conf")
+logging.config.fileConfig("weblocust/logging.conf")
 
 import shutil
-from pyspider.database.sqlite import resultdb
-from pyspider.result.result_worker import ResultWorker
-from pyspider.libs.multiprocessing_queue import Queue
-from pyspider.libs.utils import run_in_thread
+from weblocust.database.sqlite import resultdb
+from weblocust.result.result_worker import ResultWorker
+from weblocust.libs.multiprocessing_queue import Queue
+from weblocust.libs.utils import run_in_thread
 
 
 class TestProcessor(unittest.TestCase):

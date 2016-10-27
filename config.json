@@ -4,7 +4,7 @@
   "resultdb": "mongodb+resultdb://localhost:27017/weblocust_result",
   "message_queue": "redis://localhost:6379/0",
   "result_worker": {
-    "result_cls": "pyspider.result.AdvanceResultWorker"
+    "result_cls": "weblocust.result.AdvanceResultWorker"
   },
   "phantomjs_proxy":"localhost:25555",
   "fetcher":{

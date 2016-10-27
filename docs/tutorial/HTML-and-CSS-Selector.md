@@ -3,13 +3,13 @@ Level 1: HTML and CSS Selector
 
 In this tutorial, we will scrape information of movies and TV from [IMDb].
 
-An online demo with completed code is: [http://demo.pyspider.org/debug/tutorial_imdb](http://demo.pyspider.org/debug/tutorial_imdb) .
+An online demo with completed code is: [http://demo.weblocust.org/debug/tutorial_imdb](http://demo.weblocust.org/debug/tutorial_imdb) .
 
 
 Before Start
 ------------
 
-You should have pyspider installed. You can refer to the documentation [QuickStart](Quickstart). Or test your code on [demo.pyspider.org](http://demo.pyspider.org).
+You should have weblocust installed. You can refer to the documentation [QuickStart](Quickstart). Or test your code on [demo.weblocust.org](http://demo.weblocust.org).
 
 Some basic knowledges you should know before scraping:
 
@@ -56,7 +56,7 @@ Changing the crawl URL in `on_start` callback:
 ```
 
 > * `self.crawl` would fetch the page and call the `callback` method to parse the response.  
-> * The [`@every` decorator](http://docs.pyspider.org/en/latest/apis/@every/) represents `on_start` would execute every day, to make sure not missing any new movies.
+> * The [`@every` decorator](http://docs.weblocust.org/en/latest/apis/@every/) represents `on_start` would execute every day, to make sure not missing any new movies.
 
 Click the green `run` button, you should find a red 1 above follows, switch to follows panel, click the green play button:
 
@@ -101,7 +101,7 @@ You can use CSS Selector with built-in `response.doc` object, which is provided 
 
 #### CSS Selector Helper
 
-pyspider provide a tool called `CSS selector helper` to make it easier to generate a selector pattern to element you clicked. Enable CSS selector helper by click the button and switch to `web` panel.
+weblocust provide a tool called `CSS selector helper` to make it easier to generate a selector pattern to element you clicked. Enable CSS selector helper by click the button and switch to `web` panel.
 
 ![CSS Selector helper](../imgs/css_selector_helper.png)
 
@@ -117,7 +117,7 @@ click "Next »" in the page and add selector pattern to your code:
         self.crawl(response.doc('#right a').attr.href, callback=self.index_page)
 ```
 
-Click `run` again and move to the next page, we found that "« Prev" has the same selector pattern as "Next »". When using above code you may find pyspider selected the link of "« Prev", not "Next »". A solution for this is select both of them:
+Click `run` again and move to the next page, we found that "« Prev" has the same selector pattern as "Next »". When using above code you may find weblocust selected the link of "« Prev", not "Next »". A solution for this is select both of them:
 
 ```
         self.crawl([x.attr.href for x in response.doc('#right a').items()], callback=self.index_page)

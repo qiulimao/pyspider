@@ -19,13 +19,13 @@ please install PhantomJS if needed: http://phantomjs.org/build.html
 
 note that PhantomJS will be enabled only if it is excutable in the `PATH` or in the System Environment
 
-**Note:** `pyspider` command is running pyspider in `all` mode, which running components in threads or subprocesses. For production environment, please refer to [Deployment](Deployment).
+**Note:** `weblocust` command is running weblocust in `all` mode, which running components in threads or subprocesses. For production environment, please refer to [Deployment](Deployment).
 
 Your First Script
 -----------------
 
 ```python
-from pyspider.libs.base_handler import *
+from weblocust.libs.base_handler import *
 
 
 class Handler(BaseHandler):

@@ -10,7 +10,7 @@
 # Created on 2014-11-24 23:11:49
 # Modified on 2016-10-26 20:46:20
 
-from pyspider.run import main
+from weblocust.run import main
 
 if __name__ == '__main__':
     main()

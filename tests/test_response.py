@@ -19,11 +19,11 @@ import unittest2 as unittest
 
 import logging
 import logging.config
-logging.config.fileConfig("pyspider/logging.conf")
+logging.config.fileConfig("weblocust/logging.conf")
 
-from pyspider.libs import utils
-from pyspider.libs.response import rebuild_response
-from pyspider.fetcher.tornado_fetcher import Fetcher
+from weblocust.libs import utils
+from weblocust.libs.response import rebuild_response
+from weblocust.fetcher.tornado_fetcher import Fetcher
 
 class TestResponse(unittest.TestCase):
     sample_task_http = {

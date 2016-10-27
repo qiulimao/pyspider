@@ -10,7 +10,7 @@
 # Created on 2014-02-22 14:02:21
 # Modified on 2016-10-26 20:46:20
 
-from pyspider.libs.base_handler import BaseHandler, catch_status_code_error, every
+from weblocust.libs.base_handler import BaseHandler, catch_status_code_error, every
 
 class IgnoreHandler(object):
     pass

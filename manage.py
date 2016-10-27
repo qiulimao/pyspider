@@ -85,6 +85,40 @@ def modifydate(context,daysago):
     #click.echo(list2cmdline(cmd))
     subprocess.call(list2cmdline(cmd),shell=True)
 
+@public.command()
+@click.option("--path",prompt="put the documents to the path in relative",default="./weblocust/webui/static/")
+@click.pass_context
+def mkdocs(context,path):
+    """
+        make documents
+    """
+    from os.path import join 
+    mkdocs_cmd = ['mkdocs','build']  
+    replace_googlefonts_cmd = ['find','./site','-name',"\'*.html\'",'-exec',
+                            'sed','-i',"\'1,$s/fonts.googleapis.com/fonts.gmirror.org/g\'",'{}','\;']
+    mv_to_path_cmd = ['mv','site',path]
+
+    #click.echo(list2cmdline(replace_googlefonts_cmd))
+    #click.echo(list2cmdline(mv_to_path_cmd))
+    #click.echo(list2cmdline(mkdocs_cmd))
+
+    subprocess.call(list2cmdline(mkdocs_cmd),shell=True)
+    subprocess.call(list2cmdline(replace_googlefonts_cmd),shell=True)
+    subprocess.call(list2cmdline(mv_to_path_cmd),shell=True)
+
+@public.command()
+@click.option("--path",prompt="the document path in relative",default="./weblocust/webui/static/")
+@click.pass_context
+def rmdocs(context,path):
+    """
+        remove the documents
+    """
+    import os
+    cmd = ['rm','-rf',os.path.join(path,"site")]
+    #click.echo(list2cmdline(cmd),shell=True)
+    subprocess.call(list2cmdline(cmd),shell=True)
+
+
 
 if __name__ == "__main__":
     public()

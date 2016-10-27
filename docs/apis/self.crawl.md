@@ -4,7 +4,7 @@ self.crawl
 self.crawl(url, **kwargs)
 -------------------------
 
-`self.crawl` is the main interface to tell pyspider which url(s) should be crawled.
+`self.crawl` is the main interface to tell weblocust which url(s) should be crawled.
 
 ### Parameters:
 
@@ -218,7 +218,7 @@ unique id to identify the task, default is the MD5 check code of the URL, can be
 
 ```python
 import json
-from pyspider.libs.utils import md5string
+from weblocust.libs.utils import md5string
 def get_taskid(self, task):
     return md5string(task['url']+json.dumps(task['fetch'].get('data', '')))
 ```

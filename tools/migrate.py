@@ -12,11 +12,11 @@
 
 import click
 import logging
-from pyspider.database.base.projectdb import ProjectDB
-from pyspider.database.base.taskdb import TaskDB
-from pyspider.database.base.resultdb import ResultDB
-from pyspider.database import connect_database
-from pyspider.libs.utils import unicode_obj
+from weblocust.database.base.projectdb import ProjectDB
+from weblocust.database.base.taskdb import TaskDB
+from weblocust.database.base.resultdb import ResultDB
+from weblocust.database import connect_database
+from weblocust.libs.utils import unicode_obj
 from multiprocessing.pool import ThreadPool as Pool
 
 logging.getLogger().setLevel(logging.INFO)
@@ -47,7 +47,7 @@ def resultdb_migrating(project, from_connection, to_connection):
 @click.argument('to_connection', required=1)
 def migrate(pool, from_connection, to_connection):
     """
-    Migrate tool for pyspider
+    Migrate tool for weblocust
     """
     f = connect_database(from_connection)
     t = connect_database(to_connection)

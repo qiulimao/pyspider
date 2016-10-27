@@ -20,7 +20,7 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-import pyspider
+import weblocust
 
 install_requires = [
     'Flask>=0.10',
@@ -30,6 +30,10 @@ install_requires = [
     'lxml',
     'pycurl',
     'pyquery',
+    'sqlalchemy',
+    'pymongo',
+    'mkdocs',
+    'mongoengine',
     'requests>=2.2',
     'tornado>=3.2',
     'Flask-Login>=0.2.11',
@@ -61,12 +65,12 @@ if sys.version_info < (3, 0):
 
 setup(
     name='weblocust',
-    version=pyspider.__version__,
+    version=weblocust.__version__,
 
     description='A more Powerful Spider System in Python based on pyspider',
     long_description=long_description,
 
-    url='https://github.com/qiulimao/pyspider',
+    url='https://github.com/qiulimao/weblocust',
 
     author='qiulimao',
     author_email='qiulimao@getqiu.com',
@@ -111,7 +115,7 @@ setup(
     },
 
     package_data={
-        'pyspider': [
+        'weblocust': [
             'logging.conf',
             'fetcher/phantomjs_fetcher.js',
             'webui/static/*.css',
@@ -130,7 +134,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'weblocust=pyspider.run:main'
+            'weblocust=weblocust.run:main'
         ]
     },
 

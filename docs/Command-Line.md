@@ -17,7 +17,7 @@ Options:
   -c, --config FILENAME    a json file with default values for subcommands.
                            {“webui”: {“port”:5001}}
   --logging-config TEXT    logging config file for built-in python logging
-                           module  [default: pyspider/pyspider/logging.conf]
+                           module  [default: weblocust/weblocust/logging.conf]
   --debug                  debug mode
   --queue-maxsize INTEGER  maxsize of queue
   --taskdb TEXT            database url for taskdb, default: sqlite
@@ -103,7 +103,7 @@ builtin:
 
 #### --phantomjs-proxy
 
-The phantomjs proxy address, you need a phantomjs installed and running phantomjs proxy with command: [`pyspider phantomjs`](#phantomjs).
+The phantomjs proxy address, you need a phantomjs installed and running phantomjs proxy with command: [`weblocust phantomjs`](#phantomjs).
 
 #### --data-path
 
@@ -145,7 +145,7 @@ Options:
 
 **NOTE: WebUI is not running in one mode.**
 
-In `one` mode, results will be written to stdout by default. You can capture them via `pyspider one > result.txt`.
+In `one` mode, results will be written to stdout by default. You can capture them via `weblocust one > result.txt`.
 
 #### [SCRIPTS]
 
@@ -160,7 +160,7 @@ When SCRIPTS is set, `taskdb` and `resultdb` will use a in-memory sqlite db by d
 
 #### -i, --interactive
 
-With interactive mode, pyspider will start an interactive console asking what to do in next loop of process. In the console, you can use:
+With interactive mode, weblocust will start an interactive console asking what to do in next loop of process. In the console, you can use:
 
 ``` python
 crawl(url, project=None, **kwargs)
@@ -172,11 +172,11 @@ crawl(url, project=None, **kwargs)
 quit_interactive()
     Quit interactive mode
     
-quit_pyspider()
-    Close pyspider
+quit_weblocust()
+    Close weblocust
 ```
 
-You can use `pyspider.libs.utils.python_console()` to open an interactive console in your script.
+You can use `weblocust.libs.utils.python_console()` to open an interactive console in your script.
 
 bench
 -----

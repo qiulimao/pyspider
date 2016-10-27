@@ -12,7 +12,7 @@
 
 from httpbin import app
 
-@app.route('/pyspider/test.html')
+@app.route('/weblocust/test.html')
 def test_page():
     return '''
 <a href="/404">404
@@ -31,7 +31,7 @@ def test_page():
 <a href="/stream/20">stream
 '''
 
-@app.route('/pyspider/ajax.html')
+@app.route('/weblocust/ajax.html')
 def test_ajax():
     return '''
 <div class=status>loading...</div>

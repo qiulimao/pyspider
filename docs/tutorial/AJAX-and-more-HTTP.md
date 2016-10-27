@@ -10,7 +10,7 @@ AJAX
 
 [AJAX] is short for asynchronous JavaScript + XML. AJAX is using existing standards to update parts of a web page without loading the whole page. A common usage of AJAX is loading [JSON] data and render to HTML on the client side.
 
-You may find elements missing in HTML fetched by pyspider or [wget](https://www.gnu.org/software/wget/). When you open it in browser some elements appear after page loaded with(maybe not) a 'loading' animation or words. For example, we want to scrape all channels of Dota 2 from [http://www.twitch.tv/directory/game/Dota%202](http://www.twitch.tv/directory/game/Dota%202)
+You may find elements missing in HTML fetched by weblocust or [wget](https://www.gnu.org/software/wget/). When you open it in browser some elements appear after page loaded with(maybe not) a 'loading' animation or words. For example, we want to scrape all channels of Dota 2 from [http://www.twitch.tv/directory/game/Dota%202](http://www.twitch.tv/directory/game/Dota%202)
 
 ![twitch](../imgs/twitch.png)
 
@@ -55,7 +55,7 @@ class Handler(BaseHandler):
 > * You can use `response.json` to convert content to a python `dict` object.
 > * As channel list is changing frequently, we update it every 10 minutes and use [`@config(age=10*60)`](/apis/self.crawl/#configkwargs) to set the age. Otherwise, it will be ignored as scheduler thinks it's new enough and refuse to update the content.
 
-Here is an online demo for twitch as well as a measure using [PhantomJS] which will be discussed in the next level: [http://demo.pyspider.org/debug/tutorial_twitch](http://demo.pyspider.org/debug/tutorial_twitch)
+Here is an online demo for twitch as well as a measure using [PhantomJS] which will be discussed in the next level: [http://demo.weblocust.org/debug/tutorial_twitch](http://demo.weblocust.org/debug/tutorial_twitch)
 
 HTTP
 ----
@@ -113,7 +113,7 @@ HTTP Headers
 
 A [user agent string](http://en.wikipedia.org/wiki/User_agent_string) tell server the application type, operating system or software revision who send the HTTP request.
 
-pyspider's default user agent string is: `pyspider/VERSION (+http://pyspider.org/)`
+weblocust's default user agent string is: `weblocust/VERSION (+http://weblocust.org/)`
 
 ### Referer
 

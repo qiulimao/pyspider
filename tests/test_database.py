@@ -17,8 +17,8 @@ import six
 import time
 import unittest2 as unittest
 
-from pyspider import database
-from pyspider.database.base.taskdb import TaskDB
+from weblocust import database
+from weblocust.database.base.taskdb import TaskDB
 
 
 class TaskDBCase(object):
@@ -363,11 +363,11 @@ class TestMysqlTaskDB(TaskDBCase, unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
-        self.taskdb = database.connect_database('mysql+taskdb://localhost/pyspider_test_taskdb')
+        self.taskdb = database.connect_database('mysql+taskdb://localhost/weblocust_test_taskdb')
 
     @classmethod
     def tearDownClass(self):
-        self.taskdb._execute('DROP DATABASE pyspider_test_taskdb')
+        self.taskdb._execute('DROP DATABASE weblocust_test_taskdb')
 
 
 @unittest.skipIf(os.environ.get('IGNORE_MYSQL') or os.environ.get('IGNORE_ALL'), 'no mysql server for test.')
@@ -376,12 +376,12 @@ class TestMysqlProjectDB(ProjectDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.projectdb = database.connect_database(
-            'mysql+projectdb://localhost/pyspider_test_projectdb'
+            'mysql+projectdb://localhost/weblocust_test_projectdb'
         )
 
     @classmethod
     def tearDownClass(self):
-        self.projectdb._execute('DROP DATABASE pyspider_test_projectdb')
+        self.projectdb._execute('DROP DATABASE weblocust_test_projectdb')
 
 
 @unittest.skipIf(os.environ.get('IGNORE_MYSQL') or os.environ.get('IGNORE_ALL'), 'no mysql server for test.')
@@ -390,12 +390,12 @@ class TestMysqlResultDB(ResultDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.resultdb = database.connect_database(
-            'mysql+resultdb://localhost/pyspider_test_resultdb'
+            'mysql+resultdb://localhost/weblocust_test_resultdb'
         )
 
     @classmethod
     def tearDownClass(self):
-        self.resultdb._execute('DROP DATABASE pyspider_test_resultdb')
+        self.resultdb._execute('DROP DATABASE weblocust_test_resultdb')
 
 
 @unittest.skipIf(os.environ.get('IGNORE_MONGODB') or os.environ.get('IGNORE_ALL'), 'no mongodb server for test.')
@@ -404,7 +404,7 @@ class TestMongoDBTaskDB(TaskDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.taskdb = database.connect_database(
-            'mongodb+taskdb://localhost:27017/pyspider_test_taskdb'
+            'mongodb+taskdb://localhost:27017/weblocust_test_taskdb'
         )
 
     @classmethod
@@ -418,7 +418,7 @@ class TestMongoDBProjectDB(ProjectDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.projectdb = database.connect_database(
-            'mongodb+projectdb://localhost/pyspider_test_projectdb'
+            'mongodb+projectdb://localhost/weblocust_test_projectdb'
         )
 
     @classmethod
@@ -432,7 +432,7 @@ class TestMongoDBResultDB(ResultDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.resultdb = database.connect_database(
-            'mongodb+resultdb://localhost/pyspider_test_resultdb'
+            'mongodb+resultdb://localhost/weblocust_test_resultdb'
         )
 
     @classmethod
@@ -446,12 +446,12 @@ class TestSQLAlchemyMySQLTaskDB(TaskDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.taskdb = database.connect_database(
-            'sqlalchemy+mysql+mysqlconnector+taskdb://root@localhost/pyspider_test_taskdb'
+            'sqlalchemy+mysql+mysqlconnector+taskdb://root@localhost/weblocust_test_taskdb'
         )
 
     @classmethod
     def tearDownClass(self):
-        self.taskdb.engine.execute('DROP DATABASE pyspider_test_taskdb')
+        self.taskdb.engine.execute('DROP DATABASE weblocust_test_taskdb')
 
 
 @unittest.skipIf(os.environ.get('IGNORE_MYSQL') or os.environ.get('IGNORE_ALL'), 'no mysql server for test.')
@@ -460,12 +460,12 @@ class TestSQLAlchemyMySQLProjectDB(ProjectDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.projectdb = database.connect_database(
-            'sqlalchemy+mysql+mysqlconnector+projectdb://root@localhost/pyspider_test_projectdb'
+            'sqlalchemy+mysql+mysqlconnector+projectdb://root@localhost/weblocust_test_projectdb'
         )
 
     @classmethod
     def tearDownClass(self):
-        self.projectdb.engine.execute('DROP DATABASE pyspider_test_projectdb')
+        self.projectdb.engine.execute('DROP DATABASE weblocust_test_projectdb')
 
 
 @unittest.skipIf(os.environ.get('IGNORE_MYSQL') or os.environ.get('IGNORE_ALL'), 'no mysql server for test.')
@@ -474,12 +474,12 @@ class TestSQLAlchemyMySQLResultDB(ResultDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.resultdb = database.connect_database(
-            'sqlalchemy+mysql+mysqlconnector+resultdb://root@localhost/pyspider_test_resultdb'
+            'sqlalchemy+mysql+mysqlconnector+resultdb://root@localhost/weblocust_test_resultdb'
         )
 
     @classmethod
     def tearDownClass(self):
-        self.resultdb.engine.execute('DROP DATABASE pyspider_test_resultdb')
+        self.resultdb.engine.execute('DROP DATABASE weblocust_test_resultdb')
 
 
 class TestSQLAlchemyTaskDB(TaskDBCase, unittest.TestCase):
@@ -527,7 +527,7 @@ class TestPGTaskDB(TaskDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.taskdb = database.connect_database(
-            'sqlalchemy+postgresql+taskdb://postgres@127.0.0.1:5432/pyspider_test_taskdb'
+            'sqlalchemy+postgresql+taskdb://postgres@127.0.0.1:5432/weblocust_test_taskdb'
         )
         self.tearDownClass()
 
@@ -543,7 +543,7 @@ class TestPGProjectDB(ProjectDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.projectdb = database.connect_database(
-            'sqlalchemy+postgresql+projectdb://postgres@127.0.0.1:5432/pyspider_test_projectdb'
+            'sqlalchemy+postgresql+projectdb://postgres@127.0.0.1:5432/weblocust_test_projectdb'
         )
         self.tearDownClass()
 
@@ -559,7 +559,7 @@ class TestPGResultDB(ResultDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.resultdb = database.connect_database(
-            'sqlalchemy+postgresql+resultdb://postgres@127.0.0.1/pyspider_test_resultdb'
+            'sqlalchemy+postgresql+resultdb://postgres@127.0.0.1/weblocust_test_resultdb'
         )
         self.tearDownClass()
 
@@ -589,12 +589,12 @@ class TestESProjectDB(ProjectDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.projectdb = database.connect_database(
-            'elasticsearch+projectdb://127.0.0.1:9200/?index=test_pyspider'
+            'elasticsearch+projectdb://127.0.0.1:9200/?index=test_weblocust'
         )
 
     @classmethod
     def tearDownClass(self):
-        self.projectdb.es.indices.delete(index='test_pyspider', ignore=[400, 404])
+        self.projectdb.es.indices.delete(index='test_weblocust', ignore=[400, 404])
 
 
 @unittest.skipIf(os.environ.get('IGNORE_ELASTICSEARCH') or os.environ.get('IGNORE_ALL'), 'no elasticsearch server for test.')
@@ -603,12 +603,12 @@ class TestESResultDB(ResultDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.resultdb = database.connect_database(
-            'elasticsearch+resultdb://127.0.0.1:9200/?index=test_pyspider'
+            'elasticsearch+resultdb://127.0.0.1:9200/?index=test_weblocust'
         )
 
     @classmethod
     def tearDownClass(self):
-        self.resultdb.es.indices.delete(index='test_pyspider', ignore=[400, 404])
+        self.resultdb.es.indices.delete(index='test_weblocust', ignore=[400, 404])
 
     def test_15_save(self):
         self.resultdb.refresh()
@@ -640,12 +640,12 @@ class TestESTaskDB(TaskDBCase, unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.taskdb = database.connect_database(
-            'elasticsearch+taskdb://127.0.0.1:9200/?index=test_pyspider'
+            'elasticsearch+taskdb://127.0.0.1:9200/?index=test_weblocust'
         )
 
     @classmethod
     def tearDownClass(self):
-        self.taskdb.es.indices.delete(index='test_pyspider', ignore=[400, 404])
+        self.taskdb.es.indices.delete(index='test_weblocust', ignore=[400, 404])
 
 if __name__ == '__main__':
     unittest.main()

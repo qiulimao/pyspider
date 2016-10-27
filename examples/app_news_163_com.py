@@ -6,13 +6,13 @@
 # Modified on 2016-10-26 20:46:20
 # Project: app_news_163 product
 
-from pyspider.libs.base_handler import *
-from pyspider.libs.useragent import IphoneSafari,LinuxChrome
-from pyspider.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2,reduceclean,mapclean,mapreduce
+from weblocust.libs.base_handler import *
+from weblocust.libs.useragent import IphoneSafari,LinuxChrome
+from weblocust.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2,reduceclean,mapclean,mapreduce
 import json
 from  itertools import product
 from hashlib import md5
-#from pyspider.libs.response import Response
+#from weblocust.libs.response import Response
 # http://3g.163.com/touch/article/list/BBM54PGAwangning/20-20.html
 # http://3g.163.com/touch/article.html?channel=mobile&offset=7&docid=BNGBJECD0011179O&version=A
 # http://3g.163.com/touch/comment.html?#docid=BNGBJECD0011179O&board=mobile_bbs&title=%25E4%25B8%2580%25E5%258A%25A03%25E6%259B%259D%25E5%2585%2589:%25E9%2585%258D6GB%25E8%25BF%2590%25E8%25A1%258C%25E5%2586%2585%25E5%25AD%2598&from=article

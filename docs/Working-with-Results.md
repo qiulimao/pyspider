@@ -7,7 +7,7 @@ Working with ResultDB
 Although resultdb is only designed for result preview, not suitable for large scale storage. But if you want to grab data from resultdb, there are some simple snippets using database API that can help you to connect and select the data.
 
 ```
-from pyspider.database import connect_database
+from weblocust.database import connect_database
 resultdb = connect_database("<your resutldb connection url>")
 for project in resultdb.projects:
     for result in resultdb.select(project):
@@ -20,10 +20,10 @@ The `result['result']` is the object submitted by `return` statement from your s
 
 Working with ResultWorker
 -------------------------
-In product environment, you may want to connect pyspider to your system / post-processing pipeline, rather than store it into resultdb. It's highly recommended to override ResultWorker.
+In product environment, you may want to connect weblocust to your system / post-processing pipeline, rather than store it into resultdb. It's highly recommended to override ResultWorker.
 
 ```
-from pyspider.result import ResultWorker
+from weblocust.result import ResultWorker
 
 Class MyResultWorker(ResultWorker):
     def on_result(self, task, result):
@@ -36,9 +36,9 @@ Class MyResultWorker(ResultWorker):
 
 `result` is the object submitted by `return` statement from your script.
 
-You can put this script (e.g., `my_result_worker.py`) at the folder where you launch pyspider. Add argument for `result_worker` subcommand:
+You can put this script (e.g., `my_result_worker.py`) at the folder where you launch weblocust. Add argument for `result_worker` subcommand:
 
-`pyspider result_worker --result-cls=my_result_worker.MyResultWorker`
+`weblocust result_worker --result-cls=my_result_worker.MyResultWorker`
 
 Or
 
@@ -80,7 +80,7 @@ See Also: [apis/self.send_message](/apis/self.send_message)
 
 ### 更好的解决一对多的关系
 
-因为我们有很多时候会遇到要采集评论，论坛等内容，`pyspider`当中的这些方法不是那么奏效。
+因为我们有很多时候会遇到要采集评论，论坛等内容，`weblocust`当中的这些方法不是那么奏效。
 在`weblocust`当中你可以轻松的处理这类关系,`weblocust`在`result`当中引入这两个变量：
 
 *   `__refer__`

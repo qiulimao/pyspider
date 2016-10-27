@@ -4,7 +4,7 @@ weblocust
 A Powerful Spider(Web Crawler) System in Python based on **pyspider**.
 
 - Write script in Python
-- more Powerful WebUI with script editor, task monitor, project manager and result viewer than pyspider
+- more Powerful WebUI with script editor, task monitor, project manager and result viewer than weblocust
 - [MongoDB](https://www.mongodb.org/), as database backend
 - [RabbitMQ](http://www.rabbitmq.com/), [Beanstalk](http://kr.github.com/beanstalkd/), [Redis](http://redis.io/) and [Kombu](http://kombu.readthedocs.org/) as message queue
 - Task priority, retry, periodical, recrawl by age, etc...
@@ -13,11 +13,11 @@ A Powerful Spider(Web Crawler) System in Python based on **pyspider**.
 
 release Note
 -----------
-虽然pyspider这个框架是一个国人写的。但是他在英国工作，英文牛逼。pyspider在python的爬虫方面不仅仅只在国内有名气。
+虽然`pyspider`这个框架是一个国人写的。但是他在英国工作，英文牛逼。`pyspider`在python的爬虫方面不仅仅只在国内有名气。
 在国外也有很多人使用。所以作者没有想过要专门写一份中文的文档。在他的博客当中有一些早期版本的介绍和使用。虽然现在更新得比较快，
 但是使用方式上基本没怎么变。内部的结构可能有所改变。
 
-`pyspider`作者昵称叫bunix,这人确实很牛逼。看了他的代码给我的第一感觉就是博学。
+`pyspider`作者昵称叫bunix,感觉作者很牛,很博学,。再此表示敬佩.
 `weblocust` 是我根据我们的需求在`pyspider`上做了一些改进，使得更加符合我们的需求。`pyspider`原本支持很多`resultdb`
 我仅仅在`mongodb` 作为`resultdb`之上做优化。如果您采用`mysql`存储，可能将不会有`weblocust`的新特性。
 
@@ -34,16 +34,17 @@ release Note
 
 
 关于文档：
-我的英文不好，另外这份文档潜在的读者也是中国人，所以文档就在bunix的文档之上修改。中文部分是我新加的模块。
+这份文档潜在的读者是中国人，所以文档就在bunix的文档之上修改。中文部分是我新加的,英文部分有少许修改或者添加。另外我将文档和代码中的`pyspider`都换成了`weblocust`并不是想掩盖`weblocust`
+是基于`pyspider`,仅仅是为了统一工程命名.源代码当中`author`一栏始终留着`binux`的位置,我把自己加在了`contributor`一栏.
 
 Sample Code 
 -----------
 
 ```python
-from pyspider.libs.base_handler import *
-from pyspider.libs.useragent import IphoneSafari,LinuxChrome
-from pyspider.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2
-from pyspider.libs.cleaners import  reduceclean,mapclean,mapreduce
+from weblocust.libs.base_handler import *
+from weblocust.libs.useragent import IphoneSafari,LinuxChrome
+from weblocust.libs.cleaners import  TakeFirst,JoinCleaner,StripBlankMoreThan2
+from weblocust.libs.cleaners import  reduceclean,mapclean,mapreduce
 
 class Handler(BaseHandler):
     crawl_config = {
@@ -72,7 +73,7 @@ class Handler(BaseHandler):
 WebUI
 ---------
 
-![Demo Img](imgs/demo_1.png)
+![Demo Img]
 
 
 Installation
@@ -106,3 +107,5 @@ Licensed under the Apache License, Version 2.0
 
 [Demo Img]:             imgs/demo_1.png
 [Issue]:                https://github.com/qiulimao/webocust/issues
+
+
