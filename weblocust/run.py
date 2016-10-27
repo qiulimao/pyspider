@@ -741,6 +741,60 @@ def send_message(ctx, scheduler_rpc, project, message):
         }
     })
 
+@cli.command()
+@click.option("--filename",prompt="configure file name",help="configure file name",default="configure")
+@click.option("--mongo-host",prompt="mongodb hostname or ip address",help="mongo host or ip",default="localhost")
+@click.option("--redis-host",prompt="redis hostname or ip address",help="redis host or ip",default="localhost")
+@click.pass_context
+def mkconfig(context,filename,mongo_host,redis_host):
+    """
+        generate simple configure file 
+    """
+    script = """
+        {
+            "taskdb": "mongodb+taskdb://__MONGO_HOST__:27017/weblocust_task",
+            "projectdb": "mongodb+projectdb://__MONGO_HOST__:27017/weblocust_project",
+            "resultdb": "mongodb+resultdb://__MONGO_HOST__:27017/weblocust_result",
+            "message_queue": "redis://__REDIS_HOST__:6379/0",
+            "result_worker": {
+                "result_cls": "weblocust.result.AdvanceResultWorker"
+            },
+
+            "fetcher":{
+                "timeout":8
+            },
+            "webui": {
+                "username": "admin",
+                "password": "admin",
+                "need-auth": false
+            },
+            "scheduler": {
+                "delete_time": 60
+            }
+        }
+    """
+    configure_file_name = filename
+
+    new_script = script.replace("__MONGO_HOST__",mongo_host).replace("__REDIS_HOST__",redis_host)
+    with open(configure_file_name,'w') as f:
+        f.write(new_script)
+
+    click.echo("\nconfigure file is generated as %s\nrun command `weblocust -c %s`"%(filename,filename))
+
+
+@cli.command()
+@click.pass_context
+def phantomsource(context):
+    """
+        get phantomjs source code
+        if you want to run phantomjs seperately,you can get the related js code
+    """
+    phantomjs_code = os.path.join(os.path.dirname(__file__),"fetcher","phantomjs_fetcher.js")
+    with open(phantomjs_code,'r') as source_code:
+        with open("phantomjs_proxy.js",'w') as targetfile:
+            targetfile.write(source_code.read())
+
+    click.echo("phantomjs_proxy source code is generated,open 'phantomjs_proxy.js' to see how to use it")
 
 def main():
     cli()

@@ -2,7 +2,8 @@
 // Author: Binux<i@binux.me>
 //         http://binux.me
 // Created on 2014-10-29 22:12:14
-
+// run this file as :
+// phantomjs --ssl-protocol=any --disk-cache=true /path/to/this_js_file.js 25555
 var port, server, service,
   wait_before_end = 1000,
   system = require('system'),

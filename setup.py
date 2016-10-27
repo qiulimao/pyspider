@@ -124,7 +124,8 @@ setup(
             'webui/static/css/*',
             'webui/static/js/*.js',
             'webui/static/js/core/*',
-            'webui/static/templates/*',
+            'webui/static/templates/*.html',
+            'webui/static/templates/index_part/*.html',
             'webui/static/image/*',
             'webui/static/fonts/*',
             'webui/templates/*'

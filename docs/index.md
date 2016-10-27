@@ -73,14 +73,18 @@ class Handler(BaseHandler):
 WebUI
 ---------
 
-![Demo Img]
+![run one step](imgs/demo.png)
 
 
 Installation
+you can install weblocust in 2 ways
 ------------
+1.   the most convenient way `pip install weblocust` 
+2.   install from source code `git clone https://github.com/qiulimao/weblocust.git` then `$python setup.py install`
 
-* you need to run `git clone https://github.com/qiulimao/weblocust.git` then `$python setup.py install`
-* run command `weblocust`, visit [http://localhost:5000/](http://localhost:5000/)
+then run `weblocust mkconfig` to generate simple configure file.
+
+finally: run command `weblocust -c generatedfilename`, visit [http://localhost:5000/](http://localhost:5000/)
 
 Contribute
 ----------
@@ -90,7 +94,8 @@ TODO
 ----
 
 ### next version
-* keep in space
+* keep in space with pyspider
+* make the package avaiable by pip
 
 
 
@@ -105,7 +110,7 @@ License
 Licensed under the Apache License, Version 2.0
 
 
-[Demo Img]:             imgs/demo_1.png
+[Demo Img]:             imgs/demo.png
 [Issue]:                https://github.com/qiulimao/webocust/issues
 
 
