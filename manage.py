@@ -20,6 +20,9 @@ import datetime
 @click.group()
 @click.pass_context
 def public(context):
+    """
+        some tools to easy your developing job.
+    """
     return context 
 
 
@@ -50,8 +53,9 @@ def newcontributor(context,name,email,website,daysago):
     #click.echo(list2cmdline(cmd))
 
 @public.command()
+@click.option("--daysago",prompt="modified time before now",help="modified time before now",default=1,type=int)
 @click.pass_context
-def newmodifydate(context):
+def newmodifydate(context,daysago):
     """
         create modified date on py files
     """
@@ -60,7 +64,7 @@ def newmodifydate(context):
     date=datetime.datetime.now()
     dateString=date.strftime("%Y-%m-%d %H:%M:%S")
 
-    cmd = ['find','./','\\(','-name',"\'*.py\'",'\\)',
+    cmd = ['find','./','\\(','-name',"\'*.py\'",'\\)','-mtime',str(0-daysago),
             '-a','-exec','sed','-i',"/Created on 20[0-1][0-9]/a\# Modified on "+dateString,'{}','\;']
     subprocess.call(list2cmdline(cmd),shell=True)
     #click.echo(list2cmdline(cmd))
@@ -86,14 +90,16 @@ def modifydate(context,daysago):
     subprocess.call(list2cmdline(cmd),shell=True)
 
 @public.command()
-@click.option("--path",prompt="put the documents to the path in relative",default="./weblocust/webui/static/")
+@click.option("--path",prompt="put the documents to the path in relative",
+    default="./weblocust/webui/static/",
+    help="place the docs to somewhere in relative path")
 @click.pass_context
 def mkdocs(context,path):
     """
         make documents
     """
     from os.path import join 
-    mkdocs_cmd = ['mkdocs','build']  
+    mkdocs_cmd = ['mkdocs','build','-c']  
     replace_googlefonts_cmd = ['find','./site','-name',"\'*.html\'",'-exec',
                             'sed','-i',"\'1,$s/fonts.googleapis.com/fonts.gmirror.org/g\'",'{}','\;']
     mv_to_path_cmd = ['mv','site',path]

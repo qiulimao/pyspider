@@ -3,9 +3,13 @@ Quickstart
 
 Installation
 ------------
+>   `weblocust`的存储部分主要是采用`mongodb`,因此建议使用`mongodb`,队列可以使用`redis`或者`rabbitmq`,在使用之前可以先安装好这些软件
 
-* you need to run `git clone https://github.com/qiulimao/weblocust.git` then `$python setup.py install`
-* run command `weblocust`, visit [http://localhost:5000/](http://localhost:5000/)
+* run `pip install weblocust` or 
+* run `git clone https://github.com/qiulimao/weblocust.git` then `$python setup.py install`
+* run command `weblocust mkconfig`. this command will guide you configure weblocust,after that,it will generate a configure file
+* open the generated configure file,modify the file if need.
+* run command `weblocust -c theConfigureFile`, visit [http://localhost:5000/](http://localhost:5000/)
 
 if you are using ubuntu, try:
 ```
@@ -58,7 +62,7 @@ class Handler(BaseHandler):
 More things you may want to know:
 
 > * [`@every(minutes=24*60, seconds=0)`*](/apis/@every/) is a helper to tell the scheduler that `on_start` method should be called everyday.
-> * [`@config(age=10 * 24 * 60 * 60)`*](/apis/self.crawl/#configkwargs) tell scheduler discard the request if it have been crawled in 10 days. The parameter [`age`*](/apis/self.crawl/#schedule) can also be specified via `self.crawl(url, age=10*24*60*60)` and `crawl_config`
+> * [`@config(age=10 * 24 * 60 * 60)`*](/apis/self.crawl/#configkwargs) tell scheduler discard the request if it have been crawled within 10 days. The parameter [`age`*](/apis/self.crawl/#schedule) can also be specified via `self.crawl(url, age=10*24*60*60)` and `crawl_config`
 > * [`@config(priority=2)`*](/apis/self.crawl/#schedule) mark that detail pages should be crawled first.
 
 You can test your script step by step by click the green `run` button. Switch to `follows` panel, click the play button to move on.

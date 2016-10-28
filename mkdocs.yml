@@ -2,31 +2,59 @@ site_name: weblocust
 site_description: A more Powerful Spider(Web Crawler) System based on pyspider.
 site_author: qiulimao
 repo_url: https://github.com/qiulimao/weblocust
-pages:
-- Introduction: index.md
-- Quickstart: Quickstart.md
-- Command Line: Command-Line.md
-- Tutorial:
-  - Index: tutorial/index.md
-  - 'Level 1: HTML and CSS Selector': tutorial/HTML-and-CSS-Selector.md
-  - 'Level 2: AJAX and More HTTP': tutorial/AJAX-and-more-HTTP.md
-  - 'Level 3: Render with PhantomJS': tutorial/Render-with-PhantomJS.md
-- About weblocust:
-  - Architecture: Architecture.md
-  - About Tasks: About-Tasks.md
-  - About Projects: About-Projects.md
-  - Script Environment: Script-Environment.md
-  - Working with Results: Working-with-Results.md
-- API Reference:
-  - Index: apis/index.md
-  - self.crawl: apis/self.crawl.md
-  - Response: apis/Response.md
-  - self.send_message: apis/self.send_message.md
-  - '@catch_status_code_error': apis/@catch_status_code_error.md
-  - '@every': apis/@every.md
-- Deployment: Deployment.md
-- Running weblocust with Docker: Running-weblocust-with-Docker.md
-- Frequently Asked Questions: Frequently-Asked-Questions.md
 
-theme: readthedocs
+pages:
+- Home: index.md 
+- Docs: 
+  - Home: index.md 
+  - Quickstart: Quickstart.md
+  - Command Line: Command-Line.md 
+  - Tutorial:
+    - Index: tutorial/index.md
+    - Selector: tutorial/HTML-and-CSS-Selector.md
+    - AJAX: tutorial/AJAX-and-more-HTTP.md
+    - PhantomJs: tutorial/Render-with-PhantomJS.md
+  - API Reference:
+    - Index: apis/index.md
+    - self.crawl: apis/self.crawl.md
+    - Response: apis/Response.md
+    - self.send_message: apis/self.send_message.md
+    - catch_status_code_error: apis/@catch_status_code_error.md
+    - every: apis/@every.md      
+  - More:
+    - Architecture: Architecture.md
+    - About Tasks: About-Tasks.md
+    - About Projects: About-Projects.md
+    - Script Environment: Script-Environment.md
+    - Working with Results: Working-with-Results.md
+  - Deployment: Deployment.md
+  - Running weblocust with Docker: Running-weblocust-with-Docker.md
+  - Frequently Asked Questions: Frequently-Asked-Questions.md
+  - For Developers: Developers.md
+# - Introduction: index.md
+# - Quickstart: Quickstart.md
+# - Command Line: Command-Line.md
+# - Tutorial:
+#   - Index: tutorial/index.md
+#   - 'Level 1: HTML and CSS Selector': tutorial/HTML-and-CSS-Selector.md
+#   - 'Level 2: AJAX and More HTTP': tutorial/AJAX-and-more-HTTP.md
+#   - 'Level 3: Render with PhantomJS': tutorial/Render-with-PhantomJS.md
+# - About weblocust:
+#   - Architecture: Architecture.md
+#   - About Tasks: About-Tasks.md
+#   - About Projects: About-Projects.md
+#   - Script Environment: Script-Environment.md
+#   - Working with Results: Working-with-Results.md
+# - API Reference:
+#   - Index: apis/index.md
+#   - self.crawl: apis/self.crawl.md
+#   - Response: apis/Response.md
+#   - self.send_message: apis/self.send_message.md
+#   - '@catch_status_code_error': apis/@catch_status_code_error.md
+#   - '@every': apis/@every.md
+# - Deployment: Deployment.md
+# - Running weblocust with Docker: Running-weblocust-with-Docker.md
+# - Frequently Asked Questions: Frequently-Asked-Questions.md
+
+theme: cosmo
 markdown_extensions: ['toc(permalink=true)', ]
