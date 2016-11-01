@@ -27,6 +27,13 @@
           <td>[$ project.monitor["all"]["retry"] | null2zero $]</td>
         </tr>
         <tr>
+          <th scope="row"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
+          <td>[$ project.monitor["5m"]["failed"] | null2zero $]</td>
+          <td>[$ project.monitor["1h"]["failed"] | null2zero $]</td>
+          <td>[$ project.monitor["1d"]["failed"] | null2zero $]</td>
+          <td>[$ project.monitor["all"]["failed"] | null2zero $]</td>
+        </tr>        
+        <tr>
           <th scope="row"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
           <td>[$ project.monitor["5m"]["success"] | null2zero $]</td>
           <td>[$ project.monitor["1h"]["success"] | null2zero $]</td>
