@@ -152,6 +152,12 @@ class BaseHandler(object):
         Running callback function with requested number of arguments
         这傻逼，为啥在调用 self._run_func 时，最后一定要多传一个参数进来
         comment by qiulimao@2016.06.07
+        
+        以下来自binux的回答:@2016.11.28
+        因为 callback 可以 接受多个参数。
+        如果你不需要 task，那么 def callback(self,response)，
+        如果你需要 task 的时候 def callback(self,response,task)，
+        _run_func 保证了无论哪种函数原型，都能获得需要的参数。
         """
         args, varargs, keywords, defaults = inspect.getargspec(function)
         # 这个 _run_func是 一个class instance 方法，第一参数默认为self，所以 函数接收参数个数为: args-1
@@ -174,10 +180,10 @@ class BaseHandler(object):
             return None
         if not getattr(function, '_catch_status_code_error', False):
             response.raise_for_status()
-        # callback 也只接收一个参数，这里给了两个参数。
+        # callback 也只接收一个参数，这里给了两个参数,所以在程序当中你可以使用两个参数
         return self._run_func(function, response, task)
 
-    def _deal_result(self,result,task):
+    def _deal_result(self,result,response,task):
         """
             we alway come in this situation:
                 differrent crawl callback has differrent data schema,we need to save them seperatly.
@@ -218,11 +224,16 @@ class BaseHandler(object):
 
         # this method is tested,in most cases,it won't raise exceptions,
         # so let's apply this method first.
-        self.on_result(result)
+        #self.on_result(result)
+        # 使用这种方式好像有点可以重载的样子
+        # 如果客户端重写了on_result 方法,那么它可以定决定是否使用result,response,task这三个参数,目前on_result只使用了result参数
+        self._run_func(self.on_result,result,response,task)
 
         if function.__name__ != "on_result":
+            # 不要让on_result方法重复运行.
             # exceptions will be catch by self.run_task method
-            self._run_func(function,result,task)
+            # 那么同理:on_result__callback 同样可以接收三个参数
+            self._run_func(function,result,response,task)
 
         
 
@@ -247,12 +258,12 @@ class BaseHandler(object):
             result = self._run_task(task, response)
             if inspect.isgenerator(result):
                 for r in result:
-                    # 为啥 on_result 只接收一个参数，这里给了它三个参数？
+                    # 为啥 on_result 只接收一个参数，这里给了它三个参数?因为这样重写on_result更灵活,可以接收三个以内的参数
                     #self._run_func(self.on_result, r, response, task)
-                    self._deal_result(r,task)
+                    self._deal_result(r,response,task)
             else:
                 #self._run_func(self.on_result, result, response, task)
-                self._deal_result(result,task)
+                self._deal_result(result,response,task)
 
         except Exception as e:
             logger.exception(e)

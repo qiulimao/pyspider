@@ -37,13 +37,16 @@ Options:
 
 #### --config
 
-Config file is a JSON file with config values for global options or subcommands (a sub-dict named after subcommand). [example](/Deployment/#configjson)
+Config file is a JSON file with config values for global options or subcommands (a sub-dict named after subcommand). [example](/deploy/#configjson)
+
+
+if it is the first time to use `weblocust`,and you know nothing about configure,you can you `weblocust mkconfig` to generate configure file.
 
 ``` json
 {
-  "taskdb": "mysql+taskdb://username:password@host:port/taskdb",
-  "projectdb": "mysql+projectdb://username:password@host:port/projectdb",
-  "resultdb": "mysql+resultdb://username:password@host:port/resultdb",
+  "taskdb": "sqlalchemy+mysql+taskdb://username:password@host:port/taskdb",
+  "projectdb": "sqlalchemy+mysql+projectdb://username:password@host:port/projectdb",
+  "resultdb": "sqlalchemy+mysql+resultdb://username:password@host:port/resultdb",
   "message_queue": "amqp://username:password@host:port/%2F",
   "webui": {
     "username": "some_name",
@@ -60,6 +63,14 @@ Queue size limit, 0 for not limit
 #### --taskdb, --projectdb, --resultdb
 
 ```
+
+mongodb:
+    mongodb+type://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+    more: http://docs.mongodb.org/manual/reference/connection-string/
+sqlalchemy:
+    sqlalchemy+postgresql/mysql+type://user:passwd@host:port/database
+    sqlalchemy+mysql+mysqlconnector+type://user:passwd@host:port/database
+    more: http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html
 mysql:
     mysql+type://user:passwd@host:port/database
 sqlite:
@@ -68,14 +79,7 @@ sqlite:
     # absolute path
     sqlite+type:////path/to/database.db
     # memory database
-    sqlite+type://
-mongodb:
-    mongodb+type://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
-    more: http://docs.mongodb.org/manual/reference/connection-string/
-sqlalchemy:
-    sqlalchemy+postgresql+type://user:passwd@host:port/database
-    sqlalchemy+mysql+mysqlconnector+type://user:passwd@host:port/database
-    more: http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html
+    sqlite+type://    
 local:
     local+projectdb://filepath,filepath
     
@@ -108,6 +112,22 @@ The phantomjs proxy address, you need a phantomjs installed and running phantomj
 #### --data-path
 
 SQLite database and counter dump files saved path
+
+
+mkconfig
+---
+```
+Usage: weblocust mkconfig [OPTIONS]
+
+  generate simple configure file
+
+Options:
+  --filename TEXT    configure file name
+  --mongo-host TEXT  mongo host or ip
+  --redis-host TEXT  redis host or ip
+  --help             Show this message and exit.
+```
+generate configure file
 
 
 all
@@ -331,3 +351,24 @@ XML-RPC path URI for fetcher XMLRPC server. If not set, use a Fetcher instance.
 If true, all pages require username and password specified via `--username` and `--password`.
 
 
+phantomsource
+---------
+
+在部署`weblocust`时,每一个部件单独比较部署比较好,尤其是使用`phantomjs`,部署`phantomjs`时,需要运行的脚本.你可以通过这个命令获得`phantomjs_proxy.js`脚本.
+虽然可以使用`weblocust phantomjs`命令启动`phantomjs`模块,但是在`supervisor`部署下会出现一些问题,因为从本质上来讲,`weblocust phantomjs`会创建一个`subprocess`
+因为某种原因,`supervisor`结束`weblocust phantomjs`进程时,真实的`phantomjs`却无法正常关闭,导致一些bug,比如:端口一直占用,进程一直不能关闭.所以推荐单独配置.
+
+```
+Usage: run.py phantomsource [OPTIONS]
+
+  get phantomjs source code if you want to run phantomjs seperately,you can
+  get the related js code
+
+Options:
+  --help  Show this message and exit.
+
+```
+下面这条命令即可运行`phantomjs_proxy.js`,除了路径,不要再修改其它运行参数,除非你非常了解修改后的效果.
+```bash
+/path/to/phantomjs --ssl-protocol=any --disk-cache=true /path/to/phantomjs_proxy.js 25555
+```

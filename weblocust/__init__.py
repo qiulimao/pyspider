@@ -11,4 +11,4 @@
 # Modified on 2016-10-26 20:46:20
 # 基于spider 0.38
 
-__version__ = '1.0.2'
+__version__ = '1.0.3'

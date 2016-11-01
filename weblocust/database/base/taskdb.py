@@ -117,3 +117,18 @@ class TaskDB(object):
         you should implement this
         '''
         raise NotImplementedError
+
+# the flowing function is to support new ui interface and new function
+# added by qiulimao@2016.11.01
+
+    def ensure_index(self,porject):
+        """
+        """
+        raise NotImplementedError
+
+    def size(self,project):
+        raise NotImplementedError
+
+    def remove(self,project):
+        
+        raise NotImplementedError

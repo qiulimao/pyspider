@@ -96,7 +96,9 @@ def connect_rpc(ctx, param, value):
 @click.pass_context
 def cli(ctx, **kwargs):
     """
-    A powerful spider system in python.
+    A powerful spider system in python based on pyspider.
+    typically you need to run `weblocust mkconfig` to generate configure file first.
+    go to http://www.getqiu.com/static/weblocust/ to get more detail.
     """
     if kwargs['add_sys_path']:
         sys.path.append(os.getcwd())
@@ -279,8 +281,8 @@ def processor(ctx, processor_cls, enable_stdout_capture=True):
 
 
 @cli.command()
-@click.option('--result-cls', default='weblocust.result.ResultWorker', callback=load_cls,
-              help='ResultWorker class to be used.')
+@click.option('--result-cls', default='weblocust.result.AdvanceResultWorker', callback=load_cls,
+              help='AdvanceResultWorker class to be used.')
 @click.pass_context
 def result_worker(ctx, result_cls):
     """

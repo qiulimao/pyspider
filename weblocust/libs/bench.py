@@ -18,7 +18,7 @@ from six.moves import queue as Queue
 from weblocust.scheduler import ThreadBaseScheduler as Scheduler
 from weblocust.fetcher.tornado_fetcher import Fetcher
 from weblocust.processor import Processor
-from weblocust.result import ResultWorker
+from weblocust.result import ResultWorker,AdvanceResultWorker
 from weblocust.libs.utils import md5string
 
 
@@ -237,14 +237,14 @@ class BenchProcessor(Processor, BenchMixin):
         return super(BenchProcessor, self).on_task(task, response)
 
 
-class BenchResultWorker(ResultWorker, BenchMixin):
+class BenchResultWorker(AdvanceResultWorker, BenchMixin):
     def __init__(self, *args, **kwargs):
-        super(BenchResultWorker, self).__init__(*args, **kwargs)
+        super(BenchAdvanceResultWorker, self).__init__(*args, **kwargs)
         self._bench_init()
 
     def on_result(self, task, result):
         self._bench_report("Saved", 0, 150)
-        super(BenchResultWorker, self).on_result(task, result)
+        super(BenchAdvanceResultWorker, self).on_result(task, result)
 
 
 bench_script = '''

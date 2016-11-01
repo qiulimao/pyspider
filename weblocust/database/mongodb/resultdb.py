@@ -12,6 +12,7 @@
 
 import json
 import time
+import random 
 from pymongo import MongoClient
 import pymongo
 from weblocust.database.base.resultdb import ResultDB as BaseResultDB
@@ -64,23 +65,30 @@ class ResultDB(SplitTableMixin, BaseResultDB):
     # we have one2many relationship sometimes, add by qiulimao@2016.05.21
     ##
 
+
+
+
     def asave(self,project,taskid,url,result):
         """
         db.book.update({'user':'body'}, {'$addToSet':{books:{'$each':['心经','楞严经','阿弥陀佛经','金刚经']}});
         """
         collection_name = self._collection_name(project)
-        extraid = result.get("__extraid__")
-        refer = result.get("__refer__")
-        obj = {
-            'taskid': taskid,
-            'extraid':extraid if extraid else "__main__",
-            'refer':refer if refer else "__self__",
-            'url': url,
-            'result':result,
-            'updatetime': time.time(),
-        }
+        #extraid = result.get("__extraid__")
+        #refer = result.get("__refer__")
+        # use meta to describle result
+        # meta = result.pop("meta",{})
 
-        return self.database[collection_name].update({'taskid': taskid,'extraid':extraid}, {"$set":obj}, upsert=True)                  
+        # obj = {
+        #     'taskid': taskid,
+        #     'extraid':extraid if extraid else "__main__",
+        #     'refer':refer if refer else "__self__",
+        #     'url': url,
+        #     'result':result,
+        #     'updatetime': time.time(),
+        # }
+        obj = self.desc_result_with_meta(project,taskid,url,result)
+
+        return self.database[collection_name].update({'taskid': obj['taskid'],'extraid':obj['extraid']}, {"$set":obj}, upsert=True)                  
 
     def select(self, project, fields=None, offset=0, limit=0):
         if project not in self.projects:

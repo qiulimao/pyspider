@@ -81,7 +81,9 @@ See Also: [apis/self.send_message](/apis/self.send_message)
 ### 更好的解决一对多的关系
 
 因为我们有很多时候会遇到要采集评论，论坛等内容，`weblocust`当中的这些方法不是那么奏效。
-在`weblocust`当中你可以轻松的处理这类关系,`weblocust`在`result`当中引入这两个变量：
+在`weblocust`当中你可以轻松的处理这类关系,`weblocust`在`result`当中引入这`meat`这个个变量：
+
+`meta`变量当中包含:
 
 *   `__refer__`
 
@@ -93,7 +95,7 @@ See Also: [apis/self.send_message](/apis/self.send_message)
     `__extraid__`是指如果你设置了`__refer__`，实际上这条记录在在数据库当中的`resultid`,可能是一样的。
     比如都是`md5(url)`获得当前结果的`id`,那么我们可以给这个记录加一个`__extraid__`实现区分。如果不加这条属性，那么只有最后一条记录才能被记录。
     
->   默认 `__refer__='__self__'`  ;   `__extraid__='__main__'`.
+>   默认 `__refer__='__self__'`  ;   `__extraid__=a_random_number`.
 
 
 ### 灵活的存储每条记录

@@ -5,7 +5,7 @@ This document describes the reason why I made weblocust and the architecture.
 
 Why
 ---
-Two years ago, I was working on a vertical search engine. We are facing following needs on crawling:
+Two years ago, I(binux) was working on a vertical search engine. We(binuxs) are facing following needs on crawling:
 
 1. collect 100-200 websites, they may on/offline or change their templates at any time
 > We need a really powerful monitor to find out which website is changing. And a good tool to help us write script/template for each website.
@@ -62,7 +62,6 @@ WebUI is a web frontend for everything. It contains:
 * script editor, debugger
 * project manager
 * task monitor
-* result viewer, exporter
 
 Maybe webui is the most attractive part of weblocust. With this powerful UI, you can debug your scripts step by step just as weblocust do. Starting or stop a project. Finding which project is going wrong and what request is failed and try it again with debugger.
 

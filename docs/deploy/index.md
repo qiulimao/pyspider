@@ -33,9 +33,9 @@ Although you can use command-line to specify the parameters. A config file is a 
 
 ```
 {
-  "taskdb": "mysql+taskdb://username:password@host:port/taskdb",
-  "projectdb": "mysql+projectdb://username:password@host:port/projectdb",
-  "resultdb": "mysql+resultdb://username:password@host:port/resultdb",
+  "taskdb": "sqlalchemy+mysql+taskdb://username:password@host:port/taskdb",
+  "projectdb": "sqlalchemy+mysql+projectdb://username:password@host:port/projectdb",
+  "resultdb": "sqlalchemy+mysql+resultdb://username:password@host:port/resultdb",
   "message_queue": "amqp://username:password@host:port/%2F",
   "webui": {
     "username": "some_name",
@@ -51,6 +51,16 @@ you can get complete options by running `weblocust --help` and `weblocust webui 
 `"taskdb"`, `"projectdb”`, `"resultdb"` is using database connection URI with format below:
 
 ```
+
+mongodb:
+    mongodb+type://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+    more: http://docs.mongodb.org/manual/reference/connection-string/
+sqlalchemy:
+    sqlalchemy+postgresql+type://user:passwd@host:port/database
+    sqlalchemy+mysql+mysqlconnector+type://user:passwd@host:port/database
+    more: http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html
+
+# 以下存储引擎暂时不支持
 mysql:
     mysql+type://user:passwd@host:port/database
 sqlite:
@@ -60,13 +70,6 @@ sqlite:
     sqlite+type:////path/to/database.db
     # memory database
     sqlite+type://
-mongodb:
-    mongodb+type://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
-    more: http://docs.mongodb.org/manual/reference/connection-string/
-sqlalchemy:
-    sqlalchemy+postgresql+type://user:passwd@host:port/database
-    sqlalchemy+mysql+mysqlconnector+type://user:passwd@host:port/database
-    more: http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html
 local:
     local+projectdb://filepath,filepath
     
@@ -116,5 +119,8 @@ Running with Docker
 -------------------
 Or [Running weblocust with Docker](Running-weblocust-with-Docker)
 
->   关于部署呢，我本人还是推荐使用 `supervisor`
+Running with Supervisor
+-------------------
+Or [Running weblocust with Supervisor](Running-weblocust-with-Supervisor)
+
 

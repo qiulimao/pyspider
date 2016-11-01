@@ -15,7 +15,7 @@ In most case, a project is one script you write for one website.
 * to delete a project, set `group` to `delete` and status to `STOP`, wait 24 hours.
 
 
-`on_finished` callback
+on_finished callback
 --------------------
 You can override `on_finished` method in the project, the method would be triggered when the task_queue goes to 0.
 

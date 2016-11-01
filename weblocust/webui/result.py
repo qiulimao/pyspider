@@ -65,7 +65,10 @@ def showdata(project,item_per_page,page,refer):
     limit = int(item_per_page)
 
     count = resultdb.count_by(project,condition={"refer":refer})
-    results = list(resultdb.select_by(project, condition={"refer":refer},offset=offset, limit=limit))
+    #print offset
+    #resultdb.select_by(project,offset,limit,{"refer":refer}))
+    results = list(resultdb.select_by(project,offset=offset,limit=limit,condition={"refer":refer}))
+    #results = []
 
     reply = {
         "project":project,

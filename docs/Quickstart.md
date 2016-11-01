@@ -3,7 +3,7 @@ Quickstart
 
 Installation
 ------------
->   `weblocust`的存储部分主要是采用`mongodb`,因此建议使用`mongodb`,队列可以使用`redis`或者`rabbitmq`,在使用之前可以先安装好这些软件
+>   `weblocust`的存储部分主要是采用`mongodb`,`sqlalchemy`,`mysql`,`sqlite`,建议使用`mongodb`,队列可以使用`redis`或者`rabbitmq`,在使用之前可以先安装好这些软件
 
 * run `pip install weblocust` or 
 * run `git clone https://github.com/qiulimao/weblocust.git` then `$python setup.py install`
@@ -23,7 +23,8 @@ please install PhantomJS if needed: http://phantomjs.org/build.html
 
 note that PhantomJS will be enabled only if it is excutable in the `PATH` or in the System Environment
 
-**Note:** `weblocust` command is running weblocust in `all` mode, which running components in threads or subprocesses. For production environment, please refer to [Deployment](Deployment).
+**Note:** `weblocust` command is running weblocust in `all` mode, which running components in threads or subprocesses. 
+For production environment, please refer to [Deployment](/deploy/).
 
 Your First Script
 -----------------

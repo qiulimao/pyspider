@@ -9,7 +9,8 @@
 #
 # Created on 2014-10-11 18:40:03
 # Modified on 2016-10-26 20:46:20
-
+import random 
+import time
 # result schema
 {
     'result': {
@@ -51,4 +52,43 @@ class ResultDB(object):
         if you are not create database connection via connect_database method,
         you should implement this
         '''
+        raise NotImplementedError
+
+# the flowing function is to support new ui interface and new function
+# added by qiulimao@2016.11.01
+
+    def desc_result_with_meta(self,project,taskid,url,result):
+        """
+            get meta infomation from result,then compose new result
+        """
+        meta = result.pop("meta",{})
+
+        resultWithMeta = {
+            'taskid':taskid,
+            'extraid':meta.get("__extraid__",str(random.randrange(100000,999999))),
+            'refer':meta.get("__refer__","__self__"),
+            'url':url,
+            'result':result,
+            'updatetime':time.time(),}
+
+        return resultWithMeta
+
+    
+    def size(self,project):
+        raise NotImplementedError
+
+    def remove(self,project):
+        raise NotImplementedError
+
+    def ensure_index(self,project):
+        """
+        """
+        raise NotImplementedError
+
+    def count_by(self,project,condition):
+        
+        raise NotImplementedError
+
+
+    def select_by(self,project,offset,limit,condition):
         raise NotImplementedError

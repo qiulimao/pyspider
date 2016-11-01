@@ -14,6 +14,7 @@ pages:
     - Selector: tutorial/HTML-and-CSS-Selector.md
     - AJAX: tutorial/AJAX-and-more-HTTP.md
     - PhantomJs: tutorial/Render-with-PhantomJS.md
+    - DataCleaner: tutorial/Data-Cleaner.md
   - API Reference:
     - Index: apis/index.md
     - self.crawl: apis/self.crawl.md
@@ -27,8 +28,10 @@ pages:
     - About Projects: About-Projects.md
     - Script Environment: Script-Environment.md
     - Working with Results: Working-with-Results.md
-  - Deployment: Deployment.md
-  - Running weblocust with Docker: Running-weblocust-with-Docker.md
+  - Deployment:
+    - Index: deploy/index.md
+    - Running weblocust with Docker: deploy/Running-weblocust-with-Docker.md
+    - Running weblocust with Supervisor: deploy/Running-weblocust-with-Supervisor.md
   - Frequently Asked Questions: Frequently-Asked-Questions.md
   - For Developers: Developers.md
 # - Introduction: index.md
@@ -56,5 +59,5 @@ pages:
 # - Running weblocust with Docker: Running-weblocust-with-Docker.md
 # - Frequently Asked Questions: Frequently-Asked-Questions.md
 
-theme: cosmo
+theme: mkdocs
 markdown_extensions: ['toc(permalink=true)', ]
