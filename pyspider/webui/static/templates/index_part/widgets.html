@@ -1,0 +1,94 @@
+    <script type="text/ng-template" id="monitorTemplate.html">
+        <div class="col-md-12">
+
+<table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>5m</th>
+          <th>1h</th>
+          <th>1d</th>
+          <th>all</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></th>
+          <td>[$ project.monitor["5m"]["pending"] | null2zero $]</td>
+          <td>[$ project.monitor["1h"]["pending"] | null2zero $]</td>
+          <td>[$ project.monitor["1d"]["pending"] | null2zero $]</td>
+          <td>[$ project.monitor["all"]["pending"] | null2zero $]</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></th>
+          <td>[$ project.monitor["5m"]["retry"] | null2zero $]</td>
+          <td>[$ project.monitor["1h"]["retry"] | null2zero $]</td>
+          <td>[$ project.monitor["1d"]["retry"] | null2zero $]</td>
+          <td>[$ project.monitor["all"]["retry"] | null2zero $]</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
+          <td>[$ project.monitor["5m"]["failed"] | null2zero $]</td>
+          <td>[$ project.monitor["1h"]["failed"] | null2zero $]</td>
+          <td>[$ project.monitor["1d"]["failed"] | null2zero $]</td>
+          <td>[$ project.monitor["all"]["failed"] | null2zero $]</td>
+        </tr>        
+        <tr>
+          <th scope="row"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
+          <td>[$ project.monitor["5m"]["success"] | null2zero $]</td>
+          <td>[$ project.monitor["1h"]["success"] | null2zero $]</td>
+          <td>[$ project.monitor["1d"]["success"] | null2zero $]</td>
+          <td>[$ project.monitor["all"]["success"] | null2zero $]</td>
+        </tr>
+
+      </tbody>
+</table>                    
+
+  <ul class="list-inline">
+    <li><span class="glyphicon glyphicon-transfer" aria-hidden="true">:newtask</li>
+    <li><span class="glyphicon glyphicon-question-sign" aria-hidden="true">:重试</li>
+    <li><span class="glyphicon glyphicon-ok" aria-hidden="true">:成功</li>
+  </ul>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="changeGroupTemplate.html">
+      <div class="form-group">
+         <input class="form-control input-sm" ng-model="project.group" placeholder="分组"></input>
+      </div>
+      <a class='btn btn-default btn-sm' ng-click="update(project.name,'group',project.group)">更新</a>
+    </script>
+
+    <script type="text/ng-template" id="changeBRTemplate.html">
+      <div class="form-group">
+        <label class=" control-label">并发</label>
+        <input class="form-control input-sm" ng-model="project.burst"></input>
+      </div>
+
+      <div class="form-group">
+          <label class="control-label">速度</label>
+          <input class="form-control input-sm" ng-model="project.rate"></input>     
+      </div>
+          <a class='btn btn-default btn-sm' ng-click="update(project.name,'rate',project.rate+'/'+project.burst)">更新</a>
+    </script>    
+
+    <script type="text/ng-template" id="changeStatusTemplate.html">
+      <div class="col-md-12">
+        <div class="input-group">
+            <select class="form-control input-sm" ng-model="project.status" ng-options="m for m in STATUS"></select>
+          <span class="input-group-btn">
+            <button class="btn btn-default btn-sm" type="button" ng-click="update(project.name,'status',project.status)">更新</button>
+          </span>
+        </div>
+        <p>&nbsp;</p>
+      </div>
+    </script>
+
+    <script type="text/ng-template" id="settingsTemplate.html">
+      <div class="input-group">
+        <span class="input-group-addon">刷新频率</span>
+        <input type="text" class="form-control" ng-model="settings.AUTO_REFRESH_TIME">
+      </div>
+      <p class="help-block">更改刷新频率后，您需要重新开启自动刷新模式</p>
+    </script>

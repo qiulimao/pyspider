@@ -119,3 +119,31 @@ class TaskDB(SQLiteMixin, SplitTableMixin, BaseTaskDB, BaseDB):
             tablename, where="`taskid` = %s" % self.placeholder, where_values=(taskid, ),
             **self._stringify(obj)
         )
+
+# the flowing function is to support new ui interface and new function
+# added by qiulimao@2016.11.01
+
+    def size(self, project):
+        """
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return 0
+        tablename = self._tablename(project)
+        for count, in self._execute("SELECT count(1) FROM %s" % self.escape(tablename)):
+            return count
+
+    def remove(self,project):
+        """
+            remove all 
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        tablename = self._tablename(project)        
+        self._execute("DELETE FROM %s WHERE 1>0" % self.escape(tablename))
+
+    def ensure_index(self,project):
+        return True

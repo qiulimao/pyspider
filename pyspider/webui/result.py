@@ -52,3 +52,48 @@ def dump_result(project, _format):
     elif _format == 'csv':
         return Response(result_dump.dump_as_csv(results),
                         mimetype='text/csv')
+
+# add by qiulimao to support new UI
+#
+# chrome may add / automaticly,thus causing 404 Error
+@app.route('/result-list/<project>/<int:item_per_page>/<int:page>',methods=['GET', ])
+@app.route('/result-list/<project>/<int:item_per_page>/<int:page>/',methods=['GET', ])
+def crawleddata(project,item_per_page,page):
+    resultdb = app.config['resultdb']
+    #project = request.args.get('project')
+    #offset = int(request.args.get('offset', 0))
+    offset = int(item_per_page)*int(page-1)
+    limit = int(item_per_page)
+
+    count = resultdb.count(project)
+    results = list(resultdb.select(project, offset=offset, limit=limit))
+    #print count,project,results
+    reply = {
+        "project":project,
+        "count":count,
+        "results":results,
+    }
+    #print "ccccc"
+    return json.dumps(reply),200,{'Content-Type': 'application/json'}
+
+@app.route('/result-list/<project>/<refer>/<int:item_per_page>/<int:page>/',methods=['GET', ])
+def showdata(project,item_per_page,page,refer):
+    # refer:__self__  :不是外键，不是别人的一部分
+    # extraid:__main__:不是一页当中产生的多个结果之一
+    resultdb = app.config['resultdb']
+
+    offset = int(item_per_page)*int(page-1)
+    limit = int(item_per_page)
+
+    count = resultdb.count_by(project,condition={"refer":refer})
+    #print offset
+    #resultdb.select_by(project,offset,limit,{"refer":refer}))
+    results = list(resultdb.select_by(project,offset=offset,limit=limit,condition={"refer":refer}))
+    #results = []
+
+    reply = {
+        "project":project,
+        "count":count,
+        "results":results,
+    }
+    return json.dumps(reply),200,{'Content-Type': 'application/json'}

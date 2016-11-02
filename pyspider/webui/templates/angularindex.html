@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Webloust Dash Board</title>
+
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png') }}">
+    <script src="{{ url_for('static', filename='js/core/jquery.min.js') }}"></script>    
+    <script src="{{ url_for('static', filename='js/core/angular.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/angular-animate.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/angular-route.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/angular-sanitize.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/angular-resource.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/angular-touch.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/ui-bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core/ui-bootstrap-tpls.js') }}"></script>
+
+	<style>
+		.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+        td {cursor: pointer;}
+        .badge-danger{background-color:red;}
+        .badge-primary{background-color: #C42BC2;}
+        .badge-warning{background-color: yellow}
+        .badge-success{background-color: green}
+        .label-fine{background-color: #F16C13}
+        .progress{height:6px;margin-bottom:1px;}
+        .progress-bar{height:6px;margin-bottom:1px;}
+	</style>
+
+</head>
+<body ng-app="weblocust" style="margin-top:60px;">
+	<div ng-include="'static/templates/navbar.part.html'"></div>
+        
+
+            <div ng-view class="view-slide-in"></div>
+
+
+	
+    <div ng-include="'static/templates/footer.part.html'"></div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/derective.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/filter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/service.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/controller.js') }}"></script>
+
+</body>
+</html>

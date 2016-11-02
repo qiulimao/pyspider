@@ -1,0 +1,78 @@
+<div class="container">
+	<div class="row">
+		<!-- {"project": "news_163_com", "status": 2, "taskid": "_on_get_info", "updatetime": 1463535607.698866, "url": "data:,_on_get_info"}]} -->
+
+		 <div class="col-lg-6">
+		 		<p>&nbsp;</p>
+        		<div class="form-group">
+				    <div class="input-group">
+				      <input type="text" class="form-control" ng-model="TaskSearch" placeholder="Search for...">
+				      <span class="input-group-btn">
+				        <button class="btn btn-default" type="button">
+				        	&nbsp;<span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;
+				        </button>
+				      </span>
+				    </div><!-- /input-group -->  
+				    <p class="help-block">模糊查询,仅支持json第一层key</p>      			
+        		</div>
+		    </div><!-- /.col-lg-6 -->	
+
+		<div class="col-md-12" ng-repeat="task in tasks|filter:TaskSearch">
+			<div class="panel panel-default">
+				<div class="panel-heading">[$task.project$]</div>
+				<div class="panel-body">
+					<table class="table table-bordered">
+						<thead>
+							<th>#</th>
+							<th>value</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>project
+				    				</a>
+								</td>
+								<td>[$task.project$]</td>
+							</tr>
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>taskid
+				    				</a>
+								</td>
+								<td>[$task.taskid$]</td>
+							</tr>
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>url
+				    				</a>									
+								</td>
+								<td>[$task.url$]</td>	
+							</tr>			
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>track
+				    				</a>									
+								</td>
+								<td><pre>[$task.track|json$]</pre></td>	
+							</tr>
+							<tr>
+								<td>
+									<a class="btn btn-default">
+				    					<span class="glyphicon glyphicon-tag"></span>updatime
+				    				</a>									
+								</td>
+								<td>[$task.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

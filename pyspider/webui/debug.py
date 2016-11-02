@@ -222,3 +222,55 @@ def resizer_html():
     height = request.args.get('height')
     script = request.args.get('script', '')
     return render_template("helper.html", height=height, script=script)
+
+# add by qiulimao to support new ui module 
+
+@app.route("/debug/clear/taskdb/<project>",methods=['GET','POST'])
+def clear_taskdb(project):
+    """
+        clear all the tasks in taskdb
+    """
+    taskdb = app.config['taskdb']
+    resultdb = app.config['resultdb']
+    taskdb.remove(project)
+    return json.dumps({"taskdbsize":taskdb.size(project),"resultdbsize":resultdb.size(project)}),200,{'Content-Type':"application/json"}
+
+
+
+@app.route("/debug/clear/resultdb/<project>",methods=['GET','POST'])
+def clear_resultdb(project):
+    """
+        clear all the results in resultdb 
+    """
+    taskdb = app.config['taskdb']
+    resultdb = app.config['resultdb']
+    resultdb.remove(project)
+    return json.dumps({"taskdbsize":taskdb.size(project),"resultdbsize":resultdb.size(project)}),200,{'Content-Type':"application/json"}
+
+
+
+def get_project_info(project):
+    """
+    """
+    taskdb = app.config['taskdb']
+    resultdb = app.config['resultdb']
+    result = {'taskdbsize':taskdb.size(project),'resultdbsize':resultdb.size(project)}
+    return json.dumps(result),200,{'Content-Type':'application/json'}
+
+
+@app.route("/debug/info/<project>",methods=['GET'])
+def project_info(project):
+    """
+        project infomation
+    """
+    taskdb = app.config['taskdb']
+    resultdb = app.config['resultdb']
+    result = {'taskdbsize':taskdb.size(project),'resultdbsize':resultdb.size(project)}
+    return json.dumps(result),200,{'Content-Type':'application/json'}
+
+
+@app.route("/debug/create-project",methods=["POST"])
+def create_project():
+    project_name = request.form.get("project-name")
+    #debug(project_name)
+    return json.dumps({"ok":1,"project_name":project_name}),200,{'Content-Type': 'application/json'}

@@ -85,3 +85,66 @@ class ResultDB(SplitTableMixin, BaseResultDB):
         if not ret:
             return ret
         return self._parse(ret)
+
+# the flowing function is to support new ui interface and new function
+# added by qiulimao@2016.11.01
+
+    def asave(self,project,taskid,url,result):
+        """
+        """
+        if project not in self.projects:
+            self._create_project(project)
+        collection_name = self._collection_name(project)
+
+        obj = self.desc_result_with_meta(project,taskid,url,result)
+
+        return self.database[collection_name].update({'taskid': obj['taskid'],'extraid':obj['extraid']}, {"$set":obj}, upsert=True) 
+
+    def select_by(self,project,condition={},offset=0,limit=0):
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        results = self.database[collection_name].find(condition, skip=offset, limit=limit).sort("updatetime",pymongo.DESCENDING)
+        for result in results:
+            yield self._parse(result)
+
+
+    def count_by(self,project,condition={}):
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        return self.database[collection_name].find(condition).count()
+    
+    def remove(self,project):
+        """
+            remove all the results in result database 
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        return self.database[collection_name].remove()
+
+    def size(self,project):
+        """
+            return the size of result database 
+        """
+        return self.count(project)
+
+    def ensure_index(self,collection_name):
+        # 因为result 的索引实际上的taskid，所以这里建taskid的索引
+        self.database[collection_name].create_index([
+                                  ("taskid", pymongo.ASCENDING),
+                                  ("extraid", pymongo.ASCENDING)
+                                ])
+        self.database[collection_name].create_index('updatetime')
+        
+        self.database[collection_name].create_index([
+                                    ('refer',pymongo.DESCENDING),
+                                    ("updatetime",pymongo.DESCENDING)
+                                    ])

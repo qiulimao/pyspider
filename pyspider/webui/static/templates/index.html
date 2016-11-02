@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+
+
+	<div class="col-md-3 col-sm-12">
+    <div ng-include="'/static/templates/index_part/system_status.part.html'|templateinclude"></div>
+	</div>
+<!-- 以上是左侧栏，以下是右侧栏 -->
+	<div class="col-md-9 col-sm-12">
+   <div ng-include="'/static/templates/index_part/spider_status_table.html'|templateinclude"></div>
+	</div>
+
+  <div ng-include="'/static/templates/index_part/widgets.html'|templateinclude"></div>
+
+  </div>
+</div>

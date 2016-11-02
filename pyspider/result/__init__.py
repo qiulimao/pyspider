@@ -6,3 +6,4 @@
 # Created on 2014-10-19 16:10:19
 
 from .result_worker import ResultWorker, OneResultWorker
+from .result_worker import AdvanceResultWorker

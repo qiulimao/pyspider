@@ -1,0 +1,85 @@
+<div class="container">
+	<div class="row">
+        	<div class="col-md-6">
+        		<div class="form-group">
+				    <div class="input-group">
+				      <input type="text" class="form-control" ng-model="ResultSearch" placeholder="Search for...">
+				      <span class="input-group-btn">
+				        <button class="btn btn-default" type="button">
+				        	&nbsp;<span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;
+				        </button>
+				      </span>
+				    </div><!-- /input-group -->        			
+        		</div>
+		    </div><!-- /.col-lg-6 -->		
+
+        	<div class="col-md-6">
+
+		    </div><!-- /.col-lg-6 -->	
+
+		<div class="col-md-12">
+
+			<ul class="list-group">
+			  <li class="list-group-item list-group-item-default">
+  				<uib-pagination total-items="num" ng-model="current_page" max-size="5" ng-change="page_turning()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+			  </li>
+			  <li class="list-group-item list-group-item-default">
+			  	 <div class="form-group">
+				    <div class="input-group">
+				      <input type="text" class="form-control" ng-model="concentrate"  placeholder="parameter focus" uib-typeahead="k for k in keylist | filter:$viewValue | limitTo:8" ng-change="change_keylist()" typeahead-min-length=0>
+				      <span class="input-group-btn">
+				        <button class="btn btn-danger" type="button">
+				        	&nbsp;<span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>&nbsp;
+				        </button>
+				      </span>
+				    </div><!-- /input-group -->     			
+        		</div>
+			  </li>
+			</ul>
+
+  <uib-accordion >
+    <uib-accordion-group is-open="item.open" panel-class="panel-default" ng-repeat="item in results | filter: ResultSearch" class="repeat-animation">
+      <uib-accordion-heading>
+      	<span class="text-primary">#[$ $index $]#</span>
+        <span>[$ item.taskid $]</span>
+        <span class="text-danger">@</span>
+        <span>[$ item.updatetime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' $]</span>
+        
+        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': item.open, 'glyphicon-chevron-right': !item.open}"></i>
+        <span class="pull-right text-success">
+        	<span class="glyphicon glyphicon-pushpin"></span>&nbsp;
+        	[$ item.result|spotlight:concentrate $]
+        </span>
+      </uib-accordion-heading>
+
+        <p>
+        	<span class="glyphicon glyphicon-paperclip pull-right" ng-click="refered(item.taskid)" style="margin-left:20px;"></span>
+        	<a href="[$ item.url $]" target="_blank" class="pull-right" style="margin-left:10px;margin-right:10px;"><span class="glyphicon glyphicon-link"></span></a>
+           
+        </p>
+		<div ng-repeat="(key,data) in item.result">
+			<p>
+				<a class="btn btn-default">
+					<span class="glyphicon glyphicon-tag"></span> [$key$]
+				</a>
+			</p>
+			<div ng-bind-html="data|asHTML"></div>
+			<hr>
+		</div>
+        <p>
+           <a href="[$ item.url $]" target="_blank"><span class="glyphicon glyphicon-link"></span>原链接</a>
+           <span class="glyphicon glyphicon-chevron-up pull-right" ng-click="item.open = !item.open"></span>
+        </p>
+
+    </uib-accordion-group>
+  </uib-accordion>
+
+	<ul class="list-group">
+	  <li class="list-group-item list-group-item-default">
+		<uib-pagination total-items="num" ng-model="current_page" max-size="5" ng-change="page_turning()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+	</li>
+   </ul>
+		</div>
+
+	</div>
+</div>

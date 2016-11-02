@@ -33,11 +33,37 @@
     <script src="{{ url_for('cdn', path='codemirror/5.20.2/addon/lint/json-lint.min.js') }}"></script>
     <script src="{{ url_for('cdn', path='codemirror/2.36.0/formatting.min.js') }}"></script>
     <script src="{{ url_for('cdn', path='URI.js/1.11.2/URI.min.js') }}"></script>
+    <style>
+        li { margin-bottom: 6px; }
+
+        .settings-menue { 
+          margin-left:20px;
+          cursor:pointer;
+          font-weight:bold;
+          padding-left: 5px;
+          padding-right: 5px;
+          border: 1px solid #595959;
+          -moz-border-radius:5px; 
+          -webkit-border-radius:5px;
+        }
+        .settings-menue-change { 
+          margin-left:20px;
+          cursor:pointer;
+          padding-left: 5px;
+          padding-right: 5px;
+          border: 1px solid #5555a5;
+          -moz-border-radius:5px; 
+          -webkit-border-radius:5px;
+        }
+    </style>       
   </head>
 
   <body>
     <section id="control">
-      <div class="title pull-left"><a href="/">pyspider</a> &gt; {{ project_name }}</div>
+      <div class="title pull-left"><a href="/">pyspider</a> &gt; {{ project_name }}
+        <span class="settings-menue-change" value="#c5c5c5" target="background-color" style="background-color:#c5c5c5">&nbsp;&nbsp;</span>
+        <span class="settings-menue-change" value="#fff" target="background-color" style="background-color:#fff">&nbsp;&nbsp;</span>
+      </div>
       <div class="pull-right">
         <a href="http://docs.pyspider.org/" target="_blank">Documentation</a>
         <span class="webdav-btn">WebDAV Mode</span>
@@ -101,6 +127,15 @@
       var task_content = {{ task | tojson | tojson | safe }};
       var script_content = {{ script | tojson | safe }};
     </script>
+   
+    <script>
+      $(".settings-menue-change").click(function(){
+          var new_value = $(this).attr('value');
+          var target = $(this).attr("target");
+          $(".CodeMirror-code").css(target,new_value);
+      });      
+    </script>
+    
     <script src="{{ url_for('static', filename='debug.min.js') }}"></script>
   </body>
 </html>

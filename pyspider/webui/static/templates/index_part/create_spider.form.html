@@ -1,0 +1,24 @@
+<form name="createSpiderForm" ng-submit="create_new_spider()" novalidate class="form">
+
+  <div class="form-group">
+
+      <div class="form-group  has-feedback" ng-class="{'has-error':(createSpiderForm.project_name.$touched && createSpiderForm.project_name.$invalid),'has-success':(createSpiderForm.project_name.$touched && !createSpiderForm.project_name.$invalid)}">
+
+    <input type="text" class="form-control" placeholder="project name"  name="project_name" ng-model="newproject.project_name" ng-pattern="/[a-zA-Z][a-z0-9A-Z_-]+/" required/>
+
+        <span class="glyphicon  form-control-feedback" aria-hidden="true" ng-class="{'glyphicon-remove':(createSpiderForm.project_name.$touched && createSpiderForm.project_name.$invalid),'glyphicon-ok':(createSpiderForm.project_name.$touched && !createSpiderForm.project_name.$invalid)}"></span>
+      </div> 
+  </div>
+  <div class="form-group">
+      <div class="form-group  has-feedback" ng-class="{'has-error':(createSpiderForm.start_url.$touched && createSpiderForm.start_url.$invalid),'has-success':(createSpiderForm.start_url.$touched && !createSpiderForm.start_url.$invalid)}">
+
+        <input type="text" class="form-control" placeholder="start url start with http[s]://" name = "start_url" ng-model="newproject.start_url" ng-pattern="/https?:\/\/[a-z-0-9A-Z-_\.\?\&]+/" required/>
+
+        <span class="glyphicon  form-control-feedback" aria-hidden="true" ng-class="{'glyphicon-remove':(createSpiderForm.start_url.$touched && createSpiderForm.start_url.$invalid),'glyphicon-ok':(createSpiderForm.start_url.$touched && !createSpiderForm.start_url.$invalid)}"></span>
+      </div>                 
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-primary btn-block" type="submit" ng-disabled="createSpiderForm.start_url.$invalid" value="Save">创建爬虫</button>
+  </div>              
+</form>

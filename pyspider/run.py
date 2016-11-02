@@ -284,7 +284,7 @@ def processor(ctx, processor_cls, process_time_limit, enable_stdout_capture=True
 
 
 @cli.command()
-@click.option('--result-cls', default='pyspider.result.ResultWorker', callback=load_cls,
+@click.option('--result-cls', default='pyspider.result.AdvanceResultWorker', callback=load_cls,
               help='ResultWorker class to be used.')
 @click.pass_context
 def result_worker(ctx, result_cls, get_object=False):

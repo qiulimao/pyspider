@@ -100,3 +100,33 @@ def active_tasks():
     return json.dumps(result), 200, {'Content-Type': 'application/json'}
 
 app.template_filter('format_date')(utils.format_date)
+
+
+#
+
+@app.route('/tasks/<project>')
+def project_tasks(project):
+    """ a group of task """
+    rpc = app.config['scheduler_rpc']
+    taskdb = app.config['taskdb']
+    #project = request.args.get('project', "")
+    limit = int(request.args.get('limit', 100))
+
+    try:
+        updatetime_tasks = rpc.get_active_tasks(project, limit)
+    except socket.error as e:
+        app.logger.warning('connect to scheduler rpc error: %r', e)
+        return 'connect to scheduler error', 502
+
+    tasks = {}
+    result = []
+    for updatetime, task in sorted(updatetime_tasks , key=lambda x: x[0]):
+        key = '%(project)s:%(taskid)s' % task
+        task['updatetime'] = updatetime
+        if key in tasks and tasks[key].get('status', None) != taskdb.ACTIVE:
+            result.append(tasks[key])
+        tasks[key] = task
+    result.extend(tasks.values())
+    
+    return json.dumps({"tasks":result}),200,\
+            {'Content-Type': 'application/json'}

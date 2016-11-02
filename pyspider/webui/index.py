@@ -14,8 +14,8 @@ from .app import app
 
 index_fields = ['name', 'group', 'status', 'comments', 'rate', 'burst', 'updatetime']
 
-
-@app.route('/')
+# changed by qiulimao new ui will use '/'
+@app.route('/oldui')
 def index():
     projectdb = app.config['projectdb']
     projects = sorted(projectdb.get_all(fields=index_fields),
@@ -151,3 +151,25 @@ Allow: /$
 Allow: /debug
 Disallow: /debug/*?taskid=*
 """, 200, {'Content-Type': 'text/plain'}
+
+# index page 需要：
+# /
+# /project-list 
+# /counter -> binux 已经实现
+# /queues  -> binux 已经实现
+#
+# new ui module powerd by qiulimao
+@app.route("/")
+@app.route("/angular")
+@app.route("/newui")
+def angular_index():
+    return render_template("angularindex.html")
+
+
+@app.route('/projects-list')
+def projectslist():
+    projectdb = app.config['projectdb']
+    projects = sorted(projectdb.get_all(fields=index_fields),
+                      key=lambda k: (0 if k['group'] else 1, k['group'], k['name']))
+    return json.dumps({"projects":projects}),200,{'Content-Type': 'application/json'}
+

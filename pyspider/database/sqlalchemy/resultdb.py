@@ -24,10 +24,15 @@ class ResultDB(SplitTableMixin, BaseResultDB):
 
     def __init__(self, url):
         self.table = Table('__tablename__', MetaData(),
-                           Column('taskid', String(64), primary_key=True, nullable=False),
+                           Column('taskid', String(64),nullable=False),
+                           # 这个taskid不能是unique,所以不能是主键
                            Column('url', String(1024)),
                            Column('result', LargeBinary),
                            Column('updatetime', Float(32)),
+                           Column('refer',String(64),default="__self__"),
+                           Column('extraid',String(32),default="0"),
+                           Index("taskid__extraid",'taskid','extraid'),
+                           Index("refer__updatetime",'refer','updatetime'),
                            mysql_engine='InnoDB',
                            mysql_charset='utf8'
                            )
@@ -130,3 +135,100 @@ class ResultDB(SplitTableMixin, BaseResultDB):
                                         .where(self.table.c.taskid == taskid)
                                         .limit(1)):
             return self._parse(result2dict(columns, task))
+
+# the flowing function is to support new ui interface and new function
+# added by qiulimao@2016.11.01
+
+    def asave(self, project, taskid, url, result):
+        """
+            advance save
+        """
+        if project not in self.projects:
+            self._create_project(project)
+            self._list_project()
+        self.table.name = self._tablename(project)
+
+        obj = self.desc_result_with_meta(project, taskid, url, result)
+
+        # 这里用count来查看是否有重复记录,相当于执行一个upsert操作
+        # 但是是不是应该用exists更好?
+        existsItemCountProxy =  self.engine.execute(self.table.count()
+                               .where(self.table.c.taskid==taskid)
+                               .where(self.table.c.extraid==obj['extraid']))
+
+        existsItemCount = existsItemCountProxy.fetchone()
+
+        if existsItemCount[0] != 0L:
+
+            del obj['taskid']
+            extraid =  obj.pop("extraid")
+
+            return self.engine.execute(self.table.update()
+                                       .where(self.table.c.taskid == taskid)
+                                       .where(self.table.c.extraid == extraid)
+                                       .values(**self._stringify(obj)))
+        else:
+
+            return self.engine.execute(self.table.insert()
+                                       .values(**self._stringify(obj)))
+
+
+
+    def count_by(self,project,condition={}):
+        """
+            count the items by some condition.
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return 0
+        self.table.name = self._tablename(project)        
+        refer = condition.get("refer","__self__")
+        for count,in self.engine.execute(self.table.count().where(self.table.c.refer==refer)):
+            return count
+
+    
+
+    def select_by(self,project,offset,limit,condition={}):
+        """
+            select_by conditon.webui module use this function
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        
+        refer = condition.get("refer","__self__")
+
+        self.table.name = self._tablename(project)
+        for one in self.engine.execute(self.table.select()
+                                        .where(self.table.c.refer==refer)
+                                        .order_by(self.table.c.updatetime.desc())
+                                        .offset(offset).limit(limit)
+                                        .execution_options(autocommit=True)):
+
+            yield self._parse(result2dict(self.table.c,one))
+
+    def remove(self,project):
+        """
+            remove all items in result db.
+        """
+        if project not in self.projects:
+            self._create_project(project)
+            self._list_project()
+        self.table.name = self._tablename(project)
+
+        self.engine.execute(self.table.delete())
+
+    def size(self,project):
+        """
+            return the size of result.
+        """
+        return self.count(project)
+
+    def ensure_index(self,project):
+        """
+            we had create indexes on table schema.
+            so return true
+        """
+        return True

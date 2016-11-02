@@ -157,3 +157,40 @@ class TaskDB(SplitTableMixin, BaseTaskDB):
         return self.engine.execute(self.table.update()
                                    .where(self.table.c.taskid == taskid)
                                    .values(**self._stringify(obj)))
+
+
+# the flowing function is to support new ui interface and new function
+# added by qiulimao@2016.11.01
+
+    def size(self,project):
+        """
+            return the size of task db.
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return 0
+        self.table.name = self._tablename(project)
+
+        for count, in self.engine.execute(self.table.count()):
+            return count
+
+
+    def ensure_index(self,project):
+        """
+            created indexes on creating table.
+            always return true
+        """
+        return True
+        
+    def remove(self,project):
+        """
+            remove all items in task db
+        """
+        if project not in self.projects:
+            self._create_project(project)
+            self._list_project()
+        self.table.name = self._tablename(project)
+
+        self.engine.execute(self.table.delete())
+        

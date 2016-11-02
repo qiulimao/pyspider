@@ -85,3 +85,26 @@ class OneResultWorker(ResultWorker):
         else:
             logger.warning('result UNKNOW -> %.30r' % result)
             return
+
+class AdvanceResultWorker(ResultWorker):
+    
+    def on_result(self,task,result):
+        '''Called every result'''
+        if not result:
+            return
+        if 'taskid' in task and 'project' in task and 'url' in task:
+            logger.info('result %s:%s %s -> %.30r' % (
+                task['project'], task['taskid'], task['url'], result))
+
+            taskid = task["taskid"]
+
+            # use advance save 
+            return self.resultdb.asave(
+                project=task['project'],
+                taskid=taskid,
+                url=task['url'],
+                result=result
+            )
+        else:
+            logger.warning('result UNKNOW -> %.30r' % result)
+            return     

@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3 class="modal-title">警告!  <span class="glyphicon glyphicon-warning-sign"></span></h3>
+</div>
+<div class="modal-body">
+	<p>你正在试图删除[$ project $]爬虫的<em>[$ db $]</em>中的所有条目 </p>
+    <p>调试过程中,您可以随意删除,但如果数据已经用于生产环境使用,谨慎!谨慎!</p>
+    
+    <p>你确定要删除吗?</p>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+</div>

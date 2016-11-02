@@ -118,3 +118,34 @@ class TaskDB(SplitTableMixin, BaseTaskDB):
             {"$set": self._stringify(obj)},
             upsert=True
         )
+
+# the flowing function is to support new ui interface and new function
+# added by qiulimao@2016.11.01
+
+    def ensure_index(self,collection_name):
+        self.database[collection_name].ensure_index('status')
+        self.database[collection_name].ensure_index('taskid')
+
+    def remove(self,project):
+        """
+            remove all tasks in taskdb 
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        #ret = self.database[collection_name].find_one({'taskid': taskid}, fields)
+        self.database[collection_name].remove()
+
+    def size(self,project):
+        """
+            get the size of the tasks in taskdb 
+        """
+        if project not in self.projects:
+            self._list_project()
+        if project not in self.projects:
+            return
+        collection_name = self._collection_name(project)
+        ret = self.database[collection_name].find().count()
+        return ret 

@@ -1,0 +1,28 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-sm-6">
+			<div class="input-group">
+			  <input type="number" class="form-control" placeholder = "高度" ng-model="iframeHeiht" ng-model-options="{ updateOn: 'blur' }">
+			  <span class="input-group-btn">
+			  	<button class="btn btn-default" type="button" ng-click="heightdown()"><span class=" glyphicon glyphicon-arrow-up"></span></button>
+		        <button class="btn btn-default" type="button" ng-click="heightup()"><span class=" glyphicon glyphicon-arrow-down"></span></button>
+		      </span>
+			</div>
+		</div>
+        <div class="col-md-4 col-sm-6">
+            <button class="btn btn-info" type="button" ng-click="alert('taskdb')">
+				<span class="glyphicon glyphicon-trash"></span>
+				TaskDB
+				<span class="badge">[$ projectinfo.taskdbsize $]</span>
+			</button>
+            <button class="btn btn-primary" type="button" ng-click="alert('resultdb')">
+	
+				<span class="glyphicon glyphicon-trash"></span>
+				ResultDB
+				<span class="badge">[$ projectinfo.resultdbsize $]</span>
+			</button>
+        </div>
+		
+	</div>
+</div> 
+<iframe id="myFrame" ng-src="[$ trust_url $]" width="100%" height="[$ iframeHeiht $]" seamless frameborder="0" style="margin-top:10px;"></iframe>

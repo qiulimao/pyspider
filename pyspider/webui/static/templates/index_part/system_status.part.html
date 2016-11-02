@@ -1,0 +1,72 @@
+		<div class="panel panel-default">
+			<div class="panel-heading">
+        系统状态
+        <span uib-popover-template="'settingsTemplate.html'" popover-title="设置" class="glyphicon glyphicon-cog pull-right" popover-placement='bottom-right' aria-hidden="true" popover-trigger="outsideClick"></span>
+      </div>
+
+
+			<div class="panel-body">
+<!--
+        <span class="text-muted">5minutes成功比例20%:</span>
+        <uib-progressbar animate="false" max="100" value="20" type="primary" class="progress-striped"></uib-progressbar> 
+        <span class="text-muted">1hour&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功比例40%:</span>
+        <uib-progressbar animate="false" max="100" value="40" type="warning" class="progress-striped"></uib-progressbar> 
+       <span class="text-muted">1day&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功比例60%:</span>
+        <uib-progressbar animate="false" max="100" value="60" type="success" class="progress-striped"></uib-progressbar> 
+       <span class="text-muted">
+         all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功比例80%:
+       </span>
+          <uib-progressbar animate="false" max="100" value="80" type="danger" class="progress-striped"></uib-progressbar>  
+
+          -->
+          <span>20% in 5min</span>
+         <uib-progressbar animate="false" max="100" value="20" type="primary" class="progress-striped"></uib-progressbar>  
+          <span>40% in 1h</span>
+         <uib-progressbar animate="false" max="100" value="40" type="warning" class="progress-striped"></uib-progressbar> 
+          <span>60% in 1day</span>
+         <uib-progressbar animate="false" max="100" value="60" type="success" class="progress-striped"></uib-progressbar> 
+          <span>80% in all</span>
+         <uib-progressbar animate="false" max="100" value="80" type="danger" class="progress-striped"></uib-progressbar>  
+			
+      </div>
+
+     <ul class="list-group">
+      
+        <li class="list-group-item">
+          <span class="text-success">scheduler2fetcher:</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.scheduler2fetcher != 0]">[$ queues.scheduler2fetcher $]</span>
+        </li>
+
+        <li class="list-group-item">
+          <span class="text-success">fetcher2processor:</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.fetcher2processor != 0]">[$ queues.fetcher2processor $]</span>
+        </li>
+        <li class="list-group-item">
+          <span class="text-success">processor2result:</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.processor2result != 0]">[$ queues.processor2result $]</span>
+        </li>
+
+        <li class="list-group-item">
+          <span class="text-success">status_queue:</span>
+          <span class="badge" ng-class="{true:'badge-primary',false:'badge-default'}[queues.status_queue != 0]">[$ queues.status_queue $]</span>
+        </li> 
+        <li class="list-group-item" ng-controller="CreateNewSpider">    
+            <div ng-include="'/static/templates/index_part/create_spider.form.html'|templateinclude"></div>
+        </li>                
+      </ul>
+
+			<div class="panel-footer">
+         <a class="btn btn-sm btn-warning" ng-click="refresh()" ng-disabled="AUTO_REFRESH">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            &nbsp;[$ refresh_countdown | refreshCounter:settings.AUTO_REFRESH_TIME $]
+           </a>
+
+           <a class="btn  btn-sm" ng-class="{true: 'btn-success', false: 'btn-default'}[AUTO_REFRESH]" ng-disabled="AUTO_REFRESH" ng-click="start_auto_refresh()">
+            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+          </a>
+
+           <a class="btn btn-sm" ng-class="{true: 'btn-default', false: 'btn-danger'}[!AUTO_REFRESH]" ng-disabled="!AUTO_REFRESH" ng-click="stop_auto_refresh()">
+            <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+          </a>
+      </div>
+		</div>
