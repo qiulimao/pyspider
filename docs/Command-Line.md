@@ -354,9 +354,12 @@ If true, all pages require username and password specified via `--username` and 
 phantomsource
 ---------
 
-在部署`weblocust`时,每一个部件单独比较部署比较好,尤其是使用`phantomjs`,部署`phantomjs`时,需要运行的脚本.你可以通过这个命令获得`phantomjs_proxy.js`脚本.
-虽然可以使用`weblocust phantomjs`命令启动`phantomjs`模块,但是在`supervisor`部署下会出现一些问题,因为从本质上来讲,`weblocust phantomjs`会创建一个`subprocess`
-因为某种原因,`supervisor`结束`weblocust phantomjs`进程时,真实的`phantomjs`却无法正常关闭,导致一些bug,比如:端口一直占用,进程一直不能关闭.所以推荐单独配置.
+@Deprecated 
+
+使用`supervisor`可以直接`weblocust phantomjs`命令启动`phantomjs`模块,
+在`program`选项当中加入`killasgroup=true`.因为`phantomjs`代理是运行程序的子进程,不然无法结束,会出现`phantomjs`进程无法结束.
+
+thanks binux @ 2016.11.01
 
 ```
 Usage: run.py phantomsource [OPTIONS]

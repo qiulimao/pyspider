@@ -48,7 +48,8 @@ serverurl=unix:///var/runtime/supervisor.sock ; use a unix:// URL  for a unix so
 
 [program:weblocust_phantomjs]
 ;phantomjs_fetcher.js 这个文件可以由 "weblocust phantomsource" 获得
-command=/usr/app/phantomjs/bin/phantomjs --ssl-protocol=any --disk-cache=true /path/to/phantomjs_fetcher.js 25555
+;command=/usr/app/phantomjs/bin/phantomjs --ssl-protocol=any --disk-cache=true /path/to/phantomjs_fetcher.js 25555
+command=weblocust -c /path/toconfigurefile phantomjs 
 process_name=%(program_name)s  ; process_name expr (default %(program_name)s)
 directory=/var/weblocust 
 stdout_logfile=/var/runtimeLog/weblocust/phantomjs.log
@@ -56,6 +57,7 @@ stderr_logfile=/var/runtimeLog/weblocust/phantomjs_err.log
 autostart=false                ; start at supervisord start (default: true)
 priority=300                   ; the relative start priority (default 999)
 ;stopsignal=KILL               ; phantomjs need this signal to terminate
+killasgroup=true               ; kill subprocess. thanks binux's suggestion @2016.11.01
 
 [program:weblocust_scheduler]
 ;configurefile 可以由 "weblocust -mkconfig"获得
