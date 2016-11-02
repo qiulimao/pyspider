@@ -7,7 +7,7 @@
 #         http://www.getqiu.com
 
 #  Created on 2016-10-26 20:36:38
-# Modified on 2016-10-26 20:46:20
+# Modified on 2016-11-02 14:52:53
 """ 
  help contributors add info to the files 
 """ 
