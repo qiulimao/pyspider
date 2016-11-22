@@ -139,7 +139,7 @@ class Scheduler(object):
         'priority': 0,
         'retries': 3,
         'exetime': 0,
-        'age': -1,
+        'age': 60*60*8,#默认8小时网页就会发生变化。因为age默认为-1让不少人踩了很多坑
         'itag': None,
     }
     LOOP_LIMIT = 1000

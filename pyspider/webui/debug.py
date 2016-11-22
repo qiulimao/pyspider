@@ -279,3 +279,7 @@ def create_project():
     project_name = request.form.get("project-name")
     #debug(project_name)
     return json.dumps({"ok":1,"project_name":project_name}),200,{'Content-Type': 'application/json'}
+
+@app.route('/blank.html')
+def blank_html():
+    return ""

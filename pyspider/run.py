@@ -185,10 +185,11 @@ def cli(ctx, **kwargs):
 @click.option('--scheduler-cls', default='pyspider.scheduler.ThreadBaseScheduler', callback=load_cls,
               help='scheduler class to be used.')
 @click.option('--threads', default=None, help='thread number for ThreadBaseScheduler, default: 4')
+@click.option('--age', default=60*60*8, help='deafult scheduler age,default is 60*60*8 seconds')
 @click.pass_context
 def scheduler(ctx, xmlrpc, xmlrpc_host, xmlrpc_port,
               inqueue_limit, delete_time, active_tasks, loop_limit, scheduler_cls,
-              threads, get_object=False):
+              threads,age, get_object=False):
     """
     Run Scheduler, only one scheduler is allowed.
     """
@@ -206,7 +207,7 @@ def scheduler(ctx, xmlrpc, xmlrpc_host, xmlrpc_port,
     scheduler.DELETE_TIME = delete_time
     scheduler.ACTIVE_TASKS = active_tasks
     scheduler.LOOP_LIMIT = loop_limit
-
+    scheduler.default_schedule['age'] = age
     g.instances.append(scheduler)
     if g.get('testing_mode') or get_object:
         return scheduler
@@ -223,7 +224,7 @@ def scheduler(ctx, xmlrpc, xmlrpc_host, xmlrpc_port,
 @click.option('--poolsize', default=100, help="max simultaneous fetches")
 @click.option('--proxy', help="proxy host:port")
 @click.option('--user-agent', help='user agent')
-@click.option('--timeout', help='default fetch timeout')
+@click.option('--timeout', help='default fetch timeout',default=8)
 @click.option('--phantomjs-endpoint', help="endpoint of phantomjs, start via pyspider phantomjs")
 @click.option('--splash-endpoint', help="execute endpoint of splash: http://splash.readthedocs.io/en/stable/api.html#execute")
 @click.option('--fetcher-cls', default='pyspider.fetcher.Fetcher', callback=load_cls,
@@ -626,7 +627,10 @@ def bench(ctx, fetcher_num, processor_num, result_worker_num, run_in, total, sho
         scheduler_rpc = connect_rpc(ctx, None,
                                     'http://%(xmlrpc_host)s:%(xmlrpc_port)s/' % scheduler_config)
 
-        time.sleep(2)
+        for _ in range(20):
+            if utils.check_port_open(23333):
+                break
+            time.sleep(1)
 
         scheduler_rpc.newtask({
             "project": project_name,
