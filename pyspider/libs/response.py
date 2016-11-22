@@ -17,7 +17,7 @@ from pyquery import PyQuery
 from requests.structures import CaseInsensitiveDict
 from requests import HTTPError
 from pyspider.libs import utils
-
+from six.moves.urllib.parse import urljoin
 
 class Response(object):
 
@@ -188,6 +188,47 @@ class Response(object):
         except:
             return False
 
+    ##
+    #  the below is to make weblocust's response can be used as scrapy
+    ##
+    @property 
+    def xpath(self):
+        """ shortcut for etree.xpath add by qiulimao@2016.05"""
+        return self.etree.xpath
+
+    @staticmethod
+    def extract(items):
+        """ extract xpath items(lxml.html.HtmlElement) to unicode
+            if items is a lxml.html.HtmlElement return string
+            if items is a lxml.html.HtmlElement list return [string1,string2]
+            if items is a list but not lxml.html.HtmlElement items list ,return [*items]
+        """
+        
+        def htmlelement2string(item):
+            if isinstance(item,lxml.html.HtmlElement):
+                return lxml.etree.tostring(item).decode("utf-8")
+            else:
+                return item
+            
+        if isinstance(items,list):
+            #if len(items) == 1:
+            #    return htmlelement2string(items[0])
+            #else:
+            return map(htmlelement2string,items)
+        else:
+            return htmlelement2string(items)
+
+    def body_as_unicode(self):
+        """ add this method to be campatible with scrapy's linkextractor """
+        return self.text
+
+    def urljoin(self, url):
+        """Join this Response's url with a possible relative url to form an
+        absolute interpretation of the latter."""
+        return urljoin(self.url, url)
+    ##
+    #  the upper is to make weblocust's response can be used as scrapy
+    ##
 
 def rebuild_response(r):
     response = Response(
