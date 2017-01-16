@@ -182,14 +182,15 @@ def cli(ctx, **kwargs):
               help='delete time before marked as delete')
 @click.option('--active-tasks', default=100, help='active log size')
 @click.option('--loop-limit', default=1000, help='maximum number of tasks due with in a loop')
+@click.option('--fail-pause-num', default=10, help='auto pause the project when last FAIL_PAUSE_NUM task failed, set 0 to disable')
 @click.option('--scheduler-cls', default='pyspider.scheduler.ThreadBaseScheduler', callback=load_cls,
               help='scheduler class to be used.')
 @click.option('--threads', default=None, help='thread number for ThreadBaseScheduler, default: 4')
 @click.option('--age', default=60*60*8, help='deafult scheduler age,default is 60*60*8 seconds')
 @click.pass_context
 def scheduler(ctx, xmlrpc, xmlrpc_host, xmlrpc_port,
-              inqueue_limit, delete_time, active_tasks, loop_limit, scheduler_cls,
-              threads,age, get_object=False):
+              inqueue_limit, delete_time, active_tasks, loop_limit, fail_pause_num,
+              scheduler_cls,threads, age, get_object=False):
     """
     Run Scheduler, only one scheduler is allowed.
     """
@@ -208,6 +209,8 @@ def scheduler(ctx, xmlrpc, xmlrpc_host, xmlrpc_port,
     scheduler.ACTIVE_TASKS = active_tasks
     scheduler.LOOP_LIMIT = loop_limit
     scheduler.default_schedule['age'] = age
+    scheduler.FAIL_PAUSE_NUM = fail_pause_num
+    
     g.instances.append(scheduler)
     if g.get('testing_mode') or get_object:
         return scheduler
