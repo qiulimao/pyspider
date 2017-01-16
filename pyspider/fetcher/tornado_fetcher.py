@@ -71,7 +71,7 @@ class Fetcher(object):
         },
         'use_gzip': True,
         'timeout': 10,
-        'connect_timeout': 8,
+        'connect_timeout': 16,
     }
     phantomjs_proxy = None
     splash_endpoint = None

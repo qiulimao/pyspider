@@ -224,7 +224,7 @@ def scheduler(ctx, xmlrpc, xmlrpc_host, xmlrpc_port,
 @click.option('--poolsize', default=100, help="max simultaneous fetches")
 @click.option('--proxy', help="proxy host:port")
 @click.option('--user-agent', help='user agent')
-@click.option('--timeout', help='default fetch timeout',default=8)
+@click.option('--timeout', help='default fetch timeout',default=16)
 @click.option('--phantomjs-endpoint', help="endpoint of phantomjs, start via pyspider phantomjs")
 @click.option('--splash-endpoint', help="execute endpoint of splash: http://splash.readthedocs.io/en/stable/api.html#execute")
 @click.option('--fetcher-cls', default='pyspider.fetcher.Fetcher', callback=load_cls,

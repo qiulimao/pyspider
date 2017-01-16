@@ -18,8 +18,10 @@ import inspect
 import datetime
 import traceback
 from flask import render_template, request, json
-from flask.ext import login
-
+try:
+    import flask_login as login
+except ImportError:
+    from flask.ext import login
 from pyspider.libs import utils, sample_handler, dataurl
 from pyspider.libs.response import rebuild_response
 from pyspider.processor.project_module import ProjectManager, ProjectFinder

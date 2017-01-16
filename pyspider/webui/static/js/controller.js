@@ -89,7 +89,7 @@ controller("IndexController",["$scope","$http","$interval","$timeout",function($
 	$scope.refresh = refresh
 	$scope.close_alert = close_alert;
 	$scope.settings = {
-		AUTO_REFRESH_TIME:3,
+		AUTO_REFRESH_TIME:8,
 	}
 
 	$scope.start_auto_refresh = function(){
