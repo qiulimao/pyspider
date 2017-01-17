@@ -1,3 +1,0 @@
-{
-  "message_queue": "redis://localhost:6379/0"
-}
