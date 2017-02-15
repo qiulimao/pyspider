@@ -29,7 +29,8 @@ class TaskDB(SplitTableMixin, BaseTaskDB):
 
     def __init__(self, url):
         self.table = Table('__tablename__', MetaData(),
-                           Column('taskid', String(64), primary_key=True, nullable=False),
+                           Column('id', Integer, primary_key=True),
+                           Column('taskid', String(64),unique=True,nullable=False),
                            Column('project', String(64)),
                            Column('url', String(1024)),
                            Column('status', Integer),

@@ -28,6 +28,7 @@ class ResultDB(SQLiteMixin, SplitTableMixin, BaseResultDB, BaseDB):
         assert re.match(r'^\w+$', project) is not None
         tablename = self._tablename(project)
         self._execute('''CREATE TABLE IF NOT EXISTS `%s` (
+                id INTEGER PRIMARY KEY,
                 taskid,
                 url,
                 result,
@@ -36,12 +37,12 @@ class ResultDB(SQLiteMixin, SplitTableMixin, BaseResultDB, BaseDB):
                 updatetime
                 )''' % tablename)
         self._execute(
-            '''CREATE INDEX `taskid__extraid` ON %s (taskid,extraid)'''
+            '''CREATE INDEX IF NOT EXISTS `taskid__extraid` ON %s (taskid,extraid)'''
             % self.escape(tablename)
         )
 
         self._execute(
-            '''CREATE INDEX `refer__updatetime` ON %s (refer,updatetime)'''
+            '''CREATE INDEX IF NOT EXISTS `refer__updatetime` ON %s (refer,updatetime)'''
             % self.escape(tablename)
         )
 

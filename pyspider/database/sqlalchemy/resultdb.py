@@ -17,7 +17,7 @@ import json
 import sqlalchemy.exc
 
 from sqlalchemy import (create_engine, MetaData, Table, Column,
-                        String, Float, LargeBinary)
+                        String, Float, LargeBinary,Integer)
 from sqlalchemy.engine.url import make_url
 from pyspider.database.base.resultdb import ResultDB as BaseResultDB
 from pyspider.libs import utils
@@ -29,6 +29,7 @@ class ResultDB(SplitTableMixin, BaseResultDB):
 
     def __init__(self, url):
         self.table = Table('__tablename__', MetaData(),
+                           Column('id', Integer, primary_key=True),
                            Column('taskid', String(64),nullable=False),
                            # 这个taskid不能是unique,所以不能是主键
                            Column('url', String(1024)),

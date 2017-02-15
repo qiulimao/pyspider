@@ -42,7 +42,8 @@ class TaskDB(MySQLMixin, SplitTableMixin, BaseTaskDB, BaseDB):
         if tablename in [x[0] for x in self._execute('show tables')]:
             return
         self._execute('''CREATE TABLE IF NOT EXISTS %s (
-            `taskid` varchar(64) PRIMARY KEY,
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `taskid` varchar(64),
             `project` varchar(64),
             `url` varchar(1024),
             `status` int(1),
@@ -52,8 +53,10 @@ class TaskDB(MySQLMixin, SplitTableMixin, BaseTaskDB, BaseDB):
             `track` BLOB,
             `lastcrawltime` double(16, 4),
             `updatetime` double(16, 4),
-            INDEX `status_index` (`status`)
-            ) ENGINE=InnoDB CHARSET=utf8''' % self.escape(tablename))
+            PRIMARY KEY (`id`),
+            INDEX `status_index` (`status`),
+            UNIQUE KEY `unique_index__taskid` (`taskid`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=1 CHARSET=utf8''' % self.escape(tablename))
 
     def _parse(self, data):
         for key, value in list(six.iteritems(data)):

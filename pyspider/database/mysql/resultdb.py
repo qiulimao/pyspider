@@ -40,16 +40,22 @@ class ResultDB(MySQLMixin, SplitTableMixin, BaseResultDB, BaseDB):
         tablename = self._tablename(project)
         if tablename in [x[0] for x in self._execute('show tables')]:
             return
-        self._execute('''CREATE TABLE %s (
+        # 原先的的primary key是taskid，但是taskid是一个md5值，作为主键，因为innodb采用的聚集索引原因，会导致性能问题。
+        # 所以这里新创建一个id字段，作为主键。
+        # 并且目前taskid并不唯一
+        # 不要每次都创建表，所以加上了IF NOT EXISTS
+        self._execute('''CREATE TABLE IF NOT EXISTS %s (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
             `taskid` varchar(64),
             `url` varchar(1024),
             `extraid` varchar(32),
             `refer` varchar(64),
             `result` MEDIUMBLOB,
             `updatetime` double(16, 4),
+            PRIMARY KEY (`id`),
             KEY `taskid__extraid` (`taskid`,`extraid`),
             KEY `refer__updatetime` (`refer`,`updatetime`)
-            ) ENGINE=InnoDB CHARSET=utf8''' % self.escape(tablename))
+            ) ENGINE=InnoDB AUTO_INCREMENT=1 CHARSET=utf8''' % self.escape(tablename))
 
     def _parse(self, data):
         for key, value in list(six.iteritems(data)):

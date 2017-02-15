@@ -28,14 +28,15 @@ class TaskDB(SQLiteMixin, SplitTableMixin, BaseTaskDB, BaseDB):
         assert re.match(r'^\w+$', project) is not None
         tablename = self._tablename(project)
         self._execute('''CREATE TABLE IF NOT EXISTS `%s` (
-                taskid PRIMARY KEY,
+                id INTEGER PRIMARY KEY,
+                taskid not null unique,
                 project,
                 url, status,
                 schedule, fetch, process, track,
                 lastcrawltime, updatetime
                 )''' % tablename)
         self._execute(
-            '''CREATE INDEX `status_%s_index` ON %s (status)'''
+            '''CREATE INDEX IF NOT EXISTS `status_%s_index` ON %s (status)'''
             % (tablename, self.escape(tablename))
         )
 
