@@ -29,6 +29,7 @@ def task(taskid):
     if not task:
         abort(404)
     resultdb = app.config['resultdb']
+    result = {}
     if resultdb:
         result = resultdb.get(project, taskid)
 

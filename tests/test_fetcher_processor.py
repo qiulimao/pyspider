@@ -220,6 +220,15 @@ class TestFetcherProcessor(unittest.TestCase):
         self.assertEqual(result['headers'].get('A'), 'b')
         self.assertEqual(result['headers'].get('C-D'), 'e-F')
 
+    def test_a115_user_agent(self):
+        status, newtasks, result = self.crawl(self.httpbin+'/get',
+                                              user_agent='binux', callback=self.json)
+
+        self.assertStatusOk(status)
+        self.assertFalse(newtasks)
+        self.assertEqual(result['headers'].get('User-Agent'), 'binux')
+
+
     def test_a120_cookies(self):
         status, newtasks, result = self.crawl(self.httpbin+'/get',
                                               cookies={
@@ -473,3 +482,10 @@ class TestFetcherProcessor(unittest.TestCase):
         status, newtasks, result = self.crawl(self.httpbin+'/deny', robots_txt=True, callback=self.catch_http_error)
 
         self.assertEqual(result, 403)
+
+
+    def test_zzz_connect_timeout(self):
+        start_time = time.time()
+        status, newtasks, result = self.crawl('http://1.1.1.1/', connect_timeout=5, callback=self.catch_http_error)
+        end_time = time.time()
+        self.assertTrue(5 <= end_time - start_time <= 6)

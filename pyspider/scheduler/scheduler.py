@@ -427,7 +427,7 @@ class Scheduler(object):
                 continue
             if project.waiting_get_info:
                 continue
-            if project.min_tick == 0:
+            if int(project.min_tick) == 0:
                 continue
             if self._last_tick % int(project.min_tick) != 0:
                 continue
@@ -518,7 +518,7 @@ class Scheduler(object):
                     project._selected_tasks = False
                     project._send_finished_event_wait = 0
 
-                    self.newtask_queue.put({
+                    self._postpone_request.append({
                         'project': project.name,
                         'taskid': 'on_finished',
                         'url': 'data:,on_finished',
