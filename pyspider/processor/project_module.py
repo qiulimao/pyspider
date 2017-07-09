@@ -154,40 +154,6 @@ class ProjectManager(object):
         return self.projects.get(project_name, None)
 
 
-class ProjectFinder(object):
-    '''ProjectFinder class for sys.meta_path'''
-
-    def __init__(self, projectdb):
-        self.get_projectdb = weakref.ref(projectdb)
-
-    @property
-    def projectdb(self):
-        return self.get_projectdb()
-
-    def find_module(self, fullname, path=None):
-        if fullname == 'projects':
-            return self
-        parts = fullname.split('.')
-        if len(parts) == 2 and parts[0] == 'projects':
-            name = parts[1]
-            if not self.projectdb:
-                return
-            info = self.projectdb.get(name)
-            if info:
-                return ProjectLoader(info)
-
-    def load_module(self, fullname):
-        mod = imp.new_module(fullname)
-        mod.__file__ = '<projects>'
-        mod.__loader__ = self
-        mod.__path__ = ['<projects>']
-        mod.__package__ = 'projects'
-        return mod
-
-    def is_package(self, fullname):
-        return True
-
-
 class ProjectLoader(object):
     '''ProjectLoader class for sys.meta_path'''
 
@@ -195,6 +161,7 @@ class ProjectLoader(object):
         self.project = project
         self.name = project['name']
         self.mod = mod
+        pass
 
     def load_module(self, fullname):
         if self.mod is None:
@@ -208,6 +175,8 @@ class ProjectLoader(object):
         code = self.get_code(fullname)
         six.exec_(code, mod.__dict__)
         linecache.clearcache()
+        if sys.version_info[:2] == (3, 3):
+            sys.modules[fullname] = mod
         return mod
 
     def is_package(self, fullname):
@@ -221,3 +190,100 @@ class ProjectLoader(object):
         if isinstance(script, six.text_type):
             return script.encode('utf8')
         return script
+
+
+if six.PY2:
+    class ProjectFinder(object):
+        '''ProjectFinder class for sys.meta_path'''
+
+        def __init__(self, projectdb):
+            self.get_projectdb = weakref.ref(projectdb)
+
+        @property
+        def projectdb(self):
+            return self.get_projectdb()
+
+        def find_module(self, fullname, path=None):
+            if fullname == 'projects':
+                return self
+            parts = fullname.split('.')
+            if len(parts) == 2 and parts[0] == 'projects':
+                name = parts[1]
+                if not self.projectdb:
+                    return
+                info = self.projectdb.get(name)
+                if info:
+                    return ProjectLoader(info)
+
+        def load_module(self, fullname):
+            mod = imp.new_module(fullname)
+            mod.__file__ = '<projects>'
+            mod.__loader__ = self
+            mod.__path__ = ['<projects>']
+            mod.__package__ = 'projects'
+            return mod
+
+        def is_package(self, fullname):
+            return True
+else:
+    import importlib.abc
+
+    class ProjectFinder(importlib.abc.MetaPathFinder):
+        '''ProjectFinder class for sys.meta_path'''
+
+        def __init__(self, projectdb):
+            self.get_projectdb = weakref.ref(projectdb)
+
+        @property
+        def projectdb(self):
+            return self.get_projectdb()
+
+        def find_spec(self, fullname, path, target=None):
+            loader = self.find_module(fullname, path)
+            if loader:
+                return importlib.util.spec_from_loader(fullname, loader)
+
+        def find_module(self, fullname, path):
+            if fullname == 'projects':
+                return ProjectsLoader()
+            parts = fullname.split('.')
+            if len(parts) == 2 and parts[0] == 'projects':
+                name = parts[1]
+                if not self.projectdb:
+                    return
+                info = self.projectdb.get(name)
+                if info:
+                    return ProjectLoader(info)
+
+    class ProjectsLoader(importlib.abc.InspectLoader):
+        def load_module(self, fullname):
+            mod = imp.new_module(fullname)
+            mod.__file__ = '<projects>'
+            mod.__loader__ = self
+            mod.__path__ = ['<projects>']
+            mod.__package__ = 'projects'
+            if sys.version_info[:2] == (3, 3):
+                sys.modules[fullname] = mod
+            return mod
+
+        def module_repr(self, module):
+            return '<Module projects>'
+
+        def is_package(self, fullname):
+            return True
+
+        def get_source(self, path):
+            return ''
+
+        def get_code(self, fullname):
+            return compile(self.get_source(fullname), '<projects>', 'exec')
+
+    class ProjectLoader(ProjectLoader, importlib.abc.Loader):
+        def create_module(self, spec):
+            return self.load_module(spec.name)
+
+        def exec_module(self, module):
+            return module
+
+        def module_repr(self, module):
+            return '<Module projects.%s>' % self.name

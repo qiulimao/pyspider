@@ -6,6 +6,7 @@
 # Created on 2015-06-03 21:15
 
 import os
+import sys
 import six
 import time
 import shutil
@@ -17,6 +18,7 @@ from pyspider import run
 from pyspider.libs import utils
 from tests import data_sample_handler, data_handler
 
+@unittest.skipIf(sys.version_info >= (3, 6), "easywebdav doesn't support python 3.6")
 class TestWebDav(unittest.TestCase):
     @classmethod
     def setUpClass(self):
@@ -118,6 +120,7 @@ class TestWebDav(unittest.TestCase):
         self.webdav_up.upload(inspect.getsourcefile(data_sample_handler), 'sample_handler.py')
 
 
+@unittest.skipIf(sys.version_info >= (3, 6), "easywebdav doesn't support python 3.6")
 class TestWebDavNeedAuth(unittest.TestCase):
     @classmethod
     def setUpClass(self):

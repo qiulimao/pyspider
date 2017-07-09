@@ -193,6 +193,13 @@ class Response(object):
     ##
     #  the below is to make weblocust's response can be used as scrapy
     ##
+
+    @property
+    def selector(self):
+        """使用这个功能必须安装了scrapy"""
+        from scrapy.selector.unified import Selector
+        return Selector(self)
+
     @property 
     def xpath(self):
         """ shortcut for etree.xpath add by qiulimao@2016.05"""
